@@ -6,4 +6,8 @@
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AsmResolver.DotNet" Version="4.0.0" />
+    </ItemGroup>
+
 </Project>
