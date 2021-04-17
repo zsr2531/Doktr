@@ -6,7 +6,7 @@ namespace Doktr.CommandLine
     {
         public static readonly IList<CommandLineSwitch> Switches = new List<CommandLineSwitch>();
         
-        public static readonly CommandLineSwitch Help = new CommandLineSwitch(new []
+        public static readonly CommandLineSwitch Help = new(new []
         {
             "-h", "--help"
         }, "Shows this help message.");

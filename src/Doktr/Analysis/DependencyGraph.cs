@@ -5,13 +5,13 @@ namespace Doktr.Analysis
 {
     public class DependencyGraph
     {
-        public DependencyGraph(IReadOnlyDictionary<INameProvider, DependencyNodeBase> nodes, DependencyNode root)
+        public DependencyGraph(IReadOnlyDictionary<IFullNameProvider, DependencyNode> nodes, DependencyNode root)
         {
             Nodes = nodes;
             Root = root;
         }
 
-        public IReadOnlyDictionary<INameProvider, DependencyNodeBase> Nodes
+        public IReadOnlyDictionary<IFullNameProvider, DependencyNode> Nodes
         {
             get;
         }

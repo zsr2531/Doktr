@@ -5,17 +5,17 @@ using Doktr.Analysis;
 namespace Doktr.Collections
 {
     [DebuggerDisplay("Count = {" + nameof(Count) + ",nq}")]
-    public class DependencyCollection : NeoCollection<DependencyNodeBase>
+    public class DependencyCollection : NeoCollection<DependencyNode>
     {
-        private readonly DependencyNodeBase _parent;
+        private readonly DependencyNode _parent;
         private bool _removing;
 
-        public DependencyCollection(DependencyNodeBase parent)
+        public DependencyCollection(DependencyNode parent)
         {
             _parent = parent;
         }
         
-        protected override void RemoveItem(int index, DependencyNodeBase item)
+        protected override void RemoveItem(int index, DependencyNode item)
         {
             if (_removing)
                 return;
@@ -26,7 +26,7 @@ namespace Doktr.Collections
             _removing = false;
         }
 
-        protected override void InsertItem(int index, DependencyNodeBase item)
+        protected override void InsertItem(int index, DependencyNode item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));

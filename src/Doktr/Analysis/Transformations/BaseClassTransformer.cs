@@ -4,7 +4,7 @@ namespace Doktr.Analysis.Transformations
 {
     public class BaseClassTransformer : DependencyAdderTransformerBase
     {
-        protected override void Visit(DependencyNodeBase node, TransformationContext context)
+        protected override void Visit(DependencyNode node, TransformationContext context)
         {
             if (!(node.MetadataMember is TypeDefinition type))
                 return;
@@ -13,6 +13,12 @@ namespace Doktr.Analysis.Transformations
                 return;
             
             var super = type.BaseType.Resolve();
+            if (super is null)
+            {
+                Logger.Warning($"Couldn't resolve the base class of {type}");
+                return;
+            }
+            
             var superNode = context.GetOrCreateNode(super);
             
             Depend(node, superNode);

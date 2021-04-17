@@ -21,6 +21,7 @@ namespace Doktr.Analysis.Transformations
             if (ReferenceEquals(newParent, node.Owner))
                 return;
 
+            Logger.Verbose($"New parent of {node.MetadataMember}: {newParent.MetadataMember}");
             node.Owner!.Children.Remove(node);
             newParent.Children.Add(node);
             delta--;

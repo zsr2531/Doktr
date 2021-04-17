@@ -15,6 +15,8 @@ namespace Doktr.Collections
 
         protected sealed override void RemoveItem(int index)
         {
+            var item = this[index];
+            RemoveItem(index, item);
             base.RemoveItem(index);
         }
 

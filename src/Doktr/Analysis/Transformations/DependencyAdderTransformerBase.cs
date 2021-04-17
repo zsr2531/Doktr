@@ -10,8 +10,8 @@ namespace Doktr.Analysis.Transformations
             Visit(node, context);
         }
 
-        protected abstract void Visit(DependencyNodeBase node, TransformationContext context);
+        protected abstract void Visit(DependencyNode node, TransformationContext context);
 
-        protected static void Depend(DependencyNodeBase from, DependencyNodeBase to) => from.Dependencies.Add(to);
+        protected static void Depend(DependencyNode from, DependencyNode to) => from.Dependencies.Add(to);
     }
 }

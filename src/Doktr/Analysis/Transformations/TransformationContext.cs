@@ -5,22 +5,22 @@ namespace Doktr.Analysis.Transformations
 {
     public class TransformationContext
     {
-        public TransformationContext(IDictionary<INameProvider, DependencyNodeBase> mapping)
+        public TransformationContext(IDictionary<IFullNameProvider, DependencyNode> mapping)
         {
             Mapping = mapping;
         }
 
-        public IDictionary<INameProvider, DependencyNodeBase> Mapping
+        public IDictionary<IFullNameProvider, DependencyNode> Mapping
         {
             get;
         }
 
-        public DependencyNodeBase GetOrCreateNode(INameProvider member)
+        public DependencyNode GetOrCreateNode(IFullNameProvider member)
         {
             if (Mapping.TryGetValue(member, out var value))
                 return value;
             
-            var node = new ExternalDependencyNode(member);
+            var node = new DependencyNode(member);
             Mapping.Add(member, node);
 
             return node;

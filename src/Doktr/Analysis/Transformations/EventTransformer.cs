@@ -14,12 +14,12 @@ namespace Doktr.Analysis.Transformations
             var remove = @event.RemoveMethod;
             var fire = @event.FireMethod;
 
-            if (add is not null)
-                FixParent((DependencyNode) context.Mapping[add], node, ref delta);
-            if (remove is not null)
-                FixParent((DependencyNode) context.Mapping[remove], node, ref delta);
-            if (fire is not null)
-                FixParent((DependencyNode) context.Mapping[fire], node, ref delta);
+            if (add is not null && context.Mapping.TryGetValue(add, out var adder))
+                FixParent(adder, node, ref delta);
+            if (remove is not null && context.Mapping.TryGetValue(remove, out var remover))
+                FixParent(remover, node, ref delta);
+            if (fire is not null && context.Mapping.TryGetValue(fire, out var firer))
+                FixParent(firer, node, ref delta);
 
             return delta;
         }
