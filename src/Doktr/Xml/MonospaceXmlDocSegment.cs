@@ -3,9 +3,9 @@ using Doktr.Generation;
 
 namespace Doktr.Xml
 {
-    public class CodeXmlDocSegment : IXmlDocSegment
+    public class MonospaceXmlDocSegment : IXmlDocSegment
     {
-        public CodeXmlDocSegment(ImmutableArray<IXmlDocSegment> content)
+        public MonospaceXmlDocSegment(ImmutableArray<IXmlDocSegment> content)
         {
             Content = content;
         }
