@@ -4,7 +4,7 @@ namespace Doktr.Generation
 {
     public interface IDocumentationVisitor
     {
-        void Visit(CodeXmlDocSegment segment);
+        void Visit(MonospaceXmlDocSegment segment);
 
         void Visit(DescriptionXmlDocSegment segment);
 

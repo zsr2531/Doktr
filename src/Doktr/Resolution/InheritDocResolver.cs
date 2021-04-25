@@ -49,7 +49,20 @@ namespace Doktr.Resolution
                     continue;
                 }
 
-                _docs[member] = inherited.Value;
+                if (inherited.Value.Length == 1 && inherited.Value[0] is InheritDocXmlDocSegment moreInherit)
+                {
+                    if (_raw.TryGetValue(moreInherit.From, out var resolved))
+                    {
+                        _docs[member] = resolved;
+                        continue;
+                    }
+                    
+                    Logger.Warning($"Couldn't resolve explicit inheritdoc of member {member} ('{inherit.From}')");
+                }
+                else
+                {
+                    _docs[member] = inherited.Value;
+                }
             }
         }
 
@@ -64,7 +77,7 @@ namespace Doktr.Resolution
                 EnsureNoDuplicates(member, agenda);
                 
                 var candidate = agenda.Dequeue();
-                if (!InheritsDoc(candidate) && _docs.TryGetValue(candidate, out var resolved))
+                if (!InheritsDocImplicitly(candidate) && _docs.TryGetValue(candidate, out var resolved))
                     return resolved;
                 
                 foreach (var dependency in _dependencyGraph.Nodes[candidate].Dependencies)
@@ -83,6 +96,15 @@ namespace Doktr.Resolution
 
             var segment = docs[0];
             return segment is InheritDocXmlDocSegment;
+        }
+
+        private bool InheritsDocImplicitly(IFullNameProvider member)
+        {
+            if (!InheritsDoc(member))
+                return false;
+
+            var docs = _docs[member];
+            return ((InheritDocXmlDocSegment) docs[0]).From is null;
         }
 
         private void EnsureNoDuplicates(IFullNameProvider root, Queue<IFullNameProvider> agenda)

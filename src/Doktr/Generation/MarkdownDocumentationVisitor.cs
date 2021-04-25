@@ -12,7 +12,7 @@ namespace Doktr.Generation
             _writer = writer;
         }
 
-        public void Visit(CodeXmlDocSegment segment)
+        public void Visit(MonospaceXmlDocSegment segment)
         {
             _writer.WriteLine("```csharp");
             

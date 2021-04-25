@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 namespace Doktr.Xml
@@ -65,7 +66,7 @@ namespace Doktr.Xml
                     continue;
                 
                 if (_reader.NodeType == XmlNodeType.Text)
-                    content.Add(new RawXmlDocSegment(_reader.Value.Trim()));
+                    content.Add(new RawXmlDocSegment(FixWhitespace(_reader.Value)));
                 else if (_reader.NodeType == XmlNodeType.Element)
                     content.Add(ProcessElement());
                 else if (_reader.NodeType == XmlNodeType.EndElement)
@@ -84,8 +85,12 @@ namespace Doktr.Xml
                 "item" => new ItemXmlDocSegment(content.ToImmutable()),
                 "description" => new DescriptionXmlDocSegment(content.ToImmutable()),
                 "para" => new ParaXmlDocSegment(content.ToImmutable()),
-                "c" => new CodeXmlDocSegment(content.ToImmutable()),
+                "c" => new MonospaceXmlDocSegment(content.ToImmutable()),
                 "strong" => new StrongXmlDocSegment(content.ToImmutable()),
+                "i" => null, // TODO
+                "b" => null, // TODO
+                "value" => null, // TODO
+                "term" => null, // TODO
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -93,6 +98,22 @@ namespace Doktr.Xml
         public void Dispose()
         {
             _reader.Dispose();
+        }
+
+        private static string FixWhitespace(string value)
+        {
+            var sb = new StringBuilder();
+
+            int i = 0;
+            while (i < value.Length)
+            {
+                if (!char.IsWhiteSpace(value[i]) || i + 1 >= value.Length || !char.IsWhiteSpace(value[i + 1]))
+                    sb.Append(value[i]);
+
+                i++;
+            }
+
+            return sb.ToString();
         }
     }
 }
