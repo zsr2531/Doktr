@@ -4,9 +4,21 @@ namespace Doktr.Xml.Semantics
 {
     public class TypeDocumentation
     {
-        public TypeDocumentation(string name)
+        public TypeDocumentation(string assembly, string ns, string name)
         {
+            Assembly = assembly;
+            Namespace = ns;
             Name = name;
+        }
+        
+        public string Assembly
+        {
+            get;
+        }
+        
+        public string Namespace
+        {
+            get;
         }
 
         public string Name
@@ -14,7 +26,7 @@ namespace Doktr.Xml.Semantics
             get;
         }
         
-        public IDocumentationElement Summary
+        public ImmutableArray<IXmlDocSegment> Summary
         {
             get;
             init;
@@ -26,19 +38,13 @@ namespace Doktr.Xml.Semantics
             init;
         }
         
-        public ImmutableArray<IDocumentationElement> Inheritance
+        public ImmutableArray<string> Inheritance
         {
             get;
             init;
         }
 
-        public IDocumentationElement TypeParameters
-        {
-            get;
-            init;
-        }
-        
-        public IDocumentationElement Remarks
+        public ImmutableArray<(string Name, ImmutableArray<IXmlDocSegment> Documentation)> TypeParameters
         {
             get;
             init;
@@ -63,6 +69,42 @@ namespace Doktr.Xml.Semantics
         }
         
         public ImmutableArray<MethodDocumentation> StaticMethods
+        {
+            get;
+            init;
+        }
+
+        public ImmutableArray<EventDocumentation> InstanceEvents
+        {
+            get;
+            init;
+        }
+
+        public ImmutableArray<FieldDocumentation> InstanceFields
+        {
+            get;
+            init;
+        }
+
+        public ImmutableArray<MethodDocumentation> Constructors
+        {
+            get;
+            init;
+        }
+
+        public ImmutableArray<PropertyDocumentation> InstanceProperties
+        {
+            get;
+            init;
+        }
+        
+        public ImmutableArray<MethodDocumentation> InstanceMethods
+        {
+            get;
+            init;
+        }
+        
+        public ImmutableArray<IXmlDocSegment> Remarks
         {
             get;
             init;

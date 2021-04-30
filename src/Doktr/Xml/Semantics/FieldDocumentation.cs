@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Doktr.Xml.Semantics
 {
     public class FieldDocumentation
@@ -12,7 +14,7 @@ namespace Doktr.Xml.Semantics
             get;
         }
         
-        public IDocumentationElement Summary
+        public ImmutableArray<IXmlDocSegment> Summary
         {
             get;
             init;
@@ -24,13 +26,13 @@ namespace Doktr.Xml.Semantics
             init;
         }
         
-        public IDocumentationElement Type
+        public string Type
         {
             get;
             init;
         }
         
-        public IDocumentationElement Remarks
+        public ImmutableArray<IXmlDocSegment> Remarks
         {
             get;
             init;

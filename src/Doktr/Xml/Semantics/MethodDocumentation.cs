@@ -14,7 +14,7 @@ namespace Doktr.Xml.Semantics
             get;
         }
         
-        public IDocumentationElement Summary
+        public ImmutableArray<IXmlDocSegment> Summary
         {
             get;
             init;
@@ -26,31 +26,31 @@ namespace Doktr.Xml.Semantics
             init;
         }
         
-        public ImmutableArray<(string Name, IDocumentationElement Documentation)> TypeParameters
+        public ImmutableArray<(string Name, ImmutableArray<IXmlDocSegment> Documentation)> TypeParameters
         {
             get;
             init;
         }
 
-        public ImmutableArray<(IDocumentationElement Type, string Name, IDocumentationElement Documentation)> Parameters
+        public ImmutableArray<(IXmlDocSegment Type, string Name, ImmutableArray<IXmlDocSegment> Documentation)> Parameters
         {
             get;
             init;
         }
         
-        public IDocumentationElement Returns
+        public ImmutableArray<IXmlDocSegment> Returns
         {
             get;
             init;
         }
         
-        public ImmutableArray<(IDocumentationElement Exception, IDocumentationElement Documentation)> Exceptions
+        public ImmutableArray<(ImmutableArray<IXmlDocSegment> Exception, ImmutableArray<IXmlDocSegment> Documentation)> Exceptions
         {
             get;
             init;
         }
         
-        public IDocumentationElement Remarks
+        public ImmutableArray<IXmlDocSegment> Remarks
         {
             get;
             init;

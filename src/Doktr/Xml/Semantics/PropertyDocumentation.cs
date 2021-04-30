@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Doktr.Xml.Semantics
 {
     public class PropertyDocumentation
@@ -12,7 +14,7 @@ namespace Doktr.Xml.Semantics
             get;
         }
         
-        public IDocumentationElement Summary
+        public ImmutableArray<IXmlDocSegment> Summary
         {
             get;
             init;
@@ -24,7 +26,7 @@ namespace Doktr.Xml.Semantics
             init;
         }
         
-        public IDocumentationElement Remarks
+        public ImmutableArray<IXmlDocSegment> Remarks
         {
             get;
             init;
