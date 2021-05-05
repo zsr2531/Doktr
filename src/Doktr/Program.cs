@@ -1,4 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,9 +11,37 @@ using Doktr.CommandLine;
 using Doktr.Generation;
 using Doktr.Resolution;
 using Doktr.Xml;
+using Doktr.Xml.Semantics;
 
 namespace Doktr
 {
+    /// <summary>
+    /// Test
+    /// </summary>
+    /// <param name="One">string</param>
+    /// <param name="Two">int</param>
+    public record Test(string? One, int? Two) : IEnumerable<int?>
+    {
+        /// <summary>
+        /// kek
+        /// </summary>
+        /// <returns>ayy</returns>
+        public IEnumerator<int?> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        // public unsafe void oops(in int x, ref int y, out int z, delegate* unmanaged[Cdecl]<int, int> kek)
+        // {
+        //     z = 0;
+        // }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     public static class Program
     {
         private const string Version = "1.0.0.0";
@@ -33,19 +64,13 @@ namespace Doktr
                 var docs = new DocumentationReader(target.Xmldoc);
                 var documentation = new DocumentationResolver(result, docs.Loaded).MapMembers();
                 new InheritDocResolver(documentation, result, docs.Loaded).ResolveInheritDoc();
-
-                var fs = File.OpenWrite("output.md");
-                var writer = new StreamWriter(fs);
-                var visitor = new MarkdownDocumentationVisitor(writer);
-                var generator = new DocumentationGenerator(visitor, documentation);
-
-                var meme = documentation.Keys.ElementAt(42);
-                writer.WriteLine("```"+meme.FullName+"```");
-                generator.GenerateDocumentation(meme);
-
-                writer.Flush();
-                fs.Flush();
-                fs.Close();
+                var semantics = new SemanticXmlDocParser(documentation);
+                foreach (var type in result.Nodes.Where(p => p.Key is TypeDefinition))
+                {
+                    if (!documentation.ContainsKey(type.Key))
+                        continue;
+                    var parsed = semantics.ParseTypeDocumentation((TypeDefinition) type.Key);
+                }
             }
         }
 

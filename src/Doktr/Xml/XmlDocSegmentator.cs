@@ -105,11 +105,20 @@ namespace Doktr.Xml
             var sb = new StringBuilder();
 
             int i = 0;
+            bool hadNonWhitespace = false;
             while (i < value.Length)
             {
+                if (!hadNonWhitespace && char.IsWhiteSpace(value[i]))
+                {
+                    i++;
+                    continue;
+                }
+                
                 if (!char.IsWhiteSpace(value[i]) || i + 1 >= value.Length || !char.IsWhiteSpace(value[i + 1]))
+                {
+                    hadNonWhitespace = true;
                     sb.Append(value[i]);
-
+                }
                 i++;
             }
 
