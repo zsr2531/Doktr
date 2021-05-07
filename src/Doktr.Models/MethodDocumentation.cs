@@ -6,26 +6,10 @@ namespace Doktr.Models
 {
     public class MethodDocumentation : IMemberDocumentation
     {
-        public MethodDocumentation(
-            string name,
-            ImmutableArray<IDocumentationSegment> summary,
-            string syntax,
-            ImmutableArray<TypeParameterDocumentation> typeParameters,
-            ImmutableArray<ParameterDocumentation> parameters,
-            IReference returnType,
-            ImmutableArray<IDocumentationSegment> returns,
-            ImmutableArray<IDocumentationSegment> examples,
-            ImmutableArray<IDocumentationSegment> remarks)
+        public MethodDocumentation(string name, IReference returnType)
         {
             Name = name;
-            Summary = summary;
-            Syntax = syntax;
-            TypeParameters = typeParameters;
-            Parameters = parameters;
             ReturnType = returnType;
-            Returns = returns;
-            Examples = examples;
-            Remarks = remarks;
         }
 
         public string Name
@@ -36,41 +20,55 @@ namespace Doktr.Models
         public ImmutableArray<IDocumentationSegment> Summary
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
-        public string Syntax
+        public string? Syntax
         {
             get;
+            init;
         }
 
         public ImmutableArray<TypeParameterDocumentation> TypeParameters
         {
             get;
-        }
-        
+            init;
+        } = ImmutableArray<TypeParameterDocumentation>.Empty;
+
         public ImmutableArray<ParameterDocumentation> Parameters
         {
             get;
-        }
-        
+            init;
+        } = ImmutableArray<ParameterDocumentation>.Empty;
+
         public IReference ReturnType
         {
             get;
+            init;
         }
-        
+
         public ImmutableArray<IDocumentationSegment> Returns
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Examples
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Remarks
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
+
+        public ImmutableArray<IReference> SeeAlso
+        {
+            get;
+            init;
+        } = ImmutableArray<IReference>.Empty;
     }
 }

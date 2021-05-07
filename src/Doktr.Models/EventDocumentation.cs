@@ -6,20 +6,10 @@ namespace Doktr.Models
 {
     public class EventDocumentation : IMemberDocumentation
     {
-        public EventDocumentation(
-            string name,
-            ImmutableArray<IDocumentationSegment> summary,
-            string syntax,
-            IReference type,
-            ImmutableArray<IDocumentationSegment> examples,
-            ImmutableArray<IDocumentationSegment> remarks)
+        public EventDocumentation(string name, IReference type)
         {
             Name = name;
-            Summary = summary;
-            Syntax = syntax;
             Type = type;
-            Examples = examples;
-            Remarks = remarks;
         }
 
         public string Name
@@ -27,29 +17,40 @@ namespace Doktr.Models
             get;
         }
 
-        public ImmutableArray<IDocumentationSegment> Summary
-        {
-            get;
-        }
-
-        public string Syntax
-        {
-            get;
-        }
-        
         public IReference Type
         {
             get;
+            init;
+        }
+
+        public ImmutableArray<IDocumentationSegment> Summary
+        {
+            get;
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
+
+        public string? Syntax
+        {
+            get;
+            init;
         }
 
         public ImmutableArray<IDocumentationSegment> Examples
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Remarks
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
+
+        public ImmutableArray<IReference> SeeAlso
+        {
+            get;
+            init;
+        } = ImmutableArray<IReference>.Empty;
     }
 }

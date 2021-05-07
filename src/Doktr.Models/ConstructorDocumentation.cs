@@ -1,24 +1,14 @@
 using System.Collections.Immutable;
+using Doktr.Models.References;
 using Doktr.Models.Segments;
 
 namespace Doktr.Models
 {
     public class ConstructorDocumentation : IMemberDocumentation
     {
-        public ConstructorDocumentation(
-            string name,
-            ImmutableArray<IDocumentationSegment> summary,
-            string syntax,
-            ImmutableArray<ParameterDocumentation> parameters,
-            ImmutableArray<IDocumentationSegment> examples,
-            ImmutableArray<IDocumentationSegment> remarks)
+        public ConstructorDocumentation(string name)
         {
             Name = name;
-            Summary = summary;
-            Syntax = syntax;
-            Parameters = parameters;
-            Examples = examples;
-            Remarks = remarks;
         }
 
         public string Name
@@ -29,26 +19,37 @@ namespace Doktr.Models
         public ImmutableArray<IDocumentationSegment> Summary
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
-        public string Syntax
+        public string? Syntax
         {
             get;
+            init;
         }
 
         public ImmutableArray<ParameterDocumentation> Parameters
         {
             get;
-        }
-        
+            init;
+        } = ImmutableArray<ParameterDocumentation>.Empty;
+
         public ImmutableArray<IDocumentationSegment> Examples
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Remarks
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
+
+        public ImmutableArray<IReference> SeeAlso
+        {
+            get;
+            init;
+        } = ImmutableArray<IReference>.Empty;
     }
 }
