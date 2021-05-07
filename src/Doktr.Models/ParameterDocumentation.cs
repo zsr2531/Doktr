@@ -6,16 +6,16 @@ namespace Doktr.Models
 {
     public class ParameterDocumentation
     {
-        public ParameterDocumentation(IReference type, string name, ImmutableArray<IDocumentationSegment> documentation)
+        public ParameterDocumentation(string name, IReference type)
         {
-            Type = type;
             Name = name;
-            Documentation = documentation;
+            Type = type;
         }
 
         public IReference Type
         {
             get;
+            init;
         }
         
         public string Name
@@ -26,6 +26,7 @@ namespace Doktr.Models
         public ImmutableArray<IDocumentationSegment> Documentation
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
     }
 }

@@ -1,20 +1,14 @@
 using System.Collections.Immutable;
+using Doktr.Models.References;
 using Doktr.Models.Segments;
-
-using Constraint = LanguageExt.Either<Doktr.Models.References.IReference, string>;
 
 namespace Doktr.Models
 {
     public class TypeParameterDocumentation
     {
-        public TypeParameterDocumentation(
-            string name,
-            ImmutableArray<IDocumentationSegment> documentation,
-            ImmutableArray<Constraint> constraints)
+        public TypeParameterDocumentation(string name)
         {
             Name = name;
-            Documentation = documentation;
-            Constraints = constraints;
         }
 
         public string Name
@@ -25,11 +19,13 @@ namespace Doktr.Models
         public ImmutableArray<IDocumentationSegment> Documentation
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IDocumentationSegment>.Empty;
         
-        public ImmutableArray<Constraint> Constraints
+        public ImmutableArray<IReference> Constraints
         {
             get;
-        }
+            init;
+        } = ImmutableArray<IReference>.Empty;
     }
 }
