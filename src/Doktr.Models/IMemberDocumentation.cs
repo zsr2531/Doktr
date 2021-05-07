@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Doktr.Models.References;
 using Doktr.Models.Segments;
 
 namespace Doktr.Models
@@ -15,7 +16,7 @@ namespace Doktr.Models
             get;
         }
         
-        string Syntax
+        string? Syntax
         {
             get;
         }
@@ -26,6 +27,11 @@ namespace Doktr.Models
         }
         
         ImmutableArray<IDocumentationSegment> Remarks
+        {
+            get;
+        }
+        
+        ImmutableArray<IReference> SeeAlso
         {
             get;
         }
