@@ -12,17 +12,22 @@ namespace Doktr.Models
             Type = type;
         }
 
-        public IReference Type
-        {
-            get;
-            init;
-        }
-        
         public string Name
         {
             get;
         }
-        
+
+        public IReference Type
+        {
+            get;
+        }
+
+        public ParameterModifier Modifier
+        {
+            get;
+            init;
+        } = ParameterModifier.None;
+
         public ImmutableArray<IDocumentationSegment> Documentation
         {
             get;

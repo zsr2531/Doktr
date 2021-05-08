@@ -15,6 +15,12 @@ namespace Doktr.Models
         {
             get;
         }
+
+        public TypeParameterModifier Modifier
+        {
+            get;
+            init;
+        } = TypeParameterModifier.None;
         
         public ImmutableArray<IDocumentationSegment> Documentation
         {
