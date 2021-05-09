@@ -16,6 +16,12 @@ namespace Doktr.Models
             get;
         }
         
+        public ImmutableArray<IReference> Inheritance
+        {
+            get;
+            init;
+        } = ImmutableArray<IReference>.Empty;
+        
         public ImmutableArray<IReference> Implementations
         {
             get;
