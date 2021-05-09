@@ -4,7 +4,7 @@ using Doktr.Models.Segments;
 
 namespace Doktr.Models
 {
-    public class PropertyDocumentation : IMemberDocumentation
+    public class PropertyDocumentation : IMemberDocumentation, IHasExceptions
     {
         public PropertyDocumentation(string name, IReference type)
         {
@@ -40,6 +40,12 @@ namespace Doktr.Models
             get;
             init;
         }
+
+        public ImmutableArray<ExceptionDocumentation> Exceptions
+        {
+            get;
+            init;
+        } = ImmutableArray<ExceptionDocumentation>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Examples
         {

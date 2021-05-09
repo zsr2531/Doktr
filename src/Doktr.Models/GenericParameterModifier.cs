@@ -1,6 +1,6 @@
 namespace Doktr.Models
 {
-    public enum TypeParameterModifier : byte
+    public enum GenericParameterModifier : byte
     {
         None,
         Covariant,

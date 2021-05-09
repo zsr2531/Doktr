@@ -4,7 +4,7 @@ using Doktr.Models.Segments;
 
 namespace Doktr.Models
 {
-    public abstract class TypeDocumentation : IMemberDocumentation
+    public abstract class TypeDocumentation : IMemberDocumentation, IHasGenericParameters
     {
         protected TypeDocumentation(string assembly, string ns, string name)
         {
@@ -42,11 +42,11 @@ namespace Doktr.Models
             init;
         }
 
-        public ImmutableArray<TypeParameterDocumentation> TypeParameters
+        public ImmutableArray<GenericParameterDocumentation> GenericParameters
         {
             get;
             init;
-        } = ImmutableArray<TypeParameterDocumentation>.Empty;
+        } = ImmutableArray<GenericParameterDocumentation>.Empty;
 
         public ImmutableArray<EventDocumentation> StaticEvents
         {

@@ -4,7 +4,7 @@ using Doktr.Models.Segments;
 
 namespace Doktr.Models
 {
-    public class MethodDocumentation : IMemberDocumentation
+    public class MethodDocumentation : IMemberDocumentation, IHasExceptions, IHasGenericParameters
     {
         public MethodDocumentation(string name, IReference returnType)
         {
@@ -29,11 +29,11 @@ namespace Doktr.Models
             init;
         }
 
-        public ImmutableArray<TypeParameterDocumentation> TypeParameters
+        public ImmutableArray<GenericParameterDocumentation> GenericParameters
         {
             get;
             init;
-        } = ImmutableArray<TypeParameterDocumentation>.Empty;
+        } = ImmutableArray<GenericParameterDocumentation>.Empty;
 
         public ImmutableArray<ParameterDocumentation> Parameters
         {
@@ -52,6 +52,12 @@ namespace Doktr.Models
             get;
             init;
         } = ImmutableArray<IDocumentationSegment>.Empty;
+
+        public ImmutableArray<ExceptionDocumentation> Exceptions
+        {
+            get;
+            init;
+        } = ImmutableArray<ExceptionDocumentation>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Examples
         {

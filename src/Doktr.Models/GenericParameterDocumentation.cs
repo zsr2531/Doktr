@@ -4,9 +4,9 @@ using Doktr.Models.Segments;
 
 namespace Doktr.Models
 {
-    public class TypeParameterDocumentation
+    public class GenericParameterDocumentation
     {
-        public TypeParameterDocumentation(string name)
+        public GenericParameterDocumentation(string name)
         {
             Name = name;
         }
@@ -16,11 +16,11 @@ namespace Doktr.Models
             get;
         }
 
-        public TypeParameterModifier Modifier
+        public GenericParameterModifier Modifier
         {
             get;
             init;
-        } = TypeParameterModifier.None;
+        } = GenericParameterModifier.None;
         
         public ImmutableArray<IDocumentationSegment> Documentation
         {
