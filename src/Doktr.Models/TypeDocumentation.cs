@@ -12,6 +12,8 @@ namespace Doktr.Models
             Namespace = ns;
             Name = name;
         }
+
+        public string FullName => $"{Namespace}.{Name}";
         
         public string Assembly
         {
@@ -27,8 +29,6 @@ namespace Doktr.Models
         {
             get;
         }
-
-        public string FullName => $"{Namespace}.{Name}";
 
         public ImmutableArray<IDocumentationSegment> Summary
         {
