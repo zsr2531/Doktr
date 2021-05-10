@@ -95,12 +95,6 @@ namespace Doktr.Models
             get;
             init;
         } = ImmutableArray<MethodDocumentation>.Empty;
-        
-        public ImmutableArray<TypeDocumentation> NestedTypes
-        {
-            get;
-            init;
-        } = ImmutableArray<TypeDocumentation>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Examples
         {
