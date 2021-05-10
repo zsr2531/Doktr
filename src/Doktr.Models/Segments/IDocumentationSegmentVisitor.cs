@@ -13,5 +13,13 @@ namespace Doktr.Models.Segments
         void Visit(MonospaceDocumentationSegment segment);
 
         void Visit(CodeBlockDocumentationSegment segment);
+
+        void Visit(ParagraphDocumentationSegment segment);
+
+        void Visit(ListDocumentationSegment segment);
+
+        void Visit(TableDocumentationSegment segment);
+
+        void Visit(TermDocumentationSegment segment);
     }
 }
