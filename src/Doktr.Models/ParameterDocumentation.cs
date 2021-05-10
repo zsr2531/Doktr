@@ -28,6 +28,24 @@ namespace Doktr.Models
             init;
         } = ParameterModifier.None;
 
+        public bool IsParams
+        {
+            get;
+            init;
+        } = false;
+
+        public bool IsDefault
+        {
+            get;
+            init;
+        } = false;
+
+        public object? DefaultValue
+        {
+            get;
+            init;
+        } = null;
+
         public ImmutableArray<IDocumentationSegment> Documentation
         {
             get;
