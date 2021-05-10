@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Doktr.Models.References
 {
     public class ExternalReference : IReference
@@ -12,10 +14,16 @@ namespace Doktr.Models.References
         {
             get;
         }
-        
+
         public string Url
         {
             get;
         }
+
+        public ImmutableArray<IReference> GenericParameters
+        {
+            get;
+            init;
+        } = ImmutableArray<IReference>.Empty;
     }
 }
