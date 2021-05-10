@@ -108,11 +108,11 @@ namespace Doktr.Models
             init;
         } = ImmutableArray<IDocumentationSegment>.Empty;
         
-        public ImmutableArray<ResolvedReference> ExtensionMethods
+        public ImmutableArray<MemberReference> ExtensionMethods
         {
             get;
             init;
-        } = ImmutableArray<ResolvedReference>.Empty;
+        } = ImmutableArray<MemberReference>.Empty;
 
         public ImmutableArray<IDocumentationSegment> Remarks
         {

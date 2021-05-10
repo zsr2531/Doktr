@@ -1,8 +1,8 @@
 namespace Doktr.Models.References
 {
-    public class ResolvedReference : IReference
+    public class MemberReference : IReference
     {
-        public ResolvedReference(string cref, IMemberDocumentation target)
+        public MemberReference(string cref, IMemberDocumentation target)
         {
             Cref = cref;
             Target = target;

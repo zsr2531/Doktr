@@ -1,21 +1,21 @@
 namespace Doktr.Models.References
 {
-    public class UnresolvedReference : IReference
+    public class RawReference : IReference
     {
-        public UnresolvedReference(string cref)
+        public RawReference(string cref, string text)
         {
             Cref = cref;
+            Text = text;
         }
 
         public string Cref
         {
             get;
         }
-        
-        public string? Text
+
+        public string Text
         {
             get;
-            init;
         }
     }
 }
