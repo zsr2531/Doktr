@@ -4,6 +4,11 @@ namespace Doktr.Models.Segments
 {
     public class BoldDocumentationSegment : IDocumentationSegment
     {
+        public BoldDocumentationSegment(ImmutableArray<IDocumentationSegment> content)
+        {
+            Content = content;
+        }
+
         public ImmutableArray<IDocumentationSegment> Content
         {
             get;
