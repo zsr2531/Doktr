@@ -12,6 +12,17 @@ namespace Doktr.Models
             Type = type;
         }
 
+        public ParameterDocumentation(ParameterDocumentation other)
+        {
+            Name = other.Name;
+            Type = other.Type;
+            Modifier = other.Modifier;
+            IsParams = other.IsParams;
+            IsOptional = other.IsOptional;
+            DefaultValue = other.DefaultValue;
+            Documentation = other.Documentation;
+        }
+
         public string Name
         {
             get;
@@ -20,6 +31,7 @@ namespace Doktr.Models
         public IReference Type
         {
             get;
+            init;
         }
 
         public ParameterModifier Modifier
@@ -34,7 +46,7 @@ namespace Doktr.Models
             init;
         } = false;
 
-        public bool IsDefault
+        public bool IsOptional
         {
             get;
             init;

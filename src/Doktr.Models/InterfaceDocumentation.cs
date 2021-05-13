@@ -9,6 +9,12 @@ namespace Doktr.Models
             : base(assembly, ns, name)
         {
         }
+
+        public InterfaceDocumentation(InterfaceDocumentation other)
+            : base(other)
+        {
+            Implementations = other.Implementations;
+        }
         
         public ImmutableArray<IReference> Implementations
         {

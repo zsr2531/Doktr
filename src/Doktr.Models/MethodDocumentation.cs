@@ -12,6 +12,18 @@ namespace Doktr.Models
             ReturnType = returnType;
         }
 
+        public MethodDocumentation(MethodDocumentation other)
+        {
+            Name = other.Name;
+            Parameters = other.Parameters;
+            ReturnType = other.ReturnType;
+            Summary = other.Summary;
+            Syntax = other.Syntax;
+            Examples = other.Examples;
+            Remarks = other.Remarks;
+            SeeAlso = other.SeeAlso;
+        }
+
         public string Name
         {
             get;

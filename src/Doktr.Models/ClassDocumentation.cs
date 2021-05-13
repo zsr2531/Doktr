@@ -10,10 +10,19 @@ namespace Doktr.Models
         {
             BaseType = baseType;
         }
+
+        public ClassDocumentation(ClassDocumentation other)
+            : base(other)
+        {
+            BaseType = other.BaseType;
+            Inheritance = other.Inheritance;
+            Implementations = other.Implementations;
+        }
         
         public IReference BaseType
         {
             get;
+            init;
         }
         
         public ImmutableArray<IReference> Inheritance

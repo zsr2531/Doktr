@@ -11,6 +11,18 @@ namespace Doktr.Models
             Name = name;
         }
 
+        public ConstructorDocumentation(ConstructorDocumentation other)
+        {
+            Name = other.Name;
+            Summary = other.Summary;
+            Syntax = other.Syntax;
+            Parameters = other.Parameters;
+            Exceptions = other.Exceptions;
+            Examples = other.Examples;
+            Remarks = other.Remarks;
+            SeeAlso = other.SeeAlso;
+        }
+
         public string Name
         {
             get;

@@ -16,10 +16,20 @@ namespace Doktr.Models
             Elements = elements;
             BaseType = baseType;
         }
-        
+
+        public RecordDocumentation(RecordDocumentation other)
+            : base(other)
+        {
+            BaseType = other.BaseType;
+            Elements = other.Elements;
+            Inheritance = other.Inheritance;
+            Implementations = other.Implementations;
+        }
+
         public IReference BaseType
         {
             get;
+            init;
         }
         
         public ImmutableArray<ParameterDocumentation> Elements

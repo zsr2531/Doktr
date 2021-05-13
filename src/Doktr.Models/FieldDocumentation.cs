@@ -12,6 +12,17 @@ namespace Doktr.Models
             Type = type;
         }
 
+        public FieldDocumentation(FieldDocumentation other)
+        {
+            Name = other.Name;
+            Type = other.Type;
+            Summary = other.Summary;
+            Syntax = other.Syntax;
+            Examples = other.Examples;
+            Remarks = other.Remarks;
+            SeeAlso = other.SeeAlso;
+        }
+
         public string Name
         {
             get;

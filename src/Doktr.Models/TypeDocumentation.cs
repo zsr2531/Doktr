@@ -13,6 +13,29 @@ namespace Doktr.Models
             Name = name;
         }
 
+        protected TypeDocumentation(TypeDocumentation other)
+        {
+            Assembly = other.Assembly;
+            Namespace = other.Namespace;
+            Name = other.Name;
+            Summary = other.Summary;
+            Syntax = other.Syntax;
+            GenericParameters = other.GenericParameters;
+            StaticEvents = other.StaticEvents;
+            StaticFields = other.StaticFields;
+            StaticProperties = other.StaticProperties;
+            StaticMethods = other.StaticMethods;
+            Constructors = other.Constructors;
+            InstanceEvents = other.InstanceEvents;
+            InstanceFields = other.InstanceFields;
+            InstanceProperties = other.InstanceProperties;
+            InstanceMethods = other.InstanceMethods;
+            Operators = other.Operators;
+            Examples = other.Examples;
+            ExtensionMethods = other.ExtensionMethods;
+            Remarks = other.Remarks;
+        }
+
         public string FullName => $"{Namespace}.{Name}";
         
         public string Assembly
@@ -54,11 +77,17 @@ namespace Doktr.Models
             init;
         } = ImmutableArray<EventDocumentation>.Empty;
 
-        public ImmutableArray<FieldDocumentation> StaticProperties
+        public ImmutableArray<FieldDocumentation> StaticFields
         {
             get;
             init;
         } = ImmutableArray<FieldDocumentation>.Empty;
+        
+        public ImmutableArray<PropertyDocumentation> StaticProperties
+        {
+            get;
+            init;
+        } = ImmutableArray<PropertyDocumentation>.Empty;
         
         public ImmutableArray<MethodDocumentation> StaticMethods
         {
@@ -78,11 +107,17 @@ namespace Doktr.Models
             init;
         } = ImmutableArray<EventDocumentation>.Empty;
 
-        public ImmutableArray<FieldDocumentation> InstanceProperties
+        public ImmutableArray<FieldDocumentation> InstanceFields
         {
             get;
             init;
         } = ImmutableArray<FieldDocumentation>.Empty;
+        
+        public ImmutableArray<PropertyDocumentation> InstanceProperties
+        {
+            get;
+            init;
+        } = ImmutableArray<PropertyDocumentation>.Empty;
         
         public ImmutableArray<MethodDocumentation> InstanceMethods
         {

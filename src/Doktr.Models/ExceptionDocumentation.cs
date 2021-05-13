@@ -11,9 +11,16 @@ namespace Doktr.Models
             Exception = exception;
         }
 
+        public ExceptionDocumentation(ExceptionDocumentation other)
+        {
+            Exception = other.Exception;
+            Documentation = other.Documentation;
+        }
+
         public IReference Exception
         {
             get;
+            init;
         }
         
         public ImmutableArray<IDocumentationSegment> Documentation

@@ -9,7 +9,13 @@ namespace Doktr.Models
             : base(assembly, ns, name)
         {
         }
-        
+
+        public StructDocumentation(StructDocumentation other)
+            : base(other)
+        {
+            Implementations = other.Implementations;
+        }
+
         public ImmutableArray<IReference> Implementations
         {
             get;

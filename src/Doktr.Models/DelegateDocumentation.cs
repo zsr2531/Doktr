@@ -16,15 +16,24 @@ namespace Doktr.Models
             ReturnType = returnType;
             Parameters = parameters;
         }
+
+        public DelegateDocumentation(DelegateDocumentation other)
+            : base(other.Assembly, other.Namespace, other.Name)
+        {
+            ReturnType = other.ReturnType;
+            Parameters = other.Parameters;
+        }
         
         public IReference ReturnType
         {
             get;
+            init;
         }
         
         public ImmutableArray<ParameterDocumentation> Parameters
         {
             get;
+            init;
         }
     }
 }
