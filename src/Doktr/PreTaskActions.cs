@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using Doktr.CommandLine;
@@ -8,46 +7,53 @@ namespace Doktr
 {
     public static class PreTaskActions
     {
-        private static readonly HashSet<CommandLineSwitch> Flags = new()
-        {
-            CommandLineSwitchProvider.Instance.About,
-            CommandLineSwitchProvider.Instance.Help,
-            CommandLineSwitchProvider.Instance.GenerateExample
-        };
-        
         public static void RunActionsIfNeeded(CommandLineParseResult cli)
         {
-            if (!AnyActionsNeeded(cli))
-                return;
-            
-            if (cli.HasFlag(CommandLineSwitchProvider.Instance.About))
+            if (cli.HasFlag(CommandLineSwitchProvider.Help))
                 PrintHelpMessage();
-            else if (cli.HasFlag(CommandLineSwitchProvider.Instance.Help))
+            else if (cli.HasFlag(CommandLineSwitchProvider.About))
                 PrintAboutMessage();
-            else
+            else if (cli.HasFlag(CommandLineSwitchProvider.GenerateExample))
                 GenerateExample();
+            else
+                return;
 
             Environment.Exit(0);
         }
 
-        private static bool AnyActionsNeeded(CommandLineParseResult cli)
-        {
-            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-            foreach (var flag in Flags)
-            {
-                if (cli.HasFlag(flag))
-                    return true;
-            }
-
-            return false;
-        }
-
         private static void PrintHelpMessage()
         {
+            Console.WriteLine("USAGE: ./Doktr [SWITCHES]... [FILE]...\n");
+            Console.WriteLine("Valid command line switches:");
+
+            var switches = CommandLineSwitchProvider.Instance;
+
+            foreach (var sw in switches.AllSwitches)
+            {
+                string identifiers = "   " + string.Join(" ", sw.Identifiers).PadRight(25);
+                Console.Write(identifiers);
+                Console.Write(sw.Description);
+                
+                if (sw.DefaultValue is { Length: >0 } value)
+                    Console.Write($" (default: {value})");
+                
+                Console.WriteLine();
+            }
+            
+            Console.WriteLine("\nExamples:");
+            Console.WriteLine("./Doktr --use-tables docs.xml");
+            Console.WriteLine("./Doktr --include docs/articles;docs/samples -o docs/_site -if bin/Project1/Project1.dll:bin/Project1/Project1.xml");
         }
 
         private static void PrintAboutMessage()
         {
+            Console.WriteLine("Doktr v0.0.1");
+            Console.WriteLine("https://github.com/zsr2531/Doktr.git\n");
+            Console.WriteLine("Doktr is licensed under the MIT license.\n");
+            
+            Console.WriteLine("External libraries:");
+            Console.WriteLine("AsmResolver (MIT license): https://github.com/Washi1337/AsmResolver.git");
+            Console.WriteLine("serilog (Apache 2.0 license): https://github.com/serilog/serilog.git");
         }
 
         private static void GenerateExample()
