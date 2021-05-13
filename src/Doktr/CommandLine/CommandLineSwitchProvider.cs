@@ -6,6 +6,11 @@ namespace Doktr.CommandLine
     {
         public static readonly CommandLineSwitchProvider Instance;
 
+        public static CommandLineSwitch Root
+        {
+            get;
+        } = new("Sets the root directory for paths", ".", "-r", "--root");
+
         public static CommandLineSwitch InputFiles
         {
             get;

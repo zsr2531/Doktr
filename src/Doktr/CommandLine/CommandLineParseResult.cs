@@ -25,14 +25,14 @@ namespace Doktr.CommandLine
 
         public bool HasFlag(CommandLineSwitch sw) => _flags.Contains(sw);
 
-        public string GetOption(CommandLineSwitch sw)
+        public string? GetOption(CommandLineSwitch sw)
         {
             if (sw.DefaultValue is null)
                 throw new InvalidOperationException("Cannot get the value of a flag.");
 
             return _options.TryGetValue(sw, out var value)
                 ? value
-                : sw.DefaultValue;
+                : null;
         }
     }
 }
