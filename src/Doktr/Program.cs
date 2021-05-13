@@ -55,10 +55,9 @@ namespace Doktr
             // Step 1: Load assemblies using AsmResolver and add them to the workspace.
             // Step 2: Load the .xml files and parse them.
             // Step 3: Resolve all external references using xref services.
-            // Step 4: Create a dependency graph between members to resolve inherited documentation.
-            // Step 5: Resolve <inheritdoc />'s.
-            // Step 6: Create output directories.
-            // Step 7: Generate markdown.
+            // Step 4: Resolve <inheritdoc />'s.
+            // Step 5: Create output directories.
+            // Step 6: Generate markdown.
         }
 
         private static CommandLineParseResult ParseCommandLine(string[] args)
@@ -106,7 +105,8 @@ namespace Doktr
                     if (result is not DoktrConfiguration configuration)
                         throw new InvalidDataException();
 
-                    builder.Add(configuration);
+                    configuration.Source = Path.Combine(Directory.GetCurrentDirectory(), inputFile);
+                    builder.Add(configuration.WithCommandLine(cli));
                     logger.Debug("Successfully loaded '{Path}'.", inputFile);
                 }
                 catch (Exception ex)

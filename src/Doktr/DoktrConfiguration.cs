@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Xml.Serialization;
+using Doktr.CommandLine;
 
 namespace Doktr
 {
@@ -7,6 +9,13 @@ namespace Doktr
     [XmlType(TypeName = "Configuration")]
     public class DoktrConfiguration
     {
+        [XmlIgnore]
+        internal string Source
+        {
+            get;
+            set;
+        }
+        
         public string Root
         {
             get;
@@ -36,7 +45,7 @@ namespace Doktr
         {
             get;
             init;
-        } = true;
+        } = false;
 
         [XmlArrayItem("Url")]
         public string[] XrefUrls
@@ -44,5 +53,51 @@ namespace Doktr
             get;
             init;
         } = Array.Empty<string>();
+
+        public DoktrConfiguration WithCommandLine(CommandLineParseResult cli)
+        {
+            return new()
+            {
+                Root = cli.GetOption(CommandLineSwitchProvider.Root) ?? Root,
+                InputFiles = CombineTargets(InputFiles, cli.GetOption(CommandLineSwitchProvider.InputFiles) ?? ""),
+                AdditionalIncludes = CombineStrings(AdditionalIncludes, cli.GetOption(CommandLineSwitchProvider.AdditionalIncludes) ?? ""),
+                OutputPath = cli.GetOption(CommandLineSwitchProvider.OutputPath) ?? OutputPath,
+                UseTablesForMethodParameters = UseTablesForMethodParameters || cli.HasFlag(CommandLineSwitchProvider.UseTablesForParameters),
+                XrefUrls = CombineStrings(XrefUrls, cli.GetOption(CommandLineSwitchProvider.XrefUrls) ?? "")
+            };
+        }
+
+        private static string[] CombineStrings(string[] config, string cli)
+        {
+            if (cli.Length == 0)
+                return config;
+
+            string[] elements = cli.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            string[] combined = new string[config.Length + elements.Length];
+            Array.Copy(config, 0, combined, 0, config.Length);
+            Array.Copy(elements, 0, combined, config.Length - 1, elements.Length);
+
+            return combined;
+        }
+
+        private static DoktrTarget[] CombineTargets(DoktrTarget[] config, string cli)
+        {
+            if (cli.Length == 0)
+                return config;
+
+            DoktrTarget[] elements = cli.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Split(':'))
+                .Select(x => new DoktrTarget
+                {
+                    Assembly = x[0],
+                    XmlFile = x[1]
+                })
+                .ToArray();
+            DoktrTarget[] combined = new DoktrTarget[config.Length + elements.Length];
+            Array.Copy(config, 0, combined, 0, config.Length);
+            Array.Copy(elements, 0, combined, config.Length - 1, elements.Length);
+
+            return combined;
+        }
     }
 }
