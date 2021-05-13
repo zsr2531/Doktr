@@ -4,6 +4,11 @@ namespace Doktr.CommandLine
 {
     public interface ICommandLineSwitchProvider
     {
+        ImmutableArray<CommandLineSwitch> AllSwitches
+        {
+            get;
+        }
+
         ImmutableDictionary<string, CommandLineSwitch> Flags
         {
             get;
