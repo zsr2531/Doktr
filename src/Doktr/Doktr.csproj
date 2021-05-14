@@ -14,4 +14,8 @@
       <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\deps\AsmResolver\src\AsmResolver.DotNet\AsmResolver.DotNet.csproj" />
+    </ItemGroup>
+
 </Project>
