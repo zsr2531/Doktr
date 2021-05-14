@@ -6,9 +6,9 @@ namespace Doktr.Services
 {
     public class GraphBuilderContext
     {
-        private readonly ImmutableDictionary<IFullNameProvider, DependencyNode> _mapping;
+        private readonly ImmutableDictionary<IFullNameProvider, DependencyNode>.Builder _mapping;
 
-        public GraphBuilderContext(ImmutableDictionary<IFullNameProvider, DependencyNode> mapping)
+        public GraphBuilderContext(ImmutableDictionary<IFullNameProvider, DependencyNode>.Builder mapping)
         {
             _mapping = mapping;
         }
@@ -19,6 +19,7 @@ namespace Doktr.Services
                 return node;
 
             node = new DependencyNode(metadataMember, parent);
+            _mapping[metadataMember] = node;
             return node;
         }
     }
