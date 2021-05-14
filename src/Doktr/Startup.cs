@@ -1,4 +1,5 @@
 using System;
+using Doktr.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
@@ -12,6 +13,9 @@ namespace Doktr
 
             collection.AddSingleton(configuration);
             collection.AddSingleton(logger);
+
+            collection.AddSingleton<IAssemblyRepositoryService, AssemblyRepositoryService>();
+            collection.AddTransient<IGraphBuilderService, GraphBuilderService>();
             
             return collection.BuildServiceProvider();
         }
