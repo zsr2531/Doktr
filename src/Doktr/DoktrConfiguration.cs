@@ -14,7 +14,7 @@ namespace Doktr
         {
             get;
             set;
-        }
+        } = "";
         
         public string Root
         {
@@ -58,6 +58,7 @@ namespace Doktr
         {
             return new()
             {
+                Source = Source,
                 Root = cli.GetOption(CommandLineSwitchProvider.Root) ?? Root,
                 InputFiles = CombineTargets(InputFiles, cli.GetOption(CommandLineSwitchProvider.InputFiles) ?? ""),
                 AdditionalIncludes = CombineStrings(AdditionalIncludes, cli.GetOption(CommandLineSwitchProvider.AdditionalIncludes) ?? ""),

@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using Doktr.CommandLine;
+using Doktr.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 
@@ -50,14 +52,35 @@ namespace Doktr
             logger.Information("Finished all jobs in {Elapsed}.", elapsed);
         }
 
-        private static void RunConfiguration(DoktrConfiguration configuration, IServiceProvider serviceProvider)
+        private static void RunConfiguration(DoktrConfiguration configuration, IServiceProvider provider)
         {
-            // Step 1: Load assemblies using AsmResolver and add them to the workspace.
-            // Step 2: Load the .xml files and parse them.
-            // Step 3: Resolve all external references using xref services.
+            var logger = provider.GetRequiredService<ILogger>();
+            var repository = provider.GetRequiredService<IAssemblyRepositoryService>();
+            logger.Verbose("Changing working directory to the root directory.");
+            Directory.SetCurrentDirectory(Path.Combine(Path.GetDirectoryName(configuration.Source)!, configuration.Root));
+            
+            // Step 1: Load assemblies using AsmResolver and add them to the repository.
+            logger.Verbose("Loading {Count} assemblies...", configuration.InputFiles.Length);
+            foreach (var target in configuration.InputFiles)
+            {
+                if (repository.LoadAssembly(target.Assembly))
+                    logger.Information("Loaded '{Assembly}'.", target.Assembly);
+                else
+                    logger.Warning("An error occured, ignoring '{Assembly}'.", target.Assembly);
+            }
+            
+            // Step 2: Build up a dependency graph between the members in the repository.
+            logger.Verbose("Building dependency graph...");
+            var graphBuilder = provider.GetRequiredService<IGraphBuilderService>();
+            var graph = graphBuilder.BuildGraph();
+            logger.Verbose("Dependency graph successfully built.");
+            logger.Debug("Tracking {Count} nodes in dependency graph.", graph.Mapping.Count);
+            
+            // Step 3: Load the .xml files and parse them.
             // Step 4: Resolve <inheritdoc />'s.
-            // Step 5: Create output directories.
-            // Step 6: Generate markdown.
+            // Step 5: Map members to documentation segments.
+            // Step 6: Create output directories.
+            // Step 7: Generate markdown.
         }
 
         private static CommandLineParseResult ParseCommandLine(string[] args)
@@ -75,10 +98,10 @@ namespace Doktr
                 : DefaultLevel;
         }
 
-        private static ILogger CreateLogger(LogEventLevel eventLevel)
+        private static ILogger CreateLogger(LogEventLevel minimumLevel)
         {
             return new LoggerConfiguration()
-                .MinimumLevel.Is(eventLevel)
+                .MinimumLevel.Is(minimumLevel)
                 .WriteTo.Console()
                 .CreateLogger();
         }
