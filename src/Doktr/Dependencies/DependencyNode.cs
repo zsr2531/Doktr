@@ -14,6 +14,8 @@ namespace Doktr.Dependencies
             Children = new OwnerCollection(this);
             Dependencies = new DependencySet(this);
             Dependants = new DependantSet(this);
+            
+            parent?.Children.Add(this);
         }
 
         public IFullNameProvider MetadataMember
