@@ -5,12 +5,6 @@ namespace Doktr.Dependencies
 {
     public class OwnerCollection : Collection<DependencyNode>
     {
-        private static void AssertNoParent(DependencyNode node)
-        {
-            if (node.Parent is not null)
-                throw new InvalidOperationException("Node already has a parent.");
-        }
-        
         private readonly DependencyNode _owner;
 
         public OwnerCollection(DependencyNode owner)
@@ -44,6 +38,12 @@ namespace Doktr.Dependencies
             AssertNoParent(item);
             item.Parent = _owner;
             base.SetItem(index, item);
+        }
+
+        private void AssertNoParent(DependencyNode node)
+        {
+            if (node.Parent is not null && node.Parent != _owner)
+                throw new InvalidOperationException("Node already has a parent.");
         }
     }
 }
