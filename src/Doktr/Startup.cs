@@ -15,6 +15,7 @@ namespace Doktr
             collection.AddSingleton(logger);
 
             collection.AddSingleton<IAssemblyRepositoryService, AssemblyRepositoryService>();
+            collection.AddSingleton<IMetadataResolutionService, MetadataResolutionService>();
             collection.AddTransient<IGraphBuilderService, GraphBuilderService>();
             
             return collection.BuildServiceProvider();
