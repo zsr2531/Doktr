@@ -22,5 +22,10 @@ namespace Doktr.Services
             _mapping[metadataMember] = node;
             return node;
         }
+        
+        public bool NodeExists(IFullNameProvider metadataMember) => _mapping.ContainsKey(metadataMember);
+
+        public void AddDependency(IFullNameProvider from, IFullNameProvider to) =>
+            GetOrCreateNode(from).Dependencies.Add(GetOrCreateNode(to));
     }
 }
