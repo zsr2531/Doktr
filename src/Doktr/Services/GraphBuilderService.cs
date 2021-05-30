@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using AsmResolver.DotNet;
 using Doktr.Dependencies;
+using Doktr.Services.GraphTransformers;
 using Serilog;
 
 namespace Doktr.Services
@@ -11,12 +12,18 @@ namespace Doktr.Services
     {
         private readonly IAssemblyRepositoryService _repository;
         private readonly IMetadataResolutionService _resolution;
+        private readonly IDependencyGraphTransformerProvider _transformerProvider;
         private readonly ILogger _logger;
 
-        public GraphBuilderService(IAssemblyRepositoryService repository, IMetadataResolutionService resolution, ILogger logger)
+        public GraphBuilderService(
+            IAssemblyRepositoryService repository,
+            IMetadataResolutionService resolution,
+            IDependencyGraphTransformerProvider transformerProvider,
+            ILogger logger)
         {
             _repository = repository;
             _resolution = resolution;
+            _transformerProvider = transformerProvider;
             _logger = logger;
         }
 
@@ -29,7 +36,7 @@ namespace Doktr.Services
 
             foreach (var assembly in _repository.LoadedAssemblies)
             {
-                _logger.Verbose("Processing '{Assembly}'", assembly.FullName);
+                _logger.Verbose("Processing '{Assembly}'...", assembly.FullName);
                 roots.Add(context.GetOrCreateNode(assembly));
 
                 topLevelTypes.AddRange(assembly.ManifestModule.TopLevelTypes);
@@ -37,7 +44,10 @@ namespace Doktr.Services
 
             foreach (var type in topLevelTypes)
                 VisitType(type, context);
-
+            
+            foreach (var transformer in _transformerProvider.Transformers)
+                context.AcceptTransformer(transformer);
+            
             return new DependencyGraph(mapping.ToImmutable(), roots.ToImmutable());
         }
 
@@ -84,13 +94,13 @@ namespace Doktr.Services
 
         private void VisitTypeAncestors(TypeDefinition type, GraphBuilderContext context)
         {
-            if (type.BaseType is { } baseType && _resolution.ResolveType(baseType) is { } resolved)
-                VisitType(resolved, context);
+            if (_resolution.ResolveType(type.BaseType) is { } baseType)
+                VisitType(baseType, context);
             
             foreach (var impl in type.Interfaces)
             {
-                var @interface = impl.Interface;
-                resolved = _resolution.ResolveType(@interface);
+                var inf = impl.Interface;
+                var resolved = _resolution.ResolveType(inf);
                 if (resolved is null)
                     continue;
                 
