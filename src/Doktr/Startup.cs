@@ -1,5 +1,6 @@
 using System;
 using Doktr.Services;
+using Doktr.Services.GraphTransformers;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
@@ -16,6 +17,8 @@ namespace Doktr
 
             collection.AddSingleton<IAssemblyRepositoryService, AssemblyRepositoryService>();
             collection.AddSingleton<IMetadataResolutionService, MetadataResolutionService>();
+            collection.AddSingleton<IGenericInstantiationService, GenericInstantiationService>();
+            collection.AddSingleton<IDependencyGraphTransformerProvider, DependencyGraphTransformerProvider>();
             collection.AddTransient<IGraphBuilderService, GraphBuilderService>();
             
             return collection.BuildServiceProvider();

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using AsmResolver.DotNet;
 using Doktr.Dependencies;
+using Doktr.Services.GraphTransformers;
 
 namespace Doktr.Services
 {
@@ -11,6 +12,12 @@ namespace Doktr.Services
         public GraphBuilderContext(ImmutableDictionary<IFullNameProvider, DependencyNode>.Builder mapping)
         {
             _mapping = mapping;
+        }
+
+        public void AcceptTransformer(IDependencyGraphTransformer transformer)
+        {
+            foreach (var (_, node) in _mapping)
+                transformer.VisitNode(node, this);
         }
 
         public DependencyNode GetOrCreateNode(IFullNameProvider metadataMember, DependencyNode? parent = null)
@@ -25,7 +32,15 @@ namespace Doktr.Services
         
         public bool NodeExists(IFullNameProvider metadataMember) => _mapping.ContainsKey(metadataMember);
 
-        public void AddDependency(IFullNameProvider from, IFullNameProvider to) =>
+        public void AddDependency(IFullNameProvider from, IFullNameProvider to)
+        {
+            if (from is MethodDefinition { Semantics: { Association: { } fromAssociation } }
+                && to is MethodDefinition { Semantics: { Association: { } toAssociation } })
+            {
+                AddDependency(fromAssociation, toAssociation);
+            }
+            
             GetOrCreateNode(from).Dependencies.Add(GetOrCreateNode(to));
+        }
     }
 }
