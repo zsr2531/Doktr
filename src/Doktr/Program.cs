@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using Doktr.CommandLine;
+using Doktr.Dependencies;
 using Doktr.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -34,11 +35,11 @@ namespace Doktr
             var pipeline = CreatePipeline(cli, logger);
             var stopwatch = Stopwatch.StartNew();
             
-            logger.Debug("Welcome to Doktr!");
+            logger.Debug("Welcome to Doktr");
             logger.Information("Doktr v0.0.1");
 
             if (pipeline.Length == 0)
-                logger.Warning("Nothing to do.");
+                logger.Warning("Nothing to do");
 
             foreach (var configuration in pipeline)
             {
@@ -49,14 +50,14 @@ namespace Doktr
             stopwatch.Stop();
 
             var elapsed = stopwatch.Elapsed;
-            logger.Information("Finished all jobs in {Elapsed}.", elapsed);
+            logger.Information("Finished all jobs in {Elapsed}", elapsed);
         }
 
         private static void RunConfiguration(DoktrConfiguration configuration, IServiceProvider provider)
         {
             var logger = provider.GetRequiredService<ILogger>();
             var repository = provider.GetRequiredService<IAssemblyRepositoryService>();
-            logger.Verbose("Changing working directory to the root directory.");
+            logger.Verbose("Changing working directory to the root directory");
             Directory.SetCurrentDirectory(Path.Combine(Path.GetDirectoryName(configuration.Source)!, configuration.Root));
             
             // Step 1: Load assemblies using AsmResolver and add them to the repository.
@@ -64,17 +65,17 @@ namespace Doktr
             foreach (var target in configuration.InputFiles)
             {
                 if (repository.LoadAssembly(target.Assembly))
-                    logger.Information("Loaded '{Assembly}'.", target.Assembly);
+                    logger.Information("Loaded '{Assembly}'", target.Assembly);
                 else
-                    logger.Warning("An error occured, ignoring '{Assembly}'.", target.Assembly);
+                    logger.Warning("An error occured, ignoring '{Assembly}'", target.Assembly);
             }
             
             // Step 2: Build up a dependency graph between the members in the repository.
             logger.Verbose("Building dependency graph...");
             var graphBuilder = provider.GetRequiredService<IGraphBuilderService>();
             var graph = graphBuilder.BuildGraph();
-            logger.Verbose("Dependency graph successfully built.");
-            logger.Debug("Tracking {Count} nodes in dependency graph.", graph.Mapping.Count);
+            logger.Verbose("Dependency graph successfully built");
+            logger.Debug("Tracking {Count} nodes in dependency graph", graph.Mapping.Count);
             
             // Step 3: Load the .xml files and parse them.
             // Step 4: Resolve <inheritdoc />'s.
@@ -114,11 +115,11 @@ namespace Doktr
             {
                 if (!File.Exists(inputFile))
                 {
-                    logger.Error("Configuration file '{Path}' not found.", inputFile);
+                    logger.Error("Configuration file '{Path}' not found", inputFile);
                     continue;
                 }
 
-                logger.Verbose("'{Path}' exists, trying to load it.", inputFile);
+                logger.Verbose("'{Path}' exists, trying to load it", inputFile);
                 var xml = new XmlSerializer(typeof(DoktrConfiguration));
 
                 try
@@ -130,15 +131,15 @@ namespace Doktr
 
                     configuration.Source = Path.Combine(Directory.GetCurrentDirectory(), inputFile);
                     builder.Add(configuration.WithCommandLine(cli));
-                    logger.Debug("Successfully loaded '{Path}'.", inputFile);
+                    logger.Debug("Successfully loaded '{Path}'", inputFile);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "An error occured while loading '{Path}'.", inputFile);
+                    logger.Error(ex, "An error occured while loading '{Path}'", inputFile);
                 }
             }
 
-            logger.Verbose("Processed all valid input files.");
+            logger.Verbose("Processed all valid input files");
             return builder.ToImmutable();
         }
     }
