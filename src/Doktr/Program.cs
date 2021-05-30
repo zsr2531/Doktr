@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using Doktr.CommandLine;
-using Doktr.Dependencies;
 using Doktr.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -74,10 +73,15 @@ namespace Doktr
             logger.Verbose("Building dependency graph...");
             var graphBuilder = provider.GetRequiredService<IGraphBuilderService>();
             var graph = graphBuilder.BuildGraph();
-            logger.Verbose("Dependency graph successfully built");
+            logger.Information("Dependency graph successfully built");
             logger.Debug("Tracking {Count} nodes in dependency graph", graph.Mapping.Count);
             
             // Step 3: Load the .xml files and parse them.
+            foreach (var target in configuration.InputFiles)
+            {
+                string file = target.XmlFile;
+            }
+            
             // Step 4: Resolve <inheritdoc />'s.
             // Step 5: Map members to documentation segments.
             // Step 6: Create output directories.
