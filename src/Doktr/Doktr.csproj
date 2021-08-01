@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\deps\AsmResolver\src\AsmResolver.DotNet\AsmResolver.DotNet.csproj" />
+      <ProjectReference Include="..\Doktr.Models\Doktr.Models.csproj" />
     </ItemGroup>
 
 </Project>
