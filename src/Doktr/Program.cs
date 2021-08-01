@@ -77,9 +77,12 @@ namespace Doktr
             logger.Debug("Tracking {Count} nodes in dependency graph", graph.Mapping.Count);
             
             // Step 3: Load the .xml files and parse them.
+            var parserFactory = provider.GetRequiredService<IXmlParserServiceFactory>();
             foreach (var target in configuration.InputFiles)
             {
-                string file = target.XmlFile;
+                string path = target.XmlFile;
+                var parser = parserFactory.CreateXmlParserService(path);
+                var result = parser.ParseXmlFile();
             }
             
             // Step 4: Resolve <inheritdoc />'s.

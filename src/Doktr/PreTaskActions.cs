@@ -47,8 +47,8 @@ namespace Doktr
 
         private static void PrintAboutMessage()
         {
-            Console.WriteLine("Doktr v0.0.1");
-            Console.WriteLine("https://github.com/zsr2531/Doktr.git\n");
+            Console.WriteLine("Doktr v0.0.1\n");
+            Console.WriteLine("https://github.com/zsr2531/Doktr.git");
             Console.WriteLine("Doktr is licensed under the MIT license.\n");
             
             Console.WriteLine("External libraries:");
@@ -83,11 +83,11 @@ namespace Doktr
                 },
                 AdditionalIncludes = new[]
                 {
-                    "docs/articles",
-                    "docs/copyright"
+                    "docs/articles/",
+                    "docs/examples/"
                 },
                 OutputPath = "docs/_site",
-                UseTablesForMethodParameters = true,
+                UseTablesForMethodParameters = false,
                 XrefUrls = new[]
                 {
                     "https://xref.docs.microsoft.com/query?uid={uid}"
