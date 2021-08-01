@@ -1,15 +1,13 @@
-using System.Collections.Immutable;
-
 namespace Doktr.Models.Segments
 {
     public class CodeBlockDocumentationSegment : IDocumentationSegment
     {
-        public CodeBlockDocumentationSegment(ImmutableArray<IDocumentationSegment> content)
+        public CodeBlockDocumentationSegment(string content)
         {
             Content = content;
         }
 
-        public ImmutableArray<IDocumentationSegment> Content
+        public string Content
         {
             get;
         }

@@ -1,15 +1,13 @@
-using System.Collections.Immutable;
-
 namespace Doktr.Models.Segments
 {
     public class MonospaceDocumentationSegment : IDocumentationSegment
     {
-        public MonospaceDocumentationSegment(ImmutableArray<IDocumentationSegment> content)
+        public MonospaceDocumentationSegment(string content)
         {
             Content = content;
         }
 
-        public ImmutableArray<IDocumentationSegment> Content
+        public string Content
         {
             get;
         }
