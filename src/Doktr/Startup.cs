@@ -1,5 +1,6 @@
 using System;
 using Doktr.Services;
+using Doktr.Services.DocumentationParsing;
 using Doktr.Services.GraphTransformers;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -19,6 +20,9 @@ namespace Doktr
             collection.AddSingleton<IMetadataResolutionService, MetadataResolutionService>();
             collection.AddSingleton<IGenericInstantiationService, GenericInstantiationService>();
             collection.AddSingleton<IDependencyGraphTransformerProvider, DependencyGraphTransformerProvider>();
+            collection.AddSingleton<IDocumentationSegmentParserProvider, DocumentationSegmentParserProvider>();
+            collection.AddSingleton<IXmlParserServiceFactory, XmlParserServiceFactory>();
+            collection.AddSingleton<IDocumentIdTranslatorService, DocumentIdTranslatorService>();
             collection.AddTransient<IGraphBuilderService, GraphBuilderService>();
             
             return collection.BuildServiceProvider();
