@@ -1,27 +1,26 @@
 using System.Collections.Immutable;
 
-namespace Doktr.Models.Segments
-{
-    public class TableDocumentationSegment : IDocumentationSegment
-    {
-        public TableDocumentationSegment(
-            ImmutableArray<TermDocumentationSegment> header,
-            ImmutableArray<ImmutableArray<TermDocumentationSegment>> rows)
-        {
-            Header = header;
-            Rows = rows;
-        }
+namespace Doktr.Models.Segments;
 
-        public ImmutableArray<TermDocumentationSegment> Header
-        {
-            get;
-        }
-        
-        public ImmutableArray<ImmutableArray<TermDocumentationSegment>> Rows
-        {
-            get;
-        }
-        
-        public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
+public class TableDocumentationSegment : IDocumentationSegment
+{
+    public TableDocumentationSegment(
+        ImmutableArray<ImmutableArray<IDocumentationSegment>> header,
+        ImmutableArray<ImmutableArray<ImmutableArray<IDocumentationSegment>>> rows)
+    {
+        Header = header;
+        Rows = rows;
     }
+
+    public ImmutableArray<ImmutableArray<IDocumentationSegment>> Header
+    {
+        get;
+    }
+        
+    public ImmutableArray<ImmutableArray<ImmutableArray<IDocumentationSegment>>> Rows
+    {
+        get;
+    }
+        
+    public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

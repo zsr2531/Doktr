@@ -1,8 +1,7 @@
-namespace Doktr.Models.Segments
+namespace Doktr.Models.Segments;
+
+public enum ListType : byte
 {
-    public enum ListType : byte
-    {
-        Bullet,
-        Numbered
-    }
+    Bullet,
+    Numbered
 }

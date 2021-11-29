@@ -1,8 +1,7 @@
 using AsmResolver.DotNet.Signatures.Types;
 
-namespace Doktr.Services
+namespace Doktr.Services;
+
+public interface IDocumentIdTranslatorService : ITypeSignatureVisitor<string>
 {
-    public interface IDocumentIdTranslatorService : ITypeSignatureVisitor<string>
-    {
-    }
 }

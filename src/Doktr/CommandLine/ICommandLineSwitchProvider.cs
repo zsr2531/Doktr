@@ -1,22 +1,21 @@
 using System.Collections.Immutable;
 
-namespace Doktr.CommandLine
+namespace Doktr.CommandLine;
+
+public interface ICommandLineSwitchProvider
 {
-    public interface ICommandLineSwitchProvider
+    ImmutableArray<CommandLineSwitch> AllSwitches
     {
-        ImmutableArray<CommandLineSwitch> AllSwitches
-        {
-            get;
-        }
+        get;
+    }
 
-        ImmutableDictionary<string, CommandLineSwitch> Flags
-        {
-            get;
-        }
+    ImmutableDictionary<string, CommandLineSwitch> Flags
+    {
+        get;
+    }
 
-        ImmutableDictionary<string, CommandLineSwitch> Options
-        {
-            get;
-        }
+    ImmutableDictionary<string, CommandLineSwitch> Options
+    {
+        get;
     }
 }

@@ -1,17 +1,16 @@
 using System.Collections.Immutable;
 
-namespace Doktr.Models.References
+namespace Doktr.Models.References;
+
+public interface IReference
 {
-    public interface IReference
+    string Cref
     {
-        string Cref
-        {
-            get;
-        }
+        get;
+    }
         
-        ImmutableArray<IReference> GenericParameters
-        {
-            get;
-        }
+    ImmutableArray<IReference> GenericParameters
+    {
+        get;
     }
 }

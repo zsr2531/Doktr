@@ -1,7 +1,6 @@
-namespace Doktr.Models.Segments
+namespace Doktr.Models.Segments;
+
+public interface IDocumentationSegment
 {
-    public interface IDocumentationSegment
-    {
-        void AcceptVisitor(IDocumentationSegmentVisitor visitor);
-    }
+    void AcceptVisitor(IDocumentationSegmentVisitor visitor);
 }

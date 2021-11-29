@@ -1,9 +1,8 @@
 using Doktr.Dependencies;
 
-namespace Doktr.Services
+namespace Doktr.Services;
+
+public interface IGraphBuilderService
 {
-    public interface IGraphBuilderService
-    {
-        DependencyGraph BuildGraph();
-    }
+    DependencyGraph BuildGraph();
 }

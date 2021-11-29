@@ -1,9 +1,8 @@
-namespace Doktr.Models
+namespace Doktr.Models;
+
+public enum GenericParameterModifier : byte
 {
-    public enum GenericParameterModifier : byte
-    {
-        None,
-        Covariant,
-        Contravariant
-    }
+    None,
+    Covariant,
+    Contravariant
 }

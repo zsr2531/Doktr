@@ -1,14 +1,13 @@
 using Doktr.Dependencies;
 
-namespace Doktr.Services.GraphTransformers
-{
-    public interface IDependencyGraphTransformer
-    {
-        string Name
-        {
-            get;
-        }
+namespace Doktr.Services.GraphTransformers;
 
-        void VisitNode(DependencyNode node, GraphBuilderContext context);
+public interface IDependencyGraphTransformer
+{
+    string Name
+    {
+        get;
     }
+
+    void VisitNode(DependencyNode node, GraphBuilderContext context);
 }

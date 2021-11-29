@@ -1,12 +1,11 @@
 using System.Collections.Immutable;
 
-namespace Doktr.Services.GraphTransformers
+namespace Doktr.Services.GraphTransformers;
+
+public interface IDependencyGraphTransformerProvider
 {
-    public interface IDependencyGraphTransformerProvider
+    ImmutableArray<IDependencyGraphTransformer> Transformers
     {
-        ImmutableArray<IDependencyGraphTransformer> Transformers
-        {
-            get;
-        }
+        get;
     }
 }

@@ -1,12 +1,11 @@
 using System.Collections.Immutable;
 
-namespace Doktr.Models
+namespace Doktr.Models;
+
+public interface IHasExceptions
 {
-    public interface IHasExceptions
+    ImmutableArray<ExceptionDocumentation> Exceptions
     {
-        ImmutableArray<ExceptionDocumentation> Exceptions
-        {
-            get;
-        }
+        get;
     }
 }

@@ -1,13 +1,12 @@
 using AsmResolver.DotNet;
 
-namespace Doktr.Services
+namespace Doktr.Services;
+
+public interface IMetadataResolutionService
 {
-    public interface IMetadataResolutionService
-    {
-        TypeDefinition? ResolveType(ITypeDefOrRef? type);
+    TypeDefinition? ResolveType(ITypeDefOrRef? type);
 
-        MethodDefinition? ResolveMethod(IMethodDefOrRef? method);
+    MethodDefinition? ResolveMethod(IMethodDefOrRef? method);
 
-        IMetadataMember? ResolveMember(IMemberDescriptor? descriptor);
-    }
+    IMetadataMember? ResolveMember(IMemberDescriptor? descriptor);
 }

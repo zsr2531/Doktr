@@ -1,12 +1,11 @@
 using System.Collections.Immutable;
 
-namespace Doktr.Models
+namespace Doktr.Models;
+
+public interface IHasGenericParameters
 {
-    public interface IHasGenericParameters
+    ImmutableArray<GenericParameterDocumentation> GenericParameters
     {
-        ImmutableArray<GenericParameterDocumentation> GenericParameters
-        {
-            get;
-        }
+        get;
     }
 }

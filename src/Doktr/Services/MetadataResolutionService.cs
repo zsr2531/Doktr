@@ -1,42 +1,41 @@
 using AsmResolver.DotNet;
 using Serilog;
 
-namespace Doktr.Services
+namespace Doktr.Services;
+
+public class MetadataResolutionService : IMetadataResolutionService
 {
-    public class MetadataResolutionService : IMetadataResolutionService
+    private readonly ILogger _logger;
+
+    public MetadataResolutionService(ILogger logger)
     {
-        private readonly ILogger _logger;
+        _logger = logger;
+    }
 
-        public MetadataResolutionService(ILogger logger)
-        {
-            _logger = logger;
-        }
+    public TypeDefinition? ResolveType(ITypeDefOrRef? type)
+    {
+        var resolved = type?.Resolve();
+        if (type is not null && resolved is null)
+            _logger.Warning("Failed to resolve type reference {Type}", type);
 
-        public TypeDefinition? ResolveType(ITypeDefOrRef? type)
-        {
-            var resolved = type?.Resolve();
-            if (type is not null && resolved is null)
-                _logger.Warning("Failed to resolve type reference {Type}", type);
+        return resolved;
+    }
 
-            return resolved;
-        }
+    public MethodDefinition? ResolveMethod(IMethodDefOrRef? method)
+    {
+        var resolved = method?.Resolve();
+        if (method is not null && resolved is null)
+            _logger.Warning("Failed to resolve method reference {Method}", method);
 
-        public MethodDefinition? ResolveMethod(IMethodDefOrRef? method)
-        {
-            var resolved = method?.Resolve();
-            if (method is not null && resolved is null)
-                _logger.Warning("Failed to resolve method reference {Method}", method);
+        return resolved;
+    }
 
-            return resolved;
-        }
+    public IMetadataMember? ResolveMember(IMemberDescriptor? descriptor)
+    {
+        var resolved = descriptor?.Resolve();
+        if (descriptor is not null && resolved is null)
+            _logger.Warning("Failed to resolve member reference {Member}", descriptor);
 
-        public IMetadataMember? ResolveMember(IMemberDescriptor? descriptor)
-        {
-            var resolved = descriptor?.Resolve();
-            if (descriptor is not null && resolved is null)
-                _logger.Warning("Failed to resolve member reference {Member}", descriptor);
-
-            return resolved;
-        }
+        return resolved;
     }
 }
