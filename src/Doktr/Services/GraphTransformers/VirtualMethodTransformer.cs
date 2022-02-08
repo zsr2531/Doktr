@@ -54,12 +54,12 @@ public class VirtualMethodTransformer : IDependencyGraphTransformer
 
         foreach (var candidate in resolved.Methods.Where(m => m.IsVirtual && m.Name == needle.Name))
         {
-            if (_generic.Equals(needle.Signature, candidate.Signature, typeSignature))
+            if (_generic.Equals(needle.Signature!, candidate.Signature!, typeSignature))
                 return candidate;
         }
 
         if (_resolution.ResolveType(resolved.BaseType) is { })
-            queue.Enqueue(resolved.BaseType);
+            queue.Enqueue(resolved.BaseType!);
             
         return null;
     }

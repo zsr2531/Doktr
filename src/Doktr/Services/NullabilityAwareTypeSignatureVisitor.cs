@@ -85,9 +85,9 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
                 : "dynamic";
         }
 
-        string name = BuiltIns.TryGetValue(signature.Name, out string? builtin)
+        string name = BuiltIns.TryGetValue(signature.Name!, out string? builtin)
             ? builtin
-            : signature.Name;
+            : signature.Name!;
 
         if (name is "IntPtr" or "UIntPtr" && _nativeIntegerValues.Next())
         {
@@ -111,7 +111,7 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
         _dynamicValues.Next();
         var type = signature.GenericType;
         
-        if (type.Namespace == "System" && type.Name.StartsWith("ValueTuple"))
+        if (type.Namespace == "System" && type.Name!.Value.StartsWith("ValueTuple"))
         {
             _nullabilityProvider.Next();
             var names = Enumerable.Repeat(0, signature.TypeArguments.Count).Select(_ => _tupleElementNames.Next()).ToList();
@@ -137,7 +137,7 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
         
         bool isNullable = NextNullable();
         var args = signature.TypeArguments.Select(arg => arg.AcceptVisitor(this));
-        string name = DropBackticks(signature.GenericType.Name);
+        string name = DropBackticks(signature.GenericType.Name!);
 
         return $"{name}<{string.Join(", ", args)}>{(isNullable ? "?" : "")}";
     }
@@ -183,7 +183,7 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
 
     public string VisitTypeDefOrRef(TypeDefOrRefSignature signature)
     {
-        string name = DropBackticks(signature.Type.Name);
+        string name = DropBackticks(signature.Type.Name!);
         bool isNullable = !signature.IsValueType && NextNullable();
         _dynamicValues.Next();
 

@@ -29,7 +29,7 @@ public class ImplicitInterfaceTransformer : IDependencyGraphTransformer
             return;
 
         foreach (var inf in interfaces.Select(impl => impl.Interface))
-            ProcessInterface(type, inf, context);
+            ProcessInterface(type, inf!, context);
     }
 
     private void ProcessInterface(TypeDefinition type, ITypeDefOrRef inf, GraphBuilderContext context)
@@ -46,7 +46,7 @@ public class ImplicitInterfaceTransformer : IDependencyGraphTransformer
             var candidates = type.Methods.Where(m => !m.IsStatic && m.Name == needle.Name);
             foreach (var candidate in candidates)
             {
-                if (!_generic.Equals(needle.Signature, candidate.Signature, typeSignature))
+                if (!_generic.Equals(needle.Signature!, candidate.Signature!, typeSignature))
                     continue;
 
                 _logger.Debug("'{Method}' implicitly implements {BaseMethod}", candidate, needle);

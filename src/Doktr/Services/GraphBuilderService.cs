@@ -39,7 +39,7 @@ public class GraphBuilderService : IGraphBuilderService
             _logger.Verbose("Processing '{Assembly}'...", assembly.FullName);
             roots.Add(context.GetOrCreateNode(assembly));
 
-            topLevelTypes.AddRange(assembly.ManifestModule.TopLevelTypes);
+            topLevelTypes.AddRange(assembly.ManifestModule!.TopLevelTypes);
         }
 
         foreach (var type in topLevelTypes)
@@ -65,7 +65,7 @@ public class GraphBuilderService : IGraphBuilderService
         DependencyNode GetParent()
         {
             if (type.DeclaringType is not { } decl)
-                return context.GetOrCreateNode(type.Module.Assembly);
+                return context.GetOrCreateNode(type.Module!.Assembly!);
             if (context.NodeExists(decl))
                 return context.GetOrCreateNode(decl);
                     

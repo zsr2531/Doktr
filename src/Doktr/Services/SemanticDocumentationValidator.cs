@@ -78,7 +78,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
         string GetName()
         {
-            string raw = type.Name;
+            string raw = type.Name!;
             int index = raw.IndexOf('`');
             string real = index == -1
                 ? raw
@@ -121,7 +121,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         if (type.Interfaces.Count > 0)
             builder.Append(hasProperBase ? ", " : " : ");
 
-        var interfaces = type.Interfaces.Select(impl => TypeSignatureToSource(impl.Interface.ToTypeSignature()));
+        var interfaces = type.Interfaces.Select(impl => TypeSignatureToSource(impl.Interface!.ToTypeSignature()));
         builder.Append(string.Join(", ", interfaces));
 
         WriteGenericParameterConstraints(type, builder);
@@ -183,7 +183,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         builder.Append('(');
         var parameters = invoke.Parameters.Select(p =>
         {
-            var def = p.Definition;
+            var def = p.Definition!;
             PushNullableContext(def);
             string modifier = def.IsIn ? "in " : def.IsOut ? "out " : "";
             // var visitor = new NullabilityAwareTypeSignatureVisitor(
@@ -221,7 +221,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         var deconstruct = type.Methods.Single(m => m.Name == "Deconstruct");
         var parameters = deconstruct.Parameters.Select(p =>
         {
-            PushNullableContext(p.Definition);
+            PushNullableContext(p.Definition!);
             // string source = $"{TypeSignatureToSource(p.ParameterType, GetNullablilityProvider(p.Definition))} {p.Name}";
             _nullableContext.Pop();
 
@@ -264,7 +264,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             if (printMembers is null)
                 return false;
 
-            var returnTypeElementType = printMembers.Signature.ReturnType.ElementType;
+            var returnTypeElementType = printMembers.Signature!.ReturnType.ElementType;
             if (returnTypeElementType != ElementType.Boolean)
                 return false;
 
@@ -286,7 +286,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             if ((attributes & GenericParameterAttributes.Contravariant) != 0)
                 return $"in {gp.Name}";
             
-            return gp.Name;
+            return gp.Name!.Value;
         }));
         builder.Append('<');
         builder.Append(parameters);
@@ -389,7 +389,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
     {
         if (type is TypeDefOrRefSignature)
         {
-            string source = type.Name;
+            string source = type.Name!;
             if (!source.Contains('`'))
                 return source;
 
@@ -417,7 +417,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             return null;
 
         var nullableContext = cas.SingleOrDefault(IsNullableContextAttribute);
-        var arg = nullableContext?.Signature.FixedArguments[0];
+        var arg = nullableContext?.Signature!.FixedArguments[0];
 
         return (Nullability?)(byte?) arg?.Element;
 
@@ -426,7 +426,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             const string ns = "System.Runtime.CompilerServices";
             const string type = "NullableContextAttribute";
 
-            var attributeType = ca.Constructor.DeclaringType;
+            var attributeType = ca.Constructor!.DeclaringType!;
             return attributeType.IsTypeOf(ns, type);
         }
     }
