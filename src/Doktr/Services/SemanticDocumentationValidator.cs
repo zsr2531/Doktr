@@ -286,7 +286,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             if ((attributes & GenericParameterAttributes.Contravariant) != 0)
                 return $"in {gp.Name}";
             
-            return gp.Name;
+            return gp.Name.Value;
         }));
         builder.Append('<');
         builder.Append(parameters);

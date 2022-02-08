@@ -64,7 +64,7 @@ public class DocumentationMapperService : IDocumentationMapperService
 
         string generic = method.GenericParameters.Count == 0 ? "" : "``" + method.GenericParameters.Count;
         string parameters = string.Join(",", method.Parameters.Select(p => p.ParameterType.AcceptVisitor(_translation)));
-        if (method.Name is not "op_Implicit" and not "op_Explicit")
+        if (method.Name.Value is not "op_Implicit" and not "op_Explicit")
             return $"{Prefix(member)}:{parent.FullName}.{name}{generic}({parameters})";
             
         return $"M:{parent.FullName}.{name}{generic}({parameters})~{method.Signature.ReturnType.AcceptVisitor(_translation)}";

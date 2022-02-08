@@ -111,7 +111,7 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
         _dynamicValues.Next();
         var type = signature.GenericType;
         
-        if (type.Namespace == "System" && type.Name.StartsWith("ValueTuple"))
+        if (type.Namespace == "System" && type.Name.Value.StartsWith("ValueTuple"))
         {
             _nullabilityProvider.Next();
             var names = Enumerable.Repeat(0, signature.TypeArguments.Count).Select(_ => _tupleElementNames.Next()).ToList();
