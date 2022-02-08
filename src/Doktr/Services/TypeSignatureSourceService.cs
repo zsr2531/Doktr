@@ -74,8 +74,8 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
                 continue;
 
             return arg.ArgumentType.IsValueType
-                ? new SimpleAttributeDataProvider<Nullability>((Nullability) (byte) arg.Element)
-                : new ComplexAttributeDataProvider<Nullability>(arg.Elements.Select(e => (Nullability) (byte) e)
+                ? new SimpleAttributeDataProvider<Nullability>((Nullability) (byte) arg.Element!)
+                : new ComplexAttributeDataProvider<Nullability>(arg.Elements.Select(e => (Nullability) (byte) e!)
                     .ToArray());
         }
 
@@ -96,7 +96,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
             if (!IsAttributeTypeOf(ca, ns, name, out var arg))
                 continue;
 
-            return (Nullability) (byte) arg.Element;
+            return (Nullability) (byte) arg.Element!;
         }
 
         return null;
@@ -114,15 +114,15 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
         foreach (var ca in cas)
         {
             var ctor = ca.Constructor;
-            var type = ctor.DeclaringType;
+            var type = ctor!.DeclaringType!;
             if (!type.IsTypeOf(ns, name))
                 continue;
 
-            var sig = ca.Signature;
+            var sig = ca.Signature!;
             var args = sig.FixedArguments;
             return args.Count == 0
                 ? TrueProvider
-                : new ComplexAttributeDataProvider<bool>(args[0].Elements.Select(e => (bool) e).ToArray());
+                : new ComplexAttributeDataProvider<bool>(args[0].Elements.Select(e => (bool) e!).ToArray());
         }
 
         return FalseProvider;
@@ -160,16 +160,16 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
 
         foreach (var ca in cas)
         {
-            var ctor = ca.Constructor;
-            var type = ctor.DeclaringType;
+            var ctor = ca.Constructor!;
+            var type = ctor.DeclaringType!;
             if (!type.IsTypeOf(ns, name))
                 continue;
 
-            var sig = ca.Signature;
+            var sig = ca.Signature!;
             var args = sig.FixedArguments;
             return args.Count == 0
                 ? TrueProvider
-                : new ComplexAttributeDataProvider<bool>(args[0].Elements.Select(e => (bool) e).ToArray());
+                : new ComplexAttributeDataProvider<bool>(args[0].Elements.Select(e => (bool) e!).ToArray());
         }
 
         return FalseProvider;
@@ -183,12 +183,12 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         arg = null;
 
-        var ctor = ca.Constructor;
-        var type = ctor.DeclaringType;
+        var ctor = ca.Constructor!;
+        var type = ctor.DeclaringType!;
         if (!type.IsTypeOf(ns, name))
             return false;
 
-        arg = ca.Signature.FixedArguments[0];
+        arg = ca.Signature!.FixedArguments[0];
         return true;
     }
 }
