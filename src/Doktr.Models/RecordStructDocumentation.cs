@@ -21,15 +21,8 @@ public class RecordStructDocumentation : TypeDocumentation
         Elements = other.Elements;
         Implementations = other.Implementations;
     }
-        
-    public ImmutableArray<ParameterDocumentation> Elements
-    {
-        get;
-    }
-        
-    public ImmutableArray<IReference> Implementations
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+
+    public ImmutableArray<ParameterDocumentation> Elements { get; }
+
+    public ImmutableArray<IReference> Implementations { get; init; } = ImmutableArray<IReference>.Empty;
 }

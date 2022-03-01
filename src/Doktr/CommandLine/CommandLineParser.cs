@@ -11,7 +11,7 @@ public class CommandLineParser
     {
         _switchProvider = switchProvider;
     }
-        
+
     public CommandLineParseResult ParseCommandLine(string[] args)
     {
         var flags = ImmutableHashSet.CreateBuilder<CommandLineSwitch>();
@@ -30,11 +30,12 @@ public class CommandLineParser
             {
                 var option = _switchProvider.Options[current];
                 string? value = GetValue(args, ref i);
-                    
+
                 if (value is null)
                     Console.Error.WriteLine($"No value provided for option '{current}'... ignoring.");
                 else if (options.ContainsKey(option))
-                    Console.Error.WriteLine($"A value was already provided for option '{current}'... ignoring new value.");
+                    Console.Error.WriteLine(
+                        $"A value was already provided for option '{current}'... ignoring new value.");
                 else
                     options.Add(option, value);
             }
@@ -55,6 +56,6 @@ public class CommandLineParser
     }
 
     private bool IsFlag(string raw) => _switchProvider.Flags.ContainsKey(raw);
-        
+
     private bool IsOption(string raw) => _switchProvider.Options.ContainsKey(raw);
 }

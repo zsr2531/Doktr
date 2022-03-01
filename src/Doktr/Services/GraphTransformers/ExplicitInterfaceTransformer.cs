@@ -19,9 +19,9 @@ public class ExplicitInterfaceTransformer : IDependencyGraphTransformer
 
     public void VisitNode(DependencyNode node, GraphBuilderContext context)
     {
-        if (node.MetadataMember is not TypeDefinition { MethodImplementations: { Count: >0 } impls })
+        if (node.MetadataMember is not TypeDefinition { MethodImplementations: { Count: > 0 } impls })
             return;
-            
+
         foreach (var impl in impls)
             ProcessExplicitImplementation(impl, context);
     }
@@ -29,7 +29,7 @@ public class ExplicitInterfaceTransformer : IDependencyGraphTransformer
     private void ProcessExplicitImplementation(MethodImplementation impl, GraphBuilderContext context)
     {
         _logger.Verbose("Processing explicit implementation '{Impl}'", impl);
-            
+
         var method = _resolution.ResolveMethod(impl.Body);
         var declaration = _resolution.ResolveMethod(impl.Declaration);
         if (method is null || declaration is null)

@@ -4,8 +4,5 @@ namespace Doktr.Models;
 
 public interface IHasExceptions
 {
-    ImmutableArray<ExceptionDocumentation> Exceptions
-    {
-        get;
-    }
+    ImmutableArray<ExceptionDocumentation> Exceptions { get; }
 }

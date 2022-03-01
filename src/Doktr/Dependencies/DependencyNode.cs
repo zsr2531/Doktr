@@ -14,33 +14,17 @@ public class DependencyNode
         Children = new OwnerCollection(this);
         Dependencies = new DependencySet(this);
         Dependants = new DependantSet(this);
-            
+
         parent?.Children.Add(this);
     }
 
-    public IFullNameProvider MetadataMember
-    {
-        get;
-    }
-        
-    public DependencyNode? Parent
-    {
-        get;
-        internal set;
-    }
-        
-    public ICollection<DependencyNode> Children
-    {
-        get;
-    }
+    public IFullNameProvider MetadataMember { get; }
 
-    public ISet<DependencyNode> Dependencies
-    {
-        get;
-    }
+    public DependencyNode? Parent { get; internal set; }
 
-    public ISet<DependencyNode> Dependants
-    {
-        get;
-    }
+    public ICollection<DependencyNode> Children { get; }
+
+    public ISet<DependencyNode> Dependencies { get; }
+
+    public ISet<DependencyNode> Dependants { get; }
 }

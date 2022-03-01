@@ -7,10 +7,7 @@ public class LinkDocumentationSegment : IDocumentationSegment
         Url = url;
     }
 
-    public string Url
-    {
-        get;
-    }
-    
+    public string Url { get; }
+
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

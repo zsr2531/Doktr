@@ -16,9 +16,5 @@ public class StructDocumentation : TypeDocumentation
         Implementations = other.Implementations;
     }
 
-    public ImmutableArray<IReference> Implementations
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> Implementations { get; init; } = ImmutableArray<IReference>.Empty;
 }

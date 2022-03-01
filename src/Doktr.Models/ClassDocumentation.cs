@@ -18,22 +18,10 @@ public class ClassDocumentation : TypeDocumentation
         Inheritance = other.Inheritance;
         Implementations = other.Implementations;
     }
-        
-    public IReference BaseType
-    {
-        get;
-        init;
-    }
-        
-    public ImmutableArray<IReference> Inheritance
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
-        
-    public ImmutableArray<IReference> Implementations
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+
+    public IReference BaseType { get; init; }
+
+    public ImmutableArray<IReference> Inheritance { get; init; } = ImmutableArray<IReference>.Empty;
+
+    public ImmutableArray<IReference> Implementations { get; init; } = ImmutableArray<IReference>.Empty;
 }

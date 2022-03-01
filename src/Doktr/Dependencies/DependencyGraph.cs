@@ -13,13 +13,7 @@ public class DependencyGraph
         Roots = roots;
     }
 
-    public ImmutableDictionary<IFullNameProvider, DependencyNode> Mapping
-    {
-        get;
-    }
-        
-    public ImmutableArray<DependencyNode> Roots
-    {
-        get;
-    }
+    public ImmutableDictionary<IFullNameProvider, DependencyNode> Mapping { get; }
+
+    public ImmutableArray<DependencyNode> Roots { get; }
 }

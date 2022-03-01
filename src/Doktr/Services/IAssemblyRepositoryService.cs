@@ -5,10 +5,7 @@ namespace Doktr.Services;
 
 public interface IAssemblyRepositoryService
 {
-    IReadOnlyList<AssemblyDefinition> LoadedAssemblies
-    {
-        get;
-    }
+    IReadOnlyList<AssemblyDefinition> LoadedAssemblies { get; }
 
     bool LoadAssembly(string path);
 }

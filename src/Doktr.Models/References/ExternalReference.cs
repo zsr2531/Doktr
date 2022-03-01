@@ -10,19 +10,9 @@ public class ExternalReference : IReference
         Url = url;
     }
 
-    public string Cref
-    {
-        get;
-    }
+    public string Cref { get; }
 
-    public string Url
-    {
-        get;
-    }
+    public string Url { get; }
 
-    public ImmutableArray<IReference> GenericParameters
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> GenericParameters { get; init; } = ImmutableArray<IReference>.Empty;
 }

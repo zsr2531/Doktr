@@ -17,15 +17,8 @@ public class ExceptionDocumentation
         Documentation = other.Documentation;
     }
 
-    public IReference Exception
-    {
-        get;
-        init;
-    }
-        
-    public ImmutableArray<IDocumentationSegment> Documentation
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public IReference Exception { get; init; }
+
+    public ImmutableArray<IDocumentationSegment> Documentation { get; init; } =
+        ImmutableArray<IDocumentationSegment>.Empty;
 }

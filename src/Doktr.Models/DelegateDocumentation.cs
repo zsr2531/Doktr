@@ -23,16 +23,8 @@ public class DelegateDocumentation : TypeDocumentation
         ReturnType = other.ReturnType;
         Parameters = other.Parameters;
     }
-        
-    public IReference ReturnType
-    {
-        get;
-        init;
-    }
-        
-    public ImmutableArray<ParameterDocumentation> Parameters
-    {
-        get;
-        init;
-    }
+
+    public IReference ReturnType { get; init; }
+
+    public ImmutableArray<ParameterDocumentation> Parameters { get; init; }
 }

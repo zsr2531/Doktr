@@ -10,49 +10,21 @@ namespace Doktr;
 public class DoktrConfiguration
 {
     [XmlIgnore]
-    internal string Source
-    {
-        get;
-        set;
-    } = "";
-        
-    public string Root
-    {
-        get;
-        init;
-    } = ".";
-        
-    public DoktrTarget[] InputFiles
-    {
-        get;
-        init;
-    } = Array.Empty<DoktrTarget>();
-        
+    internal string Source { get; set; } = "";
+
+    public string Root { get; init; } = ".";
+
+    public DoktrTarget[] InputFiles { get; init; } = Array.Empty<DoktrTarget>();
+
     [XmlArrayItem("Directory")]
-    public string[] AdditionalIncludes
-    {
-        get;
-        init;
-    } = Array.Empty<string>();
+    public string[] AdditionalIncludes { get; init; } = Array.Empty<string>();
 
-    public string OutputPath
-    {
-        get;
-        init;
-    } = "_out";
+    public string OutputPath { get; init; } = "_out";
 
-    public bool UseTablesForMethodParameters
-    {
-        get;
-        init;
-    } = false;
+    public bool UseTablesForMethodParameters { get; init; } = false;
 
     [XmlArrayItem("Url")]
-    public string[] XrefUrls
-    {
-        get;
-        init;
-    } = Array.Empty<string>();
+    public string[] XrefUrls { get; init; } = Array.Empty<string>();
 
     public DoktrConfiguration WithCommandLine(CommandLineParseResult cli)
     {
@@ -61,9 +33,11 @@ public class DoktrConfiguration
             Source = Source,
             Root = cli.GetOption(CommandLineSwitchProvider.Root) ?? Root,
             InputFiles = CombineTargets(InputFiles, cli.GetOption(CommandLineSwitchProvider.InputFiles) ?? ""),
-            AdditionalIncludes = CombineStrings(AdditionalIncludes, cli.GetOption(CommandLineSwitchProvider.AdditionalIncludes) ?? ""),
+            AdditionalIncludes = CombineStrings(AdditionalIncludes,
+                cli.GetOption(CommandLineSwitchProvider.AdditionalIncludes) ?? ""),
             OutputPath = cli.GetOption(CommandLineSwitchProvider.OutputPath) ?? OutputPath,
-            UseTablesForMethodParameters = UseTablesForMethodParameters || cli.HasFlag(CommandLineSwitchProvider.UseTablesForParameters),
+            UseTablesForMethodParameters = UseTablesForMethodParameters ||
+                cli.HasFlag(CommandLineSwitchProvider.UseTablesForParameters),
             XrefUrls = CombineStrings(XrefUrls, cli.GetOption(CommandLineSwitchProvider.XrefUrls) ?? "")
         };
     }

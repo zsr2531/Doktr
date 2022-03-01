@@ -13,7 +13,7 @@ public class GenericInstantiationService : IGenericInstantiationService
             ? new GenericContext().WithType(generic)
             : default;
     }
-        
+
     public MethodSignature InstantiateMethodSignature(MethodSignature signature, TypeSignature typeSignature)
     {
         try

@@ -26,7 +26,7 @@ public static class Startup
         collection.AddSingleton<ISemanticDocumentationValidator, SemanticDocumentationValidator>();
         collection.AddTransient<IXmlParserService, XmlParserService>();
         collection.AddTransient<IGraphBuilderService, GraphBuilderService>();
-            
+
         return collection.BuildServiceProvider();
     }
 }

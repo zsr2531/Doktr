@@ -24,68 +24,28 @@ public class MethodDocumentation : IMemberDocumentation, IHasExceptions, IHasGen
         SeeAlso = other.SeeAlso;
     }
 
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; }
 
-    public ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Summary { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public string? Syntax
-    {
-        get;
-        init;
-    }
+    public string? Syntax { get; init; }
 
-    public ImmutableArray<GenericParameterDocumentation> GenericParameters
-    {
-        get;
-        init;
-    } = ImmutableArray<GenericParameterDocumentation>.Empty;
+    public ImmutableArray<GenericParameterDocumentation> GenericParameters { get; init; } =
+        ImmutableArray<GenericParameterDocumentation>.Empty;
 
-    public ImmutableArray<ParameterDocumentation> Parameters
-    {
-        get;
-        init;
-    } = ImmutableArray<ParameterDocumentation>.Empty;
+    public ImmutableArray<ParameterDocumentation> Parameters { get; init; } =
+        ImmutableArray<ParameterDocumentation>.Empty;
 
-    public IReference ReturnType
-    {
-        get;
-        init;
-    }
+    public IReference ReturnType { get; init; }
 
-    public ImmutableArray<IDocumentationSegment> Returns
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Returns { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<ExceptionDocumentation> Exceptions
-    {
-        get;
-        init;
-    } = ImmutableArray<ExceptionDocumentation>.Empty;
+    public ImmutableArray<ExceptionDocumentation> Exceptions { get; init; } =
+        ImmutableArray<ExceptionDocumentation>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Examples { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Remarks { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IReference> SeeAlso
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> SeeAlso { get; init; } = ImmutableArray<IReference>.Empty;
 }

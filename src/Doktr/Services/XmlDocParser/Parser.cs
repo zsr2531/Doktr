@@ -68,7 +68,7 @@ public class Parser
                 summary.Add(new TextDocumentationSegment(text.Value));
                 continue;
             }
-            
+
             if (current is SelfEnclosedTag { Name: "seealso" } self)
             {
                 seealso.Add(self.Attributes["cref"]);
@@ -94,33 +94,40 @@ public class Parser
                 case "summary":
                     summary.AddRange(ParseBody());
                     break;
+
                 case "param":
                     string paramName = open.Attributes["name"];
                     parameters.Add(paramName, ParseBody());
                     break;
+
                 case "typeparam":
                     string typeParamName = open.Attributes["name"];
                     typeParameters.Add(typeParamName, ParseBody());
                     break;
+
                 case "exception":
                     string ex = open.Attributes["cref"];
                     exceptions.Add(ex, ParseBody());
                     break;
+
                 case "returns":
                     returns.AddRange(ParseBody());
                     break;
+
                 case "example":
                     examples.AddRange(ParseBody());
                     break;
+
                 case "remarks":
                     remarks.AddRange(ParseBody());
                     break;
+
                 // case "value": break; // TODO
                 default:
                     _diagnostics.Add($"Unknown xmldoc tag: '{open.Name}'");
                     continue;
             }
-            
+
             MatchClosingTag(open.Name);
         }
 
@@ -149,7 +156,7 @@ public class Parser
                 builder.Add(new TextDocumentationSegment(text.Value));
                 continue;
             }
-            
+
             if (current is SelfEnclosedTag { Name: "see" } see)
             {
                 if (see.Attributes.TryGetValue("cref", out string? cref))
@@ -166,13 +173,17 @@ public class Parser
 
             if (current is SelfEnclosedTag { Name: "paramref" } paramref)
             {
-                builder.Add(new ItalicDocumentationSegment(ImmutableArray.Create<IDocumentationSegment>(new TextDocumentationSegment(paramref.Attributes["name"]))));
+                builder.Add(new ItalicDocumentationSegment(
+                    ImmutableArray.Create<IDocumentationSegment>(
+                        new TextDocumentationSegment(paramref.Attributes["name"]))));
                 continue;
             }
-            
+
             if (current is SelfEnclosedTag { Name: "typeparamref" } typeparamref)
             {
-                builder.Add(new ItalicDocumentationSegment(ImmutableArray.Create<IDocumentationSegment>(new TextDocumentationSegment(typeparamref.Attributes["name"]))));
+                builder.Add(new ItalicDocumentationSegment(
+                    ImmutableArray.Create<IDocumentationSegment>(
+                        new TextDocumentationSegment(typeparamref.Attributes["name"]))));
                 continue;
             }
 
@@ -182,18 +193,25 @@ public class Parser
                 case "p" or "para":
                     builder.Add(new ParagraphDocumentationSegment(ParseBody()));
                     break;
+
                 case "b" or "strong":
                     builder.Add(new BoldDocumentationSegment(ParseBody()));
                     break;
+
                 case "i" or "italic":
                     builder.Add(new ItalicDocumentationSegment(ParseBody()));
                     break;
+
                 case "c":
-                    builder.Add(new MonospaceDocumentationSegment(string.Join(" ", ParseBody().OfType<TextDocumentationSegment>().Select(s => s.Content))));
+                    builder.Add(new MonospaceDocumentationSegment(string.Join(" ",
+                        ParseBody().OfType<TextDocumentationSegment>().Select(s => s.Content))));
                     break;
+
                 case "code":
-                    builder.Add(new CodeBlockDocumentationSegment(string.Join(" ", ParseBody().OfType<TextDocumentationSegment>().Select(s => s.Content))));
+                    builder.Add(new CodeBlockDocumentationSegment(string.Join(" ",
+                        ParseBody().OfType<TextDocumentationSegment>().Select(s => s.Content))));
                     break;
+
                 case "list":
                     string type = open.Attributes["type"];
                     builder.Add(type switch
@@ -215,7 +233,7 @@ public class Parser
     private ListDocumentationSegment ParseList(ListType type)
     {
         var items = ImmutableArray.CreateBuilder<ImmutableArray<IDocumentationSegment>>();
-        
+
         while (Lookahead is OpenTagToken { Name: "item" })
         {
             Consume();
@@ -236,6 +254,7 @@ public class Parser
             header.Add(ParseBody());
             MatchClosingTag("term");
         }
+
         MatchClosingTag("listheader");
 
         var rows = ImmutableArray.CreateBuilder<ImmutableArray<ImmutableArray<IDocumentationSegment>>>();
@@ -250,7 +269,7 @@ public class Parser
                 row.Add(ParseBody());
                 MatchClosingTag("term");
             }
-            
+
             rows.Add(row.ToImmutable());
             MatchClosingTag("item");
         }
@@ -272,7 +291,8 @@ public class Parser
         if (Lookahead is OpenTagToken open && open.Name == name)
             return (OpenTagToken) Consume();
 
-        _diagnostics.Add($"Expected opening tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
+        _diagnostics.Add(
+            $"Expected opening tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
         return new OpenTagToken(name, ImmutableDictionary<string, string>.Empty);
     }
 
@@ -281,7 +301,8 @@ public class Parser
         if (Lookahead is CloseTagToken close && close.Name == name)
             return (CloseTagToken) Consume();
 
-        _diagnostics.Add($"Expected closing tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
+        _diagnostics.Add(
+            $"Expected closing tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
         return new CloseTagToken(name);
     }
 
@@ -290,7 +311,8 @@ public class Parser
         if (Lookahead is SelfEnclosedTag self && self.Name == name)
             return (SelfEnclosedTag) Consume();
 
-        _diagnostics.Add($"Expected self enclosing tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
+        _diagnostics.Add(
+            $"Expected self enclosing tag with name '{name}', instead got: {(Lookahead is null ? "nothing" : Lookahead)}");
         return new SelfEnclosedTag(name, ImmutableDictionary<string, string>.Empty);
     }
 

@@ -9,10 +9,7 @@ public class ReferenceDocumentationSegment : IDocumentationSegment
         Reference = reference;
     }
 
-    public IReference Reference
-    {
-        get;
-    }
+    public IReference Reference { get; }
 
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 

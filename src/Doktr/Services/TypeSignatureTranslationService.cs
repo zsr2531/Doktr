@@ -1,10 +1,9 @@
-﻿using Serilog;
-
-namespace Doktr.Services;
-
-using System;
+﻿using System;
 using System.Linq;
 using AsmResolver.DotNet.Signatures.Types;
+using Serilog;
+
+namespace Doktr.Services;
 
 public class TypeSignatureTranslationService : ITypeSignatureTranslationService
 {
@@ -25,11 +24,13 @@ public class TypeSignatureTranslationService : ITypeSignatureTranslationService
 
     public string VisitBoxedType(BoxedTypeSignature signature) => throw new NotSupportedException();
 
-    public string VisitByReferenceType(ByReferenceTypeSignature signature) => $"{signature.BaseType.AcceptVisitor(this)}@";
+    public string VisitByReferenceType(ByReferenceTypeSignature signature) =>
+        $"{signature.BaseType.AcceptVisitor(this)}@";
 
     public string VisitCorLibType(CorLibTypeSignature signature) => signature.Type.FullName;
 
-    public string VisitCustomModifierType(CustomModifierTypeSignature signature) => signature.BaseType.AcceptVisitor(this);
+    public string VisitCustomModifierType(CustomModifierTypeSignature signature) =>
+        signature.BaseType.AcceptVisitor(this);
 
     public string VisitGenericInstanceType(GenericInstanceTypeSignature signature)
     {

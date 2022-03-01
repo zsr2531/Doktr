@@ -18,10 +18,7 @@ public readonly struct CommandLineParseResult
         _options = options;
     }
 
-    public ImmutableArray<string> Input
-    {
-        get;
-    }
+    public ImmutableArray<string> Input { get; }
 
     public bool HasFlag(CommandLineSwitch sw) => _flags.Contains(sw);
 

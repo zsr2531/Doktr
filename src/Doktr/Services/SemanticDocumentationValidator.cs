@@ -7,7 +7,6 @@ using AsmResolver.DotNet.Signatures.Types;
 using AsmResolver.PE.DotNet.Metadata.Tables.Rows;
 using Doktr.Dependencies;
 using Doktr.Models;
-using Doktr.Services.Attributes;
 using Serilog;
 
 namespace Doktr.Services;
@@ -38,7 +37,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
                 var member = (TypeDefinition) type.MetadataMember;
                 if (!member.IsPublic)
                     continue;
-                
+
                 ValidateType(type, documentation, types, "");
             }
 
@@ -56,7 +55,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
     {
         var type = (TypeDefinition) node.MetadataMember;
         PushNullableContext(type);
-        
+
         string name = GetName();
         string source = GetSignature(type);
         var genericParameters = ImmutableArray.CreateBuilder<GenericParameterDocumentation>();
@@ -70,7 +69,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         var instanceProperties = ImmutableArray.CreateBuilder<PropertyDocumentation>();
         var instanceMethods = ImmutableArray.CreateBuilder<MethodDocumentation>();
         var operators = ImmutableArray.CreateBuilder<MethodDocumentation>();
-        
+
         foreach (var child in node.Children.Where(c => c.MetadataMember is TypeDefinition))
             ValidateType(child, documentation, builder, name);
 
@@ -96,7 +95,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         var previous = _nullableContext.TryPeek(out var prev)
             ? prev
             : Nullability.Nullable;
-        
+
         _nullableContext.Push(context ?? previous);
     }
 
@@ -136,7 +135,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             WriteDelegateSignature(type, builder);
             return;
         }
-        
+
         if (IsRecord(type))
         {
             WriteRecordSignature(type, builder);
@@ -145,7 +144,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
         string modifiers = GetAccessModifiers(type);
         string secondaryModifiers = GetSecondaryAccessModifiers(type);
-        
+
         builder.Append(modifiers);
         if (!string.IsNullOrEmpty(secondaryModifiers))
         {
@@ -179,7 +178,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         builder.Append(' ');
         builder.Append(TypeSignatureToSource(type.ToTypeSignature()));
         WriteGenericParameters(type, builder);
-        
+
         builder.Append('(');
         var parameters = invoke.Parameters.Select(p =>
         {
@@ -190,7 +189,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             //     GetNullablilityProvider(def),
             //     (_, i) => type.GenericParameters[i].Name,
             //     modifier != "");
-            
+
             // string source = $"{modifier}{p.ParameterType.AcceptVisitor(visitor)} {p.Name}";
             _nullableContext.Pop();
 
@@ -215,7 +214,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
         builder.Append(" record ");
         builder.Append(TypeSignatureToSource(type.ToTypeSignature()));
-        
+
         WriteGenericParameters(type, builder);
 
         var deconstruct = type.Methods.Single(m => m.Name == "Deconstruct");
@@ -240,7 +239,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
         builder.Append(" interface ");
         builder.Append(TypeSignatureToSource(type.ToTypeSignature()));
-        
+
         WriteGenericParameters(type, builder);
     }
 
@@ -277,7 +276,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
     {
         if (type.GenericParameters.Count <= 0)
             return;
-        
+
         string parameters = string.Join(", ", type.GenericParameters.Select(gp =>
         {
             var attributes = gp.Attributes;
@@ -285,7 +284,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
                 return $"out {gp.Name}";
             if ((attributes & GenericParameterAttributes.Contravariant) != 0)
                 return $"in {gp.Name}";
-            
+
             return gp.Name!.Value;
         }));
         builder.Append('<');
@@ -305,7 +304,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
             PushNullableContext(gp);
             // var gpNullabilityProvider = GetNullablilityProvider(gp);
-            
+
             var current = new List<string>();
             if ((attributes & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
             {
@@ -318,7 +317,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             {
                 PushNullableContext(c);
                 // var constraintNullabilityProvider = GetNullablilityProvider(c);
-                
+
                 // current.Add(TypeSignatureToSource(c.Constraint.ToTypeSignature(), constraintNullabilityProvider));
 
                 _nullableContext.Pop();
@@ -326,7 +325,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
 
             if ((attributes & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
                 current.Add("new()");
-            
+
             constraints.Add(gp.Name + " : " + string.Join(", ", current));
 
             _nullableContext.Pop();
@@ -347,7 +346,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
             return isPublic
                 ? "public"
                 : "internal";
-        
+
         isPublic = type.IsNestedPublic;
         bool isInternal = type.IsNestedAssembly;
         bool isPrivate = type.IsNestedPrivate;
@@ -419,7 +418,7 @@ public class SemanticDocumentationValidator : ISemanticDocumentationValidator
         var nullableContext = cas.SingleOrDefault(IsNullableContextAttribute);
         var arg = nullableContext?.Signature!.FixedArguments[0];
 
-        return (Nullability?)(byte?) arg?.Element;
+        return (Nullability?) (byte?) arg?.Element;
 
         static bool IsNullableContextAttribute(CustomAttribute ca)
         {

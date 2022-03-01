@@ -44,10 +44,10 @@ public class GraphBuilderService : IGraphBuilderService
 
         foreach (var type in topLevelTypes)
             VisitType(type, context);
-            
+
         foreach (var transformer in _transformerProvider.Transformers)
             context.AcceptTransformer(transformer);
-            
+
         return new DependencyGraph(mapping.ToImmutable(), roots.ToImmutable());
     }
 
@@ -55,10 +55,10 @@ public class GraphBuilderService : IGraphBuilderService
     {
         if (context.NodeExists(type))
             return;
-            
+
         _logger.Verbose("Visiting type {Type}...", type.FullName);
         var typeNode = context.GetOrCreateNode(type, GetParent());
-            
+
         VisitTypeMembers(type, context, typeNode);
         VisitTypeAncestors(type, context);
 
@@ -68,7 +68,7 @@ public class GraphBuilderService : IGraphBuilderService
                 return context.GetOrCreateNode(type.Module!.Assembly!);
             if (context.NodeExists(decl))
                 return context.GetOrCreateNode(decl);
-                    
+
             VisitType(decl, context);
             return context.GetOrCreateNode(decl);
         }
@@ -81,13 +81,13 @@ public class GraphBuilderService : IGraphBuilderService
 
         foreach (var field in type.Fields)
             VisitField(field, context, typeNode);
-            
+
         foreach (var property in type.Properties)
             VisitProperty(property, context, typeNode);
 
         foreach (var method in type.Methods.Where(m => !context.NodeExists(m)))
             VisitMethod(method, context, typeNode);
-            
+
         foreach (var nestedType in type.NestedTypes)
             VisitType(nestedType, context);
     }
@@ -96,14 +96,14 @@ public class GraphBuilderService : IGraphBuilderService
     {
         if (_resolution.ResolveType(type.BaseType) is { } baseType)
             VisitType(baseType, context);
-            
+
         foreach (var impl in type.Interfaces)
         {
             var inf = impl.Interface;
             var resolved = _resolution.ResolveType(inf);
             if (resolved is null)
                 continue;
-                
+
             VisitType(resolved, context);
         }
     }
@@ -145,13 +145,15 @@ public class GraphBuilderService : IGraphBuilderService
 
         if (property.GetMethod is { } get)
         {
-            _logger.Verbose("Visiting getter method {Method} of property {Property}...", get.FullName, property.FullName);
+            _logger.Verbose("Visiting getter method {Method} of property {Property}...", get.FullName,
+                property.FullName);
             context.GetOrCreateNode(get, node);
         }
 
         if (property.SetMethod is { } set)
         {
-            _logger.Verbose("Visiting setter method {Method} of property {Property}...", set.FullName, property.FullName);
+            _logger.Verbose("Visiting setter method {Method} of property {Property}...", set.FullName,
+                property.FullName);
             context.GetOrCreateNode(set, node);
         }
     }

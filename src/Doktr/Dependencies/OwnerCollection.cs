@@ -16,7 +16,7 @@ public class OwnerCollection : Collection<DependencyNode>
     {
         foreach (var child in this)
             child.Parent = null;
-            
+
         base.ClearItems();
     }
 

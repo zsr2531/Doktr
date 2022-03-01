@@ -11,7 +11,7 @@ public class DependencyGraphTransformerProvider : IDependencyGraphTransformerPro
         ILogger logger)
     {
         var builder = ImmutableArray.CreateBuilder<IDependencyGraphTransformer>();
-            
+
         builder.Add(new ExplicitInterfaceTransformer(resolution, logger));
         builder.Add(new ConstructorTransformer(resolution, logger));
         builder.Add(new VirtualMethodTransformer(resolution, generic, logger));
@@ -19,9 +19,6 @@ public class DependencyGraphTransformerProvider : IDependencyGraphTransformerPro
 
         Transformers = builder.ToImmutable();
     }
-        
-    public ImmutableArray<IDependencyGraphTransformer> Transformers
-    {
-        get;
-    }
+
+    public ImmutableArray<IDependencyGraphTransformer> Transformers { get; }
 }

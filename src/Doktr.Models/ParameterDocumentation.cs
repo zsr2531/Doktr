@@ -23,44 +23,18 @@ public class ParameterDocumentation
         Documentation = other.Documentation;
     }
 
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; }
 
-    public IReference Type
-    {
-        get;
-        init;
-    }
+    public IReference Type { get; init; }
 
-    public ParameterModifier Modifier
-    {
-        get;
-        init;
-    } = ParameterModifier.None;
+    public ParameterModifier Modifier { get; init; } = ParameterModifier.None;
 
-    public bool IsParams
-    {
-        get;
-        init;
-    } = false;
+    public bool IsParams { get; init; } = false;
 
-    public bool IsOptional
-    {
-        get;
-        init;
-    } = false;
+    public bool IsOptional { get; init; } = false;
 
-    public object? DefaultValue
-    {
-        get;
-        init;
-    } = null;
+    public object? DefaultValue { get; init; } = null;
 
-    public ImmutableArray<IDocumentationSegment> Documentation
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Documentation { get; init; } =
+        ImmutableArray<IDocumentationSegment>.Empty;
 }

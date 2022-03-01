@@ -47,7 +47,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
         var valueTypeChecker = new NullabilityAwareTypeSignatureVisitor.ValueTypeCheckerVisitor(gpInfo);
         if (signature.AcceptVisitor(valueTypeChecker))
             nullabilityProvider = ZeroProvider;
-        
+
         var visitor = new NullabilityAwareTypeSignatureVisitor(
             nullabilityProvider,
             dynamicValues,
@@ -63,7 +63,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         if (member is null)
             return new SimpleAttributeDataProvider<Nullability>(_nullableAgenda.Peek());
-        
+
         const string ns = "System.Runtime.CompilerServices";
         const string name = "NullableAttribute";
         var cas = member.CustomAttributes;
@@ -86,7 +86,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         if (member is null)
             return null;
-        
+
         const string ns = "System.Runtime.CompilerServices";
         const string name = "NullableContextAttribute";
         var cas = member.CustomAttributes;
@@ -106,7 +106,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         if (member is null)
             return FalseProvider;
-        
+
         const string ns = "System.Runtime.CompilerServices";
         const string name = "DynamicAttribute";
         var cas = member.CustomAttributes;
@@ -132,7 +132,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         if (member is null)
             return NullProvider;
-        
+
         const string ns = "System.Runtime.CompilerServices";
         const string name = "TupleElementNamesAttribute";
         var cas = member.CustomAttributes;
@@ -153,7 +153,7 @@ public class TypeSignatureSourceService : ITypeSignatureSourceService
     {
         if (member is null)
             return FalseProvider;
-        
+
         const string ns = "System.Runtime.CompilerServices";
         const string name = "NativeIntegerAttribute";
         var cas = member.CustomAttributes;

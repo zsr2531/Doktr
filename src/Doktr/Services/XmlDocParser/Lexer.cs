@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Doktr.Services.XmlDocParser;
@@ -54,7 +53,7 @@ public class Lexer
         {
             if (_reader.AttributeCount == 0)
                 return ImmutableDictionary<string, string>.Empty;
-            
+
             var attributes = ImmutableDictionary.CreateBuilder<string, string>();
 
             for (int i = 0; i < _reader.AttributeCount; i++)

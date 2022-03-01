@@ -26,26 +26,11 @@ public class RecordDocumentation : TypeDocumentation
         Implementations = other.Implementations;
     }
 
-    public IReference BaseType
-    {
-        get;
-        init;
-    }
-        
-    public ImmutableArray<ParameterDocumentation> Elements
-    {
-        get;
-    }
-        
-    public ImmutableArray<IReference> Inheritance
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
-        
-    public ImmutableArray<IReference> Implementations
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public IReference BaseType { get; init; }
+
+    public ImmutableArray<ParameterDocumentation> Elements { get; }
+
+    public ImmutableArray<IReference> Inheritance { get; init; } = ImmutableArray<IReference>.Empty;
+
+    public ImmutableArray<IReference> Implementations { get; init; } = ImmutableArray<IReference>.Empty;
 }

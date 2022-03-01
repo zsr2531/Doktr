@@ -95,7 +95,7 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
                 ? "nint"
                 : "nuint";
         }
-        
+
         return isNullable
             ? name + '?'
             : name;
@@ -110,17 +110,18 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
     {
         _dynamicValues.Next();
         var type = signature.GenericType;
-        
+
         if (type.Namespace == "System" && type.Name!.Value.StartsWith("ValueTuple"))
         {
             _nullabilityProvider.Next();
-            var names = Enumerable.Repeat(0, signature.TypeArguments.Count).Select(_ => _tupleElementNames.Next()).ToList();
+            var names = Enumerable.Repeat(0, signature.TypeArguments.Count).Select(_ => _tupleElementNames.Next())
+                .ToList();
             var elements = signature.TypeArguments.Select((arg, idx) =>
             {
                 // ReSharper disable once VariableHidesOuterVariable
                 string type = arg.AcceptVisitor(this);
                 string? name = names[idx];
-                
+
                 return name is null
                     ? type
                     : $"{type} {name}";
@@ -128,13 +129,13 @@ public class NullabilityAwareTypeSignatureVisitor : ITypeSignatureVisitor<string
 
             return $"({string.Join(", ", elements)})";
         }
-        
+
         if (type.IsTypeOf("System", "Nullable`1"))
         {
             string arg = signature.TypeArguments[0].AcceptVisitor(this);
             return arg + '?';
         }
-        
+
         bool isNullable = NextNullable();
         var args = signature.TypeArguments.Select(arg => arg.AcceptVisitor(this));
         string name = DropBackticks(signature.GenericType.Name!);

@@ -10,21 +10,11 @@ public class RawReference : IReference
         Text = text;
     }
 
-    public string Cref
-    {
-        get;
-    }
+    public string Cref { get; }
 
-    public string Text
-    {
-        get;
-    }
+    public string Text { get; }
 
-    public ImmutableArray<IReference> GenericParameters
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> GenericParameters { get; init; } = ImmutableArray<IReference>.Empty;
 
     public override string ToString() => Text;
 }

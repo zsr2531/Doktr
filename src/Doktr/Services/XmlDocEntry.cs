@@ -27,48 +27,21 @@ public class XmlDocEntry
         Seealso = seealso;
     }
 
-    public string? InheritFrom
-    {
-        get;
-    }
+    public string? InheritFrom { get; }
 
-    public ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-    }
+    public ImmutableArray<IDocumentationSegment> Summary { get; }
 
-    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> Parameters
-    {
-        get;
-    }
+    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> Parameters { get; }
 
-    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> TypeParameters
-    {
-        get;
-    }
+    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> TypeParameters { get; }
 
-    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> Exceptions
-    {
-        get;
-    }
+    public ImmutableDictionary<string, ImmutableArray<IDocumentationSegment>> Exceptions { get; }
 
-    public ImmutableArray<IDocumentationSegment> Returns
-    {
-        get;
-    }
+    public ImmutableArray<IDocumentationSegment> Returns { get; }
 
-    public ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-    }
+    public ImmutableArray<IDocumentationSegment> Examples { get; }
 
-    public ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-    }
+    public ImmutableArray<IDocumentationSegment> Remarks { get; }
 
-    public ImmutableArray<string> Seealso
-    {
-        get;
-    }
+    public ImmutableArray<string> Seealso { get; }
 }

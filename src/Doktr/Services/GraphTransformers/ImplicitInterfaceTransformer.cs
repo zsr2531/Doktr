@@ -25,7 +25,7 @@ public class ImplicitInterfaceTransformer : IDependencyGraphTransformer
 
     public void VisitNode(DependencyNode node, GraphBuilderContext context)
     {
-        if (node.MetadataMember is not TypeDefinition { IsClass: true, Interfaces: { Count: >0 } interfaces } type)
+        if (node.MetadataMember is not TypeDefinition { IsClass: true, Interfaces: { Count: > 0 } interfaces } type)
             return;
 
         foreach (var inf in interfaces.Select(impl => impl.Interface))
@@ -35,12 +35,12 @@ public class ImplicitInterfaceTransformer : IDependencyGraphTransformer
     private void ProcessInterface(TypeDefinition type, ITypeDefOrRef inf, GraphBuilderContext context)
     {
         _logger.Debug("Processing interface '{Interface}'", inf);
-            
+
         var typeSignature = inf.ToTypeSignature();
         var resolved = _resolution.ResolveType(inf);
         if (resolved is null)
             return;
-            
+
         foreach (var needle in resolved.Methods.Where(m => !m.IsStatic))
         {
             var candidates = type.Methods.Where(m => !m.IsStatic && m.Name == needle.Name);

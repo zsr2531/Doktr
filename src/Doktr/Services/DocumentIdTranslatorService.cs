@@ -66,7 +66,7 @@ public class DocumentIdTranslatorService : IDocumentIdTranslatorService
     }
 
     public string VisitSentinelType(SentinelTypeSignature signature) => throw new NotSupportedException();
-        
+
     public string VisitSzArrayType(SzArrayTypeSignature signature)
     {
         return $"{signature.BaseType.AcceptVisitor(this)}[]";

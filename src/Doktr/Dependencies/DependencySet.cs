@@ -26,7 +26,7 @@ public class DependencySet : ISet<DependencyNode>
         _isBusy = true;
         item.Dependants.Add(_owner);
         _isBusy = false;
-            
+
         return _set.Add(item);
     }
 
@@ -41,7 +41,7 @@ public class DependencySet : ISet<DependencyNode>
         foreach (var item in _set)
             item.Dependants.Remove(_owner);
         _isBusy = false;
-            
+
         _set.Clear();
     }
 
@@ -71,7 +71,7 @@ public class DependencySet : ISet<DependencyNode>
         _isBusy = true;
         item.Dependants.Remove(_owner);
         _isBusy = false;
-            
+
         return _set.Remove(item);
     }
 

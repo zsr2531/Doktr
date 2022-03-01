@@ -4,13 +4,7 @@ namespace Doktr.Models.References;
 
 public interface IReference
 {
-    string Cref
-    {
-        get;
-    }
-        
-    ImmutableArray<IReference> GenericParameters
-    {
-        get;
-    }
+    string Cref { get; }
+
+    ImmutableArray<IReference> GenericParameters { get; }
 }

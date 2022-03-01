@@ -12,15 +12,9 @@ public class TableDocumentationSegment : IDocumentationSegment
         Rows = rows;
     }
 
-    public ImmutableArray<ImmutableArray<IDocumentationSegment>> Header
-    {
-        get;
-    }
-        
-    public ImmutableArray<ImmutableArray<ImmutableArray<IDocumentationSegment>>> Rows
-    {
-        get;
-    }
-        
+    public ImmutableArray<ImmutableArray<IDocumentationSegment>> Header { get; }
+
+    public ImmutableArray<ImmutableArray<ImmutableArray<IDocumentationSegment>>> Rows { get; }
+
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

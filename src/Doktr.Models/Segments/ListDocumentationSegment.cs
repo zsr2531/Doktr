@@ -10,15 +10,9 @@ public class ListDocumentationSegment : IDocumentationSegment
         Items = items;
     }
 
-    public ListType Type
-    {
-        get;
-    }
-        
-    public ImmutableArray<ImmutableArray<IDocumentationSegment>> Items
-    {
-        get;
-    }
+    public ListType Type { get; }
+
+    public ImmutableArray<ImmutableArray<IDocumentationSegment>> Items { get; }
 
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

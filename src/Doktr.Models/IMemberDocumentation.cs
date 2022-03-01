@@ -6,33 +6,15 @@ namespace Doktr.Models;
 
 public interface IMemberDocumentation
 {
-    string Name
-    {
-        get;
-    }
-        
-    ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-    }
-        
-    string? Syntax
-    {
-        get;
-    }
-        
-    ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-    }
-        
-    ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-    }
-        
-    ImmutableArray<IReference> SeeAlso
-    {
-        get;
-    }
+    string Name { get; }
+
+    ImmutableArray<IDocumentationSegment> Summary { get; }
+
+    string? Syntax { get; }
+
+    ImmutableArray<IDocumentationSegment> Examples { get; }
+
+    ImmutableArray<IDocumentationSegment> Remarks { get; }
+
+    ImmutableArray<IReference> SeeAlso { get; }
 }

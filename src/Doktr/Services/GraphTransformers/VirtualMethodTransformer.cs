@@ -26,7 +26,10 @@ public class VirtualMethodTransformer : IDependencyGraphTransformer
 
     public void VisitNode(DependencyNode node, GraphBuilderContext context)
     {
-        if (node.MetadataMember is not MethodDefinition { IsVirtual: true, IsAbstract: false, DeclaringType: { BaseType: { } baseType } } method)
+        if (node.MetadataMember is not MethodDefinition
+            {
+                IsVirtual: true, IsAbstract: false, DeclaringType: { BaseType: { } baseType }
+            } method)
             return;
 
         var queue = new Queue<ITypeDefOrRef>();
@@ -60,7 +63,7 @@ public class VirtualMethodTransformer : IDependencyGraphTransformer
 
         if (_resolution.ResolveType(resolved.BaseType) is { })
             queue.Enqueue(resolved.BaseType!);
-            
+
         return null;
     }
 }

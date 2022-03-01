@@ -24,56 +24,22 @@ public class PropertyDocumentation : IMemberDocumentation, IHasExceptions
         SeeAlso = other.SeeAlso;
     }
 
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; }
 
-    public IReference Type
-    {
-        get;
-        init;
-    }
+    public IReference Type { get; init; }
 
-    public ImmutableArray<IDocumentationSegment> Value
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Value { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Summary { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public string? Syntax
-    {
-        get;
-        init;
-    }
+    public string? Syntax { get; init; }
 
-    public ImmutableArray<ExceptionDocumentation> Exceptions
-    {
-        get;
-        init;
-    } = ImmutableArray<ExceptionDocumentation>.Empty;
+    public ImmutableArray<ExceptionDocumentation> Exceptions { get; init; } =
+        ImmutableArray<ExceptionDocumentation>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Examples { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Remarks { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IReference> SeeAlso
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> SeeAlso { get; init; } = ImmutableArray<IReference>.Empty;
 }

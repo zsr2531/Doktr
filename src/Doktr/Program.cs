@@ -20,12 +20,12 @@ public static class Program
 #else
     private const LogEventLevel DefaultLevel = LogEventLevel.Verbose;
 #endif
-        
+
     public static async Task Main(string[] args)
     {
         var cli = ParseCommandLine(args);
         PreTaskActions.RunActionsIfNeeded(cli);
-            
+
         await Run(cli);
     }
 
@@ -35,7 +35,7 @@ public static class Program
         var logger = CreateLogger(logEventLevel);
         var pipeline = CreatePipeline(cli, logger);
         var stopwatch = Stopwatch.StartNew();
-            
+
         logger.Debug("Welcome to Doktr");
         logger.Information("Doktr v0.0.1");
 
@@ -47,7 +47,7 @@ public static class Program
             var provider = Startup.ConfigureServices(configuration, logger);
             await RunConfiguration(configuration, provider);
         }
-            
+
         stopwatch.Stop();
 
         var elapsed = stopwatch.Elapsed;
@@ -60,7 +60,7 @@ public static class Program
         var repository = provider.GetRequiredService<IAssemblyRepositoryService>();
         logger.Verbose("Changing working directory to the root directory");
         Directory.SetCurrentDirectory(Path.Combine(Path.GetDirectoryName(configuration.Source)!, configuration.Root));
-            
+
         // Step 1: Load assemblies using AsmResolver and add them to the repository.
         logger.Verbose("Loading {Count} assemblies...", configuration.InputFiles.Length);
         foreach (var target in configuration.InputFiles)
@@ -70,14 +70,14 @@ public static class Program
             else
                 logger.Warning("An error occured, ignoring '{Assembly}'", target.Assembly);
         }
-            
+
         // Step 2: Build up a dependency graph between the members in the repository.
         logger.Verbose("Building dependency graph...");
         var graphBuilder = provider.GetRequiredService<IGraphBuilderService>();
         var graph = graphBuilder.BuildGraph();
         logger.Information("Dependency graph successfully built");
         logger.Debug("Tracking {Count} nodes in dependency graph", graph.Mapping.Count);
-            
+
         // Step 3: Load the .xml files and parse them.
         var xmldocBuilder = ImmutableDictionary.CreateBuilder<string, XmlDocEntry>();
         foreach (var target in configuration.InputFiles)
@@ -93,11 +93,11 @@ public static class Program
         // Step 4: Map members to documentation segments.
         var mapper = provider.GetRequiredService<IDocumentationMapperService>();
         var mapped = mapper.MapDocumentation(graph, xmldoc);
-        
+
         // Step 5: Resolve <inheritdoc />'s.
         var resolver = provider.GetRequiredService<IInheritDocResolutionService>();
         var resolved = resolver.ResolveInheritance(graph, xmldoc, mapped);
-        
+
         // Step 6: Semantically validate documentation and "guess" source code.
         var validator = provider.GetRequiredService<ISemanticDocumentationValidator>();
         var validated = validator.ValidateDocumentation(graph, mapped);
@@ -110,7 +110,7 @@ public static class Program
     {
         var provider = CommandLineSwitchProvider.Instance;
         var parser = new CommandLineParser(provider);
-            
+
         return parser.ParseCommandLine(args);
     }
 

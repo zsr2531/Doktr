@@ -10,19 +10,9 @@ public class MemberReference : IReference
         Target = target;
     }
 
-    public string Cref
-    {
-        get;
-    }
+    public string Cref { get; }
 
-    public IMemberDocumentation Target
-    {
-        get;
-    }
+    public IMemberDocumentation Target { get; }
 
-    public ImmutableArray<IReference> GenericParameters
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> GenericParameters { get; init; } = ImmutableArray<IReference>.Empty;
 }

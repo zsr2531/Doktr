@@ -7,10 +7,7 @@ public class MonospaceDocumentationSegment : IDocumentationSegment
         Content = content;
     }
 
-    public string Content
-    {
-        get;
-    }
-        
+    public string Content { get; }
+
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

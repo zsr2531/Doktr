@@ -22,7 +22,7 @@ public class ConstructorTransformer : IDependencyGraphTransformer
     {
         if (node.MetadataMember is not MethodDefinition { IsConstructor: true, IsStatic: false } ctor)
             return;
-            
+
         var body = ctor.CilMethodBody;
         if (body == null)
         {
@@ -36,7 +36,7 @@ public class ConstructorTransformer : IDependencyGraphTransformer
                 continue;
             if (_resolution.ResolveMethod(target) is not { IsConstructor: true } resolved)
                 continue;
-                
+
             context.AddDependency(ctor, resolved);
             _logger.Debug("Base constructor of '{Ctor1}' is '{Ctor2}'", ctor, resolved);
             return;

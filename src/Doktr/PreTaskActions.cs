@@ -33,16 +33,17 @@ public static class PreTaskActions
             string identifiers = "   " + string.Join(" ", sw.Identifiers).PadRight(25);
             Console.Write(identifiers);
             Console.Write(sw.Description);
-                
-            if (sw.DefaultValue is { Length: >0 } value)
+
+            if (sw.DefaultValue is { Length: > 0 } value)
                 Console.Write($" (default: {value})");
-                
+
             Console.WriteLine();
         }
-            
+
         Console.WriteLine("\nExamples:");
         Console.WriteLine("./Doktr --use-tables docs.xml");
-        Console.WriteLine("./Doktr --include docs/articles;docs/samples -o docs/_site -if bin/Project1/Project1.dll:bin/Project1/Project1.xml");
+        Console.WriteLine(
+            "./Doktr --include docs/articles;docs/samples -o docs/_site -if bin/Project1/Project1.dll:bin/Project1/Project1.xml");
     }
 
     private static void PrintAboutMessage()
@@ -50,7 +51,7 @@ public static class PreTaskActions
         Console.WriteLine("Doktr v0.0.1\n");
         Console.WriteLine("https://github.com/zsr2531/Doktr.git");
         Console.WriteLine("Doktr is licensed under the MIT license.\n");
-            
+
         Console.WriteLine("External libraries:");
         Console.WriteLine("AsmResolver (MIT license): https://github.com/Washi1337/AsmResolver.git");
         Console.WriteLine("serilog (Apache 2.0 license): https://github.com/serilog/serilog.git");
@@ -97,7 +98,7 @@ public static class PreTaskActions
         using var stream = File.Open("example.xml", FileMode.Create);
         var xml = new XmlSerializer(typeof(DoktrConfiguration));
         xml.Serialize(stream, configuration);
-            
+
         Console.WriteLine("An example has been generated and written to 'example.xml'.");
     }
 }

@@ -11,18 +11,9 @@ public class CommandLineSwitch
         DefaultValue = defaultValue;
     }
 
-    public ImmutableArray<string> Identifiers
-    {
-        get;
-    }
-        
-    public string Description
-    {
-        get;
-    }
+    public ImmutableArray<string> Identifiers { get; }
 
-    public string? DefaultValue
-    {
-        get;
-    }
+    public string Description { get; }
+
+    public string? DefaultValue { get; }
 }

@@ -37,121 +37,50 @@ public abstract class TypeDocumentation : IMemberDocumentation, IHasGenericParam
     }
 
     public string FullName => $"{Namespace}.{Name}";
-        
-    public string Assembly
-    {
-        get;
-    }
 
-    public string Namespace
-    {
-        get;
-    }
+    public string Assembly { get; }
 
-    public string Name
-    {
-        get;
-    }
+    public string Namespace { get; }
 
-    public ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public string Name { get; }
 
-    public string? Syntax
-    {
-        get;
-        init;
-    }
+    public ImmutableArray<IDocumentationSegment> Summary { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<GenericParameterDocumentation> GenericParameters
-    {
-        get;
-        init;
-    } = ImmutableArray<GenericParameterDocumentation>.Empty;
+    public string? Syntax { get; init; }
 
-    public ImmutableArray<EventDocumentation> StaticEvents
-    {
-        get;
-        init;
-    } = ImmutableArray<EventDocumentation>.Empty;
+    public ImmutableArray<GenericParameterDocumentation> GenericParameters { get; init; } =
+        ImmutableArray<GenericParameterDocumentation>.Empty;
 
-    public ImmutableArray<FieldDocumentation> StaticFields
-    {
-        get;
-        init;
-    } = ImmutableArray<FieldDocumentation>.Empty;
-        
-    public ImmutableArray<PropertyDocumentation> StaticProperties
-    {
-        get;
-        init;
-    } = ImmutableArray<PropertyDocumentation>.Empty;
-        
-    public ImmutableArray<MethodDocumentation> StaticMethods
-    {
-        get;
-        init;
-    } = ImmutableArray<MethodDocumentation>.Empty;
-        
-    public ImmutableArray<ConstructorDocumentation> Constructors
-    {
-        get;
-        init;
-    } = ImmutableArray<ConstructorDocumentation>.Empty;
-        
-    public ImmutableArray<EventDocumentation> InstanceEvents
-    {
-        get;
-        init;
-    } = ImmutableArray<EventDocumentation>.Empty;
+    public ImmutableArray<EventDocumentation> StaticEvents { get; init; } = ImmutableArray<EventDocumentation>.Empty;
 
-    public ImmutableArray<FieldDocumentation> InstanceFields
-    {
-        get;
-        init;
-    } = ImmutableArray<FieldDocumentation>.Empty;
-        
-    public ImmutableArray<PropertyDocumentation> InstanceProperties
-    {
-        get;
-        init;
-    } = ImmutableArray<PropertyDocumentation>.Empty;
-        
-    public ImmutableArray<MethodDocumentation> InstanceMethods
-    {
-        get;
-        init;
-    } = ImmutableArray<MethodDocumentation>.Empty;
-        
-    public ImmutableArray<MethodDocumentation> Operators
-    {
-        get;
-        init;
-    } = ImmutableArray<MethodDocumentation>.Empty;
+    public ImmutableArray<FieldDocumentation> StaticFields { get; init; } = ImmutableArray<FieldDocumentation>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
-        
-    public ImmutableArray<MethodDocumentation> ExtensionMethods
-    {
-        get;
-        init;
-    } = ImmutableArray<MethodDocumentation>.Empty;
+    public ImmutableArray<PropertyDocumentation> StaticProperties { get; init; } =
+        ImmutableArray<PropertyDocumentation>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<MethodDocumentation> StaticMethods { get; init; } = ImmutableArray<MethodDocumentation>.Empty;
 
-    public ImmutableArray<IReference> SeeAlso
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<ConstructorDocumentation> Constructors { get; init; } =
+        ImmutableArray<ConstructorDocumentation>.Empty;
+
+    public ImmutableArray<EventDocumentation> InstanceEvents { get; init; } = ImmutableArray<EventDocumentation>.Empty;
+
+    public ImmutableArray<FieldDocumentation> InstanceFields { get; init; } = ImmutableArray<FieldDocumentation>.Empty;
+
+    public ImmutableArray<PropertyDocumentation> InstanceProperties { get; init; } =
+        ImmutableArray<PropertyDocumentation>.Empty;
+
+    public ImmutableArray<MethodDocumentation> InstanceMethods { get; init; } =
+        ImmutableArray<MethodDocumentation>.Empty;
+
+    public ImmutableArray<MethodDocumentation> Operators { get; init; } = ImmutableArray<MethodDocumentation>.Empty;
+
+    public ImmutableArray<IDocumentationSegment> Examples { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
+
+    public ImmutableArray<MethodDocumentation> ExtensionMethods { get; init; } =
+        ImmutableArray<MethodDocumentation>.Empty;
+
+    public ImmutableArray<IDocumentationSegment> Remarks { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
+
+    public ImmutableArray<IReference> SeeAlso { get; init; } = ImmutableArray<IReference>.Empty;
 }

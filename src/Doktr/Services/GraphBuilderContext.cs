@@ -29,7 +29,7 @@ public class GraphBuilderContext
         _mapping[metadataMember] = node;
         return node;
     }
-        
+
     public bool NodeExists(IFullNameProvider metadataMember) => _mapping.ContainsKey(metadataMember);
 
     public void AddDependency(IFullNameProvider from, IFullNameProvider to)
@@ -39,7 +39,7 @@ public class GraphBuilderContext
         {
             AddDependency(fromAssociation, toAssociation);
         }
-            
+
         GetOrCreateNode(from).Dependencies.Add(GetOrCreateNode(to));
     }
 }

@@ -4,8 +4,5 @@ namespace Doktr.Services.GraphTransformers;
 
 public interface IDependencyGraphTransformerProvider
 {
-    ImmutableArray<IDependencyGraphTransformer> Transformers
-    {
-        get;
-    }
+    ImmutableArray<IDependencyGraphTransformer> Transformers { get; }
 }

@@ -7,15 +7,7 @@ namespace Doktr;
 [XmlType(TypeName = "Target")]
 public class DoktrTarget
 {
-    public string Assembly
-    {
-        get;
-        init;
-    } = "";
+    public string Assembly { get; init; } = "";
 
-    public string XmlFile
-    {
-        get;
-        init;
-    } = "";
+    public string XmlFile { get; init; } = "";
 }

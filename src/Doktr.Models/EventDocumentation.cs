@@ -23,44 +23,17 @@ public class EventDocumentation : IMemberDocumentation
         SeeAlso = other.SeeAlso;
     }
 
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; }
 
-    public IReference Type
-    {
-        get;
-        init;
-    }
+    public IReference Type { get; init; }
 
-    public ImmutableArray<IDocumentationSegment> Summary
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Summary { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public string? Syntax
-    {
-        get;
-        init;
-    }
+    public string? Syntax { get; init; }
 
-    public ImmutableArray<IDocumentationSegment> Examples
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Examples { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IDocumentationSegment> Remarks
-    {
-        get;
-        init;
-    } = ImmutableArray<IDocumentationSegment>.Empty;
+    public ImmutableArray<IDocumentationSegment> Remarks { get; init; } = ImmutableArray<IDocumentationSegment>.Empty;
 
-    public ImmutableArray<IReference> SeeAlso
-    {
-        get;
-        init;
-    } = ImmutableArray<IReference>.Empty;
+    public ImmutableArray<IReference> SeeAlso { get; init; } = ImmutableArray<IReference>.Empty;
 }

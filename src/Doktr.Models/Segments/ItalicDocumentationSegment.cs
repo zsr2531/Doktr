@@ -9,10 +9,7 @@ public class ItalicDocumentationSegment : IDocumentationSegment
         Content = content;
     }
 
-    public ImmutableArray<IDocumentationSegment> Content
-    {
-        get;
-    }
+    public ImmutableArray<IDocumentationSegment> Content { get; }
 
     public void AcceptVisitor(IDocumentationSegmentVisitor visitor) => visitor.Visit(this);
 }

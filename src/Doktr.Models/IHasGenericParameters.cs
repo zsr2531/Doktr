@@ -4,8 +4,5 @@ namespace Doktr.Models;
 
 public interface IHasGenericParameters
 {
-    ImmutableArray<GenericParameterDocumentation> GenericParameters
-    {
-        get;
-    }
+    ImmutableArray<GenericParameterDocumentation> GenericParameters { get; }
 }

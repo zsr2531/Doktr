@@ -42,10 +42,10 @@ public class InheritDocResolutionService : IInheritDocResolutionService
                     ? Implicit(member, entry, dependencyGraph, mapped, ref good)
                     : Explicit(member, entry, raw, ref good);
             }
-            
+
             if (resolved.InheritFrom is not null)
                 _logger.Warning("Couldn't resolve inheritdoc of {Member} fully", member);
-            
+
             builder.Add(member, resolved);
         }
 
