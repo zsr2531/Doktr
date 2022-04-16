@@ -70,4 +70,10 @@ public class CodeReferenceTests
     {
         Assert.Throws<ArgumentException>(() => new CodeReference("Ttest"));
     }
+    
+    [Fact]
+    public void Invalid_Prefix_Should_Throw_ArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => new CodeReference("X:test"));
+    }
 }
