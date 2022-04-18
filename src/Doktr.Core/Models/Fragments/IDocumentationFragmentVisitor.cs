@@ -8,6 +8,8 @@ public interface IDocumentationFragmentVisitor
 
     void VisitItalic(ItalicFragment italicFragment);
 
+    void VisitUnderline(UnderlineFragment underlineFragment);
+
     void VisitMonospace(MonospaceFragment monospaceFragment);
 
     void VisitCode(CodeFragment codeFragment);
