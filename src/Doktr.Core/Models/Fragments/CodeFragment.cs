@@ -1,8 +1,8 @@
 namespace Doktr.Core.Models.Fragments;
 
-public class CodeSegment : IDocumentationFragment
+public class CodeFragment : IDocumentationFragment
 {
-    public CodeSegment(string code)
+    public CodeFragment(string code)
     {
         Code = code;
     }

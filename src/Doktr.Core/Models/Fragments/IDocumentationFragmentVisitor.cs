@@ -2,15 +2,15 @@ namespace Doktr.Core.Models.Fragments;
 
 public interface IDocumentationFragmentVisitor
 {
-    void VisitText(TextSegment textSegment);
+    void VisitText(TextFragment textFragment);
 
-    void VisitBold(BoldSegment boldSegment);
+    void VisitBold(BoldFragment boldFragment);
 
-    void VisitItalic(ItalicSegment italicSegment);
+    void VisitItalic(ItalicFragment italicFragment);
 
-    void VisitMonospace(MonospaceSegment monospaceSegment);
+    void VisitMonospace(MonospaceFragment monospaceFragment);
 
-    void VisitCode(CodeSegment codeSegment);
+    void VisitCode(CodeFragment codeFragment);
 
     void VisitParagraph(ParagraphFragment paragraphFragment);
 

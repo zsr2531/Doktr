@@ -1,8 +1,8 @@
 namespace Doktr.Core.Models.Fragments;
 
-public class TextSegment : IDocumentationFragment
+public class TextFragment : IDocumentationFragment
 {
-    public TextSegment(string text)
+    public TextFragment(string text)
     {
         Text = text;
     }

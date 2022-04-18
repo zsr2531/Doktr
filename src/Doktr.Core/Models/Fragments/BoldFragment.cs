@@ -2,9 +2,9 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models.Fragments;
 
-public class MonospaceSegment : IDocumentationFragment
+public class BoldFragment : IDocumentationFragment
 {
     public DocumentationFragmentCollection Children { get; set; } = new();
 
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitMonospace(this);
+    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitBold(this);
 }
