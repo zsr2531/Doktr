@@ -4,11 +4,11 @@ namespace Doktr.Core.Models.Segments;
 
 public class ExceptionSegment
 {
-    public ExceptionSegment(CodeReference exceptionReference)
+    public ExceptionSegment(CodeReference exceptionType)
     {
-        ExceptionReference = exceptionReference;
+        ExceptionType = exceptionType;
     }
 
-    public CodeReference ExceptionReference { get; set; }
+    public CodeReference ExceptionType { get; set; }
     public DocumentationFragmentCollection Documentation { get; set; } = new();
 }
