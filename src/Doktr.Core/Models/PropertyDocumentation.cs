@@ -3,7 +3,7 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
-public class PropertyDocumentation : MemberDocumentation, IHasVirtual, IHasValue
+public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtual, IHasValue
 {
     public PropertyDocumentation(string name, MemberVisibility visibility, TypeSignature type)
         : base(name, visibility)
@@ -12,6 +12,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasVirtual, IHasValue
     }
     
     public TypeSignature Type { get; set; }
+    public bool IsStatic { get; set; } = false;
     public bool IsVirtual { get; set; } = false;
     public bool IsOverride { get; set; } = false;
     public bool IsSealed { get; set; } = false;
