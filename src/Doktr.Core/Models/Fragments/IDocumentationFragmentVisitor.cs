@@ -19,4 +19,6 @@ public interface IDocumentationFragmentVisitor
     void VisitTypeParameterReference(TypeParameterReferenceFragment typeParameterReferenceFragment);
 
     void VisitLinkReference(LinkReferenceFragment linkReferenceFragment);
+
+    void VisitCodeReference(CodeReferenceFragment codeReferenceFragment);
 }
