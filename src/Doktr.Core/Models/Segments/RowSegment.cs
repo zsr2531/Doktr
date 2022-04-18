@@ -4,5 +4,5 @@ namespace Doktr.Core.Models.Segments;
 
 public class RowSegment
 {
-    public DocumentationFragmentCollection Columns { get; set; } = new();
+    public ColumnSegmentCollection Columns { get; set; } = new();
 }
