@@ -2,6 +2,7 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models.Segments;
 
+// TODO: Modifiers! (in, out, ref)
 public class ParameterSegment
 {
     public ParameterSegment(string name)

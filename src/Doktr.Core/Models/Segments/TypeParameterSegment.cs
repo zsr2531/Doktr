@@ -2,6 +2,7 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models.Segments;
 
+// TODO: Constraints!
 public class TypeParameterSegment
 {
     public TypeParameterSegment(string name)
