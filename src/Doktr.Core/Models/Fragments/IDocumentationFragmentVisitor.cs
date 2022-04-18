@@ -31,4 +31,6 @@ public interface IDocumentationFragmentVisitor
     void VisitVanillaListItem(VanillaListItemFragment vanillaListItemFragment);
 
     void VisitDefinitionListItem(DefinitionListItemFragment definitionListItemFragment);
+
+    void VisitTable(TableFragment tableFragment);
 }
