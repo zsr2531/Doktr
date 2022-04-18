@@ -9,6 +9,6 @@ public class ExceptionSegment
         ExceptionReference = exceptionReference;
     }
 
-    public CodeReference ExceptionReference { get; }
+    public CodeReference ExceptionReference { get; set; }
     public DocumentationFragmentCollection Documentation { get; set; } = new();
 }

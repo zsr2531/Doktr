@@ -9,6 +9,6 @@ public class ProductVersionsSegment
         Name = name;
     }
 
-    public string Name { get; }
+    public string Name { get; set; }
     public VersionCollection Versions { get; set; } = new();
 }
