@@ -1,6 +1,6 @@
 namespace Doktr.Core.Models;
 
-public sealed class CodeReference : IEquatable<CodeReference>
+public readonly struct CodeReference : IEquatable<CodeReference>
 {
     private const char ErrorPrefix = '!';
     private const char TypePrefix = 'T';
