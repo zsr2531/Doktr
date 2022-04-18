@@ -23,4 +23,12 @@ public interface IDocumentationFragmentVisitor
     void VisitLinkReference(LinkReferenceFragment linkReferenceFragment);
 
     void VisitCodeReference(CodeReferenceFragment codeReferenceFragment);
+
+    void VisitLineBreak(LineBreakFragment lineBreakFragment);
+
+    void VisitList(ListFragment listFragment);
+
+    void VisitVanillaListItem(VanillaListItemFragment vanillaListItemFragment);
+
+    void VisitDefinitionListItem(DefinitionListItemFragment definitionListItemFragment);
 }
