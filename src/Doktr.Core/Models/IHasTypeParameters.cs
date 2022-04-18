@@ -2,7 +2,7 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models;
 
-public interface IHasTypeParameters : IMemberDocumentation
+public interface IHasTypeParameters
 {
     TypeParameterSegmentCollection TypeParameters { get; set;}
 }
