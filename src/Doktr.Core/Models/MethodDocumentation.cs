@@ -8,6 +8,7 @@ public class MethodDocumentation : MemberDocumentation,
     IHasVirtual,
     IHasTypeParameters,
     IHasParameters,
+    IHasReturns,
     IHasExceptions
 {
     public MethodDocumentation(string name, MemberVisibility visibility)
