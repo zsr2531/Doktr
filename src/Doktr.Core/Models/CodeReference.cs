@@ -39,7 +39,7 @@ public readonly struct CodeReference : IEquatable<CodeReference>
 
     public string Identifier { get; }
     public CodeReferenceKind Kind { get; }
-    public string Name => Identifier.Substring(2);
+    public ReadOnlySpan<char> Name => Identifier[2..];
     public char Prefix => Identifier[0];
     public bool IsError => Kind == CodeReferenceKind.Error;
     public bool IsType => Kind == CodeReferenceKind.Type;
