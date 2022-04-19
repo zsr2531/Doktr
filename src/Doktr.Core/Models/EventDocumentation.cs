@@ -14,5 +14,6 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     public bool IsStatic { get; set; } = false;
     public bool IsVirtual { get; set; } = false;
     public bool IsOverride { get; set; } = false;
+    public bool IsAbstract { get; set; } = false;
     public bool IsSealed { get; set; } = false;
 }

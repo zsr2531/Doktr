@@ -19,6 +19,7 @@ public class MethodDocumentation : MemberDocumentation,
     public bool IsReadOnly { get; set; } = false;
     public bool IsVirtual { get; set; } = false;
     public bool IsOverride { get; set; } = false;
+    public bool IsAbstract { get; set; } = false;
     public bool IsSealed { get; set; } = false;
     public bool IsExtension { get; set; } = false;
     public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
