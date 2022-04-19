@@ -33,22 +33,28 @@ public class MethodDocumentation : MemberDocumentation,
 
     public override MethodDocumentation Clone()
     {
-        var clone = new MethodDocumentation(Name, Visibility, ReturnType)
-        {
-            IsStatic = IsStatic,
-            IsReadOnly = IsReadOnly,
-            IsVirtual = IsVirtual,
-            IsOverride = IsOverride,
-            IsAbstract = IsAbstract,
-            IsSealed = IsSealed,
-            IsExtension = IsExtension,
-            TypeParameters = TypeParameters.Clone(),
-            Parameters = Parameters.Clone(),
-            Returns = Returns.Clone(),
-            Exceptions = Exceptions.Clone()
-        };
-        
+        var clone = new MethodDocumentation(Name, Visibility, ReturnType);
         CopyDocumentationTo(clone);
+        
         return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not MethodDocumentation otherMethod)
+            throw new InvalidOperationException("Cannot copy documentation to a non-method member.");
+
+        otherMethod.IsStatic = IsStatic;
+        otherMethod.IsReadOnly = IsReadOnly;
+        otherMethod.IsVirtual = IsVirtual;
+        otherMethod.IsOverride = IsOverride;
+        otherMethod.IsAbstract = IsAbstract;
+        otherMethod.IsSealed = IsSealed;
+        otherMethod.IsExtension = IsExtension;
+        otherMethod.TypeParameters = TypeParameters.Clone();
+        otherMethod.Parameters = Parameters.Clone();
+        otherMethod.Returns = Returns.Clone();
+        otherMethod.Exceptions = Exceptions.Clone();
+        base.CopyDocumentationTo(other);
     }
 }

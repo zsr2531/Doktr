@@ -14,14 +14,19 @@ public class ConstructorDocumentation : MemberDocumentation, IHasParameters, IHa
 
     public override ConstructorDocumentation Clone()
     {
-        return new ConstructorDocumentation(Name, Visibility)
-        {
-            Summary = Summary.Clone(),
-            Parameters = Parameters.Clone(),
-            Exceptions = Exceptions.Clone(),
-            Examples = Examples.Clone(),
-            Remarks = Remarks.Clone(),
-            AppliesTo = AppliesTo.Clone()
-        };
+        var clone = new ConstructorDocumentation(Name, Visibility);
+        CopyDocumentationTo(clone);
+
+        return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not ConstructorDocumentation otherConstructor)
+            throw new InvalidOperationException("Cannot copy documentation to a non-constructor member.");
+        
+        otherConstructor.Parameters = Parameters.Clone();
+        otherConstructor.Exceptions = Exceptions.Clone();
+        base.CopyDocumentationTo(other);
     }
 }

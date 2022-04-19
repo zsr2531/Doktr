@@ -19,16 +19,22 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
 
     public override EventDocumentation Clone()
     {
-        var clone = new EventDocumentation(Name, Visibility, HandlerType)
-        {
-            IsStatic = IsStatic,
-            IsVirtual = IsVirtual,
-            IsOverride = IsOverride,
-            IsAbstract = IsAbstract,
-            IsSealed = IsSealed,
-        };
-        
+        var clone = new EventDocumentation(Name, Visibility, HandlerType.Clone());
         CopyDocumentationTo(clone);
+        
         return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not EventDocumentation otherEvent)
+            throw new InvalidOperationException("Cannot copy documentation to non-event member.");
+        
+        otherEvent.IsStatic = IsStatic;
+        otherEvent.IsVirtual = IsVirtual;
+        otherEvent.IsOverride = IsOverride;
+        otherEvent.IsAbstract = IsAbstract;
+        otherEvent.IsSealed = IsSealed;
+        base.CopyDocumentationTo(other);
     }
 }

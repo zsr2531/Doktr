@@ -18,16 +18,18 @@ public class ConversionOperatorDocumentation : MemberDocumentation,
     public ConversionOperatorDocumentation(
         string name,
         MemberVisibility visibility,
-        TypeSignature returnType,
+        TypeSignature resultingType,
         ConversionKind kind)
         : base(name, visibility)
     {
-        ReturnType = returnType;
+        ReturnType = resultingType;
         Kind = kind;
     }
 
     public ConversionKind Kind { get; set; }
     public bool IsStatic => true;
+    public TypeSignature InputType => Parameters[0].Type;
+    public TypeSignature ResultType => ReturnType;
     public ParameterSegmentCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
@@ -35,14 +37,21 @@ public class ConversionOperatorDocumentation : MemberDocumentation,
 
     public override ConversionOperatorDocumentation Clone()
     {
-        var clone = new ConversionOperatorDocumentation(Name, Visibility, ReturnType.Clone(), Kind)
-        {
-            Parameters = Parameters.Clone(),
-            Returns = Returns.Clone(),
-            Exceptions = Exceptions.Clone()
-        };
-
+        var clone = new ConversionOperatorDocumentation(Name, Visibility, ReturnType.Clone(), Kind);
         CopyDocumentationTo(clone);
+        
         return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not ConversionOperatorDocumentation otherConvOp)
+            throw new InvalidOperationException("Cannot copy documentation to a non-conversion operator member.");
+        
+        otherConvOp.Kind = Kind;
+        otherConvOp.Parameters = Parameters.Clone();
+        otherConvOp.Returns = Returns.Clone();
+        otherConvOp.Exceptions = Exceptions.Clone();
+        base.CopyDocumentationTo(other);
     }
 }

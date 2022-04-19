@@ -55,14 +55,20 @@ public class OperatorDocumentation : MemberDocumentation, IHasStatic, IHasParame
 
     public override OperatorDocumentation Clone()
     {
-        var clone = new OperatorDocumentation(Name, Visibility, ReturnType, Symbol)
-        {
-            Parameters = Parameters.Clone(),
-            Returns = Returns.Clone(),
-            Exceptions = Exceptions.Clone()
-        };
-        
+        var clone = new OperatorDocumentation(Name, Visibility, ReturnType.Clone(), Symbol);
         CopyDocumentationTo(clone);
+        
         return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not OperatorDocumentation otherOp)
+            throw new InvalidOperationException("Cannot copy documentation to a non-operator member.");
+        
+        otherOp.Parameters = Parameters.Clone();
+        otherOp.Returns = Returns.Clone();
+        otherOp.Exceptions = Exceptions.Clone();
+        base.CopyDocumentationTo(other);
     }
 }

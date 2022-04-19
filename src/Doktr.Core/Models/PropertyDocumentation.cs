@@ -24,7 +24,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
 
     public override PropertyDocumentation Clone()
     {
-        var clone = new PropertyDocumentation(Name, Visibility, Type);
+        var clone = new PropertyDocumentation(Name, Visibility, Type.Clone());
         CopyDocumentationTo(clone);
         return clone;
     }
