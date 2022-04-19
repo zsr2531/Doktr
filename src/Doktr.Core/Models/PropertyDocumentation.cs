@@ -21,14 +21,47 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     public PropertySetter? Setter { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
 
-    public class PropertyGetter
+    public override PropertyDocumentation Clone()
+    {
+        var clone = new PropertyDocumentation(Name, Visibility, Type)
+        {
+            IsStatic = IsStatic,
+            IsVirtual = IsVirtual,
+            IsOverride = IsOverride,
+            IsAbstract = IsAbstract,
+            IsSealed = IsSealed,
+            Getter = Getter?.Clone(),
+            Setter = Setter?.Clone(),
+            Value = Value.Clone()
+        };
+        
+        CopyDocumentationTo(clone);
+        return clone;
+    }
+
+    public class PropertyGetter : ICloneable
     {
         public MemberVisibility Visibility { get; set; } = MemberVisibility.Public;
+
+        public PropertyGetter Clone() => new()
+        {
+            Visibility = Visibility
+        };
+
+        object ICloneable.Clone() => Clone();
     }
     
-    public class PropertySetter
+    public class PropertySetter : ICloneable
     {
         public MemberVisibility Visibility { get; set; } = MemberVisibility.Public;
         public bool IsInit { get; set; } = false;
+
+        public PropertySetter Clone() => new()
+        {
+            Visibility = Visibility,
+            IsInit = IsInit
+        };
+
+        object ICloneable.Clone() => Clone();
     }
 }

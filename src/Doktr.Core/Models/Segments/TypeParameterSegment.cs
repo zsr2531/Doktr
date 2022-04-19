@@ -9,7 +9,7 @@ public enum TypeArgumentVarianceKind
     Contravariant
 }
 
-public class TypeParameterSegment
+public class TypeParameterSegment : ICloneable
 {
     public TypeParameterSegment(string name)
     {
@@ -20,4 +20,13 @@ public class TypeParameterSegment
     public TypeArgumentVarianceKind Variance { get; set; } = TypeArgumentVarianceKind.Invariant;
     public TypeArgumentConstraintCollection Constraints { get; set; } = new();
     public DocumentationFragmentCollection Documentation { get; set; } = new();
+
+    public TypeParameterSegment Clone() => new(Name)
+    {
+        Variance = Variance,
+        Constraints = Constraints.Clone(),
+        Documentation = Documentation.Clone()
+    };
+
+    object ICloneable.Clone() => Clone();
 }

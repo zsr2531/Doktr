@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace Doktr.Core.Models.Collections;
 
-public class TypeArgumentConstraintCollection : Collection<TypeArgumentConstraint>
+public class TypeArgumentConstraintCollection : Collection<TypeArgumentConstraint>, ICloneable
 {
     public void AssertAtMostOneTypeKindConstraint()
     {
@@ -15,4 +15,15 @@ public class TypeArgumentConstraintCollection : Collection<TypeArgumentConstrain
             }
         }
     }
+    
+    public TypeArgumentConstraintCollection Clone()
+    {
+        var clone = new TypeArgumentConstraintCollection();
+        foreach (var constraint in this)
+            clone.Add(constraint.Clone());
+
+        return clone;
+    }
+    
+    object ICloneable.Clone() => Clone();
 }

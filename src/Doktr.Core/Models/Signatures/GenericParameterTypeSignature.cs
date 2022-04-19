@@ -8,4 +8,6 @@ public class GenericParameterTypeSignature : TypeSignature
     }
 
     public override void AcceptVisitor(ITypeSignatureVisitor visitor) => visitor.VisitGenericParameter(this);
+
+    public override GenericParameterTypeSignature Clone() => new(Name);
 }

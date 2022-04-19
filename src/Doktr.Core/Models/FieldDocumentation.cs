@@ -12,9 +12,24 @@ public class FieldDocumentation : MemberDocumentation, IHasStatic, IHasReadOnly,
     }
     
     public TypeSignature Type { get; set; }
-    public bool IsStatic { get; set; } = false;
-    public bool IsVolatile { get; set; } = false;
-    public bool IsConstant { get; set; } = false;
-    public bool IsReadOnly { get; set; } = false;
+    public bool IsStatic { get; set; }
+    public bool IsVolatile { get; set; }
+    public bool IsConstant { get; set; }
+    public bool IsReadOnly { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
+
+    public override FieldDocumentation Clone()
+    {
+        var clone = new FieldDocumentation(Name, Visibility, Type)
+        {
+            IsStatic = IsStatic,
+            IsVolatile = IsVolatile,
+            IsConstant = IsConstant,
+            IsReadOnly = IsReadOnly,
+            Value = Value.Clone(),
+        };
+        
+        CopyDocumentationTo(clone);
+        return clone;
+    }
 }

@@ -14,7 +14,7 @@ public enum ParameterModifierFlags
     Params = 16
 }
 
-public class ParameterSegment
+public class ParameterSegment : ICloneable
 {
     public ParameterSegment(TypeSignature type, string name)
     {
@@ -33,4 +33,13 @@ public class ParameterSegment
     public bool IsOptional => (Modifiers & ParameterModifierFlags.Optional) != 0;
     public bool IsParams => (Modifiers & ParameterModifierFlags.Params) != 0;
     public bool HasDefaultValue => IsOptional;
+
+    public ParameterSegment Clone() => new(Type.Clone(), Name)
+    {
+        Modifiers = Modifiers,
+        DefaultValue = DefaultValue,
+        Documentation = Documentation.Clone()
+    };
+
+    object ICloneable.Clone() => Clone();
 }

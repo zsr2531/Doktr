@@ -14,4 +14,9 @@ public class GenericInstanceTypeSignature : TypeSignature
     public TypeSignatureCollection TypeArguments { get; set; } = new();
 
     public override void AcceptVisitor(ITypeSignatureVisitor visitor) => visitor.VisitGenericInstance(this);
+
+    public override GenericInstanceTypeSignature Clone() => new(GenericType.Clone())
+    {
+        TypeArguments = TypeArguments.Clone()
+    };
 }

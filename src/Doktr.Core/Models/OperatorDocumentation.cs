@@ -13,7 +13,7 @@ public enum OperatorKind
     UnaryMinusMinus,
     UnaryTrue,
     UnaryFalse,
-    
+
     BinaryPlus,
     BinaryMinus,
     BinaryStar,
@@ -24,7 +24,7 @@ public enum OperatorKind
     BinaryCaret,
     BinaryLeftDoubleAngle,
     BinaryRightDoubleAngle,
-    
+
     BinaryDoubleEqual,
     BinaryBangEqual,
     BinaryLeftAngle,
@@ -35,17 +35,34 @@ public enum OperatorKind
 
 public class OperatorDocumentation : MemberDocumentation, IHasStatic, IHasParameters, IHasReturns, IHasExceptions
 {
-    public OperatorDocumentation(string name, MemberVisibility visibility, TypeSignature returnType, OperatorKind kind)
+    public OperatorDocumentation(
+        string name,
+        MemberVisibility visibility,
+        TypeSignature returnType,
+        OperatorKind symbol)
         : base(name, visibility)
     {
         ReturnType = returnType;
-        Kind = kind;
+        Symbol = symbol;
     }
 
-    public OperatorKind Kind { get; set; }
+    public OperatorKind Symbol { get; set; }
     public bool IsStatic => true;
-    public ParameterSegmentCollection Parameters { get; } = new();
+    public ParameterSegmentCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
-    public DocumentationFragmentCollection Returns { get; } = new();
-    public ExceptionSegmentCollection Exceptions { get; } = new();
+    public DocumentationFragmentCollection Returns { get; set; } = new();
+    public ExceptionSegmentCollection Exceptions { get; set; } = new();
+
+    public override OperatorDocumentation Clone()
+    {
+        var clone = new OperatorDocumentation(Name, Visibility, ReturnType, Symbol)
+        {
+            Parameters = Parameters.Clone(),
+            Returns = Returns.Clone(),
+            Exceptions = Exceptions.Clone()
+        };
+        
+        CopyDocumentationTo(clone);
+        return clone;
+    }
 }

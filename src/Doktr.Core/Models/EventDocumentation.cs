@@ -11,9 +11,24 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     }
     
     public TypeSignature HandlerType { get; set; }
-    public bool IsStatic { get; set; } = false;
-    public bool IsVirtual { get; set; } = false;
-    public bool IsOverride { get; set; } = false;
-    public bool IsAbstract { get; set; } = false;
-    public bool IsSealed { get; set; } = false;
+    public bool IsStatic { get; set; }
+    public bool IsVirtual { get; set; }
+    public bool IsOverride { get; set; }
+    public bool IsAbstract { get; set; }
+    public bool IsSealed { get; set; }
+
+    public override EventDocumentation Clone()
+    {
+        var clone = new EventDocumentation(Name, Visibility, HandlerType)
+        {
+            IsStatic = IsStatic,
+            IsVirtual = IsVirtual,
+            IsOverride = IsOverride,
+            IsAbstract = IsAbstract,
+            IsSealed = IsSealed,
+        };
+        
+        CopyDocumentationTo(clone);
+        return clone;
+    }
 }

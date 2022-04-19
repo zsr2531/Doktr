@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace Doktr.Core.Models.Collections;
 
-public class ExtensionMethodCollection : Collection<CodeReference>
+public class ExtensionMethodCollection : Collection<CodeReference>, ICloneable
 {
     protected override void InsertItem(int index, CodeReference item)
     {
@@ -15,6 +15,17 @@ public class ExtensionMethodCollection : Collection<CodeReference>
         AssertCorrectCodeReferenceKind(item);
         base.SetItem(index, item);
     }
+
+    public ExtensionMethodCollection Clone()
+    {
+        var clone = new ExtensionMethodCollection();
+        foreach (var item in this)
+            clone.Add(item);
+
+        return clone;
+    }
+
+    object ICloneable.Clone() => Clone();
 
     private static void AssertCorrectCodeReferenceKind(CodeReference codeReference)
     {
