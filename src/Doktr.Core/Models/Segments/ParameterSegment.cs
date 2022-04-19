@@ -26,7 +26,7 @@ public class ParameterSegment : ICloneable
     public TypeSignature Type { get; set; }
     public string Name { get; set; }
     public ParameterModifierFlags Modifiers { get; set; } = ParameterModifierFlags.None;
-    public object? DefaultValue { get; set; } = null;
+    public object? DefaultValue { get; set; }
     public DocumentationFragmentCollection Documentation { get; set; } = new();
     public bool IsIn => (Modifiers & ParameterModifierFlags.In) != 0;
     public bool IsOut => (Modifiers & ParameterModifierFlags.Out) != 0;

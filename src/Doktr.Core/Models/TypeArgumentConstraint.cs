@@ -16,7 +16,7 @@ public abstract class TypeKindTypeArgumentConstraint : TypeArgumentConstraint
 
 public class ReferenceTypeArgumentConstraint : TypeKindTypeArgumentConstraint
 {
-    public TypeSignature? BaseType { get; set; } = null;
+    public TypeSignature? BaseType { get; set; }
     public NullabilityKind Nullability { get; set; } = NullabilityKind.NotNullable;
 
     public override ReferenceTypeArgumentConstraint Clone() => new()
@@ -28,7 +28,7 @@ public class ReferenceTypeArgumentConstraint : TypeKindTypeArgumentConstraint
 
 public class ValueTypeArgumentConstraint : TypeKindTypeArgumentConstraint
 {
-    public bool IsUnmanaged { get; set; } = false;
+    public bool IsUnmanaged { get; set; }
     
     public override ValueTypeArgumentConstraint Clone() => new()
     {
