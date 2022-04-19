@@ -5,6 +5,6 @@ namespace Doktr.Core.Models;
 
 public interface IHasValue
 {
-    TypeSignature Type { get; set; }
-    DocumentationFragmentCollection Value { get; set; }
+    TypeSignature Type { get; }
+    DocumentationFragmentCollection Value { get; }
 }

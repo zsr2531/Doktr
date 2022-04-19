@@ -4,5 +4,5 @@ namespace Doktr.Core.Models;
 
 public interface IHasTypeParameters
 {
-    TypeParameterSegmentCollection TypeParameters { get; set;}
+    TypeParameterSegmentCollection TypeParameters { get; }
 }

@@ -4,5 +4,5 @@ namespace Doktr.Core.Models;
 
 public interface IHasExtensionMethods
 {
-    ExtensionMethodCollection ExtensionMethods { get; set; }
+    ExtensionMethodCollection ExtensionMethods { get; }
 }
