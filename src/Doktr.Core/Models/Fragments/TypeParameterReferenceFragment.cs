@@ -1,6 +1,6 @@
 namespace Doktr.Core.Models.Fragments;
 
-public class TypeParameterReferenceFragment : IDocumentationFragment
+public class TypeParameterReferenceFragment : DocumentationFragment
 {
     public TypeParameterReferenceFragment(string name)
     {
@@ -9,5 +9,7 @@ public class TypeParameterReferenceFragment : IDocumentationFragment
 
     public string Name { get; set; }
 
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitTypeParameterReference(this);
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitTypeParameterReference(this);
+
+    public override TypeParameterReferenceFragment Clone() => new(Name);
 }

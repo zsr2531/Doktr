@@ -1,13 +1,15 @@
+using Doktr.Core.Models.Collections;
+
 namespace Doktr.Core.Models.Fragments;
 
-public class CodeFragment : IDocumentationFragment
+public class CodeFragment : DocumentationFragment
 {
-    public CodeFragment(string code)
+    public DocumentationFragmentCollection Content { get; set; } = new();
+
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitCode(this);
+
+    public override CodeFragment Clone() => new()
     {
-        Code = code;
-    }
-
-    public string Code { get; set; }
-
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitCode(this);
+        Content = Content.Clone()
+    };
 }

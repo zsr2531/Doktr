@@ -1,6 +1,6 @@
 namespace Doktr.Core.Models.Fragments;
 
-public class TextFragment : IDocumentationFragment
+public class TextFragment : DocumentationFragment
 {
     public TextFragment(string text)
     {
@@ -9,5 +9,7 @@ public class TextFragment : IDocumentationFragment
 
     public string Text { get; set; }
 
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitText(this);
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitText(this);
+
+    public override TextFragment Clone() => new(Text);
 }

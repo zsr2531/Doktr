@@ -1,6 +1,6 @@
 namespace Doktr.Core.Models.Fragments;
 
-public abstract class ListItemFragment : IDocumentationFragment
+public abstract class ListItemFragment : DocumentationFragment
 {
-    public abstract void AcceptVisitor(IDocumentationFragmentVisitor visitor);
+    public abstract override ListItemFragment Clone();
 }

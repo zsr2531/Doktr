@@ -8,4 +8,10 @@ public class DefinitionListItemFragment : ListItemFragment
     public DocumentationFragmentCollection Description { get; set; } = new();
     
     public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitDefinitionListItem(this);
+
+    public override DefinitionListItemFragment Clone() => new()
+    {
+        Term = Term.Clone(),
+        Description = Description.Clone()
+    };
 }

@@ -8,10 +8,16 @@ public enum ListStyle
     Numbered
 }
 
-public class ListFragment : IDocumentationFragment
+public class ListFragment : DocumentationFragment
 {
     public ListStyle Style { get; set; } = ListStyle.Bullet;
     public ListItemFragmentCollection Items { get; set; } = new();
 
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitList(this);
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitList(this);
+
+    public override ListFragment Clone() => new()
+    {
+        Style = Style,
+        Items = Items.Clone()
+    };
 }

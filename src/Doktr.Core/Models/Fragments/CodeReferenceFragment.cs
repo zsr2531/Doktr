@@ -2,7 +2,7 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models.Fragments;
 
-public class CodeReferenceFragment : IDocumentationFragment
+public class CodeReferenceFragment : DocumentationFragment
 {
     public CodeReferenceFragment(CodeReference codeReference)
     {
@@ -12,5 +12,10 @@ public class CodeReferenceFragment : IDocumentationFragment
     public CodeReference CodeReference { get; set; }
     public DocumentationFragmentCollection? ReplacementText { get; set; }
 
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitCodeReference(this);
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitCodeReference(this);
+
+    public override CodeReferenceFragment Clone() => new(CodeReference)
+    {
+        ReplacementText = ReplacementText?.Clone()
+    };
 }

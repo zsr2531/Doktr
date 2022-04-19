@@ -10,11 +10,18 @@ public enum TableAlignment
     Right
 }
 
-public class TableFragment : IDocumentationFragment
+public class TableFragment : DocumentationFragment
 {
     public TableAlignment Alignment { get; set; } = TableAlignment.Left;
     public RowSegment Header { get; set; } = new();
     public RowSegmentCollection Rows { get; set; } = new();
     
-    public void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitTable(this);
+    public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitTable(this);
+
+    public override TableFragment Clone() => new()
+    {
+        Alignment = Alignment,
+        Header = Header.Clone(),
+        Rows = Rows.Clone()
+    };
 }
