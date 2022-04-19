@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 
@@ -32,6 +33,7 @@ public class ParameterSegment : ICloneable
     public bool IsRef => (Modifiers & ParameterModifierFlags.Ref) != 0;
     public bool IsOptional => (Modifiers & ParameterModifierFlags.Optional) != 0;
     public bool IsParams => (Modifiers & ParameterModifierFlags.Params) != 0;
+    [MemberNotNullWhen(true, nameof(DefaultValue))]
     public bool HasDefaultValue => IsOptional;
 
     public ParameterSegment Clone() => new(Type.Clone(), Name)
