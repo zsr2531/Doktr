@@ -3,7 +3,7 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
-public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtual, IHasValue
+public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtual, IHasValue, IHasExceptions
 {
     public PropertyDocumentation(string name, MemberVisibility visibility, TypeSignature type)
         : base(name, visibility)
@@ -20,6 +20,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     public PropertyGetter? Getter { get; set; }
     public PropertySetter? Setter { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
+    public ExceptionSegmentCollection Exceptions { get; set; } = new();
 
     public override PropertyDocumentation Clone()
     {
@@ -32,7 +33,8 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
             IsSealed = IsSealed,
             Getter = Getter?.Clone(),
             Setter = Setter?.Clone(),
-            Value = Value.Clone()
+            Value = Value.Clone(),
+            Exceptions = Exceptions.Clone()
         };
         
         CopyDocumentationTo(clone);
