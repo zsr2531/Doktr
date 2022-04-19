@@ -24,21 +24,26 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
 
     public override PropertyDocumentation Clone()
     {
-        var clone = new PropertyDocumentation(Name, Visibility, Type)
-        {
-            IsStatic = IsStatic,
-            IsVirtual = IsVirtual,
-            IsOverride = IsOverride,
-            IsAbstract = IsAbstract,
-            IsSealed = IsSealed,
-            Getter = Getter?.Clone(),
-            Setter = Setter?.Clone(),
-            Value = Value.Clone(),
-            Exceptions = Exceptions.Clone()
-        };
-        
+        var clone = new PropertyDocumentation(Name, Visibility, Type);
         CopyDocumentationTo(clone);
         return clone;
+    }
+
+    protected override void CopyDocumentationTo(MemberDocumentation other)
+    {
+        if (other is not PropertyDocumentation otherProperty)
+            throw new InvalidOperationException("Cannot copy documentation to a non-property member.");
+
+        otherProperty.IsStatic = IsStatic;
+        otherProperty.IsVirtual = IsVirtual;
+        otherProperty.IsOverride = IsOverride;
+        otherProperty.IsAbstract = IsAbstract;
+        otherProperty.IsSealed = IsSealed;
+        otherProperty.Getter = Getter?.Clone();
+        otherProperty.Setter = Setter?.Clone();
+        otherProperty.Value = Value.Clone();
+        otherProperty.Exceptions = Exceptions.Clone();
+        base.CopyDocumentationTo(other);
     }
 
     public class PropertyGetter : ICloneable
