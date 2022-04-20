@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace Doktr.Core.Models.Collections;
 
-public class ExtensionMethodCollection : Collection<CodeReference>, ICloneable
+public class CodeReferenceCollection : Collection<CodeReference>, ICloneable
 {
     protected override void InsertItem(int index, CodeReference item)
     {
@@ -16,9 +16,9 @@ public class ExtensionMethodCollection : Collection<CodeReference>, ICloneable
         base.SetItem(index, item);
     }
 
-    public ExtensionMethodCollection Clone()
+    public CodeReferenceCollection Clone()
     {
-        var clone = new ExtensionMethodCollection();
+        var clone = new CodeReferenceCollection();
         foreach (var item in this)
             clone.Add(item);
 

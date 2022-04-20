@@ -17,7 +17,7 @@ public abstract class TypeDocumentation : MemberDocumentation,
     public bool IsAbstract { get; set; }
     public bool IsSealed { get; set; }
     public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
-    public ExtensionMethodCollection ExtensionMethods { get; set; } = new();
+    public CodeReferenceCollection ExtensionMethods { get; set; } = new();
 
     public abstract override TypeDocumentation Clone();
 
