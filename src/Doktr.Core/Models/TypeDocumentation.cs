@@ -24,7 +24,7 @@ public abstract class TypeDocumentation : MemberDocumentation,
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not TypeDocumentation otherType)
-            throw new InvalidOperationException("Cannot copy documentation to a non-type member.");
+            throw new ArgumentException("Cannot copy documentation to a non-type member.", nameof(other));
 
         otherType.IsStatic = IsStatic;
         otherType.IsAbstract = IsAbstract;

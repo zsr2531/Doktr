@@ -32,7 +32,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not PropertyDocumentation otherProperty)
-            throw new InvalidOperationException("Cannot copy documentation to a non-property member.");
+            throw new ArgumentException("Cannot copy documentation to a non-property member.", nameof(other));
 
         otherProperty.IsStatic = IsStatic;
         otherProperty.IsVirtual = IsVirtual;

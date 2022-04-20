@@ -23,7 +23,7 @@ public class IndexerDocumentation : PropertyDocumentation, IHasParameters
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not IndexerDocumentation otherIndexer)
-            throw new InvalidOperationException("Cannot copy documentation to a non-indexer member.");
+            throw new ArgumentException("Cannot copy documentation to a non-indexer member.", nameof(other));
         
         otherIndexer.Parameters = Parameters.Clone();
         base.CopyDocumentationTo(other);

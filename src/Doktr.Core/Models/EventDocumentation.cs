@@ -28,7 +28,7 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not EventDocumentation otherEvent)
-            throw new InvalidOperationException("Cannot copy documentation to non-event member.");
+            throw new ArgumentException("Cannot copy documentation to non-event member.", nameof(other));
         
         otherEvent.IsStatic = IsStatic;
         otherEvent.IsVirtual = IsVirtual;

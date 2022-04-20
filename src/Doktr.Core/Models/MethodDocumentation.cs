@@ -42,7 +42,7 @@ public class MethodDocumentation : MemberDocumentation,
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not MethodDocumentation otherMethod)
-            throw new InvalidOperationException("Cannot copy documentation to a non-method member.");
+            throw new ArgumentException("Cannot copy documentation to a non-method member.", nameof(other));
 
         otherMethod.IsStatic = IsStatic;
         otherMethod.IsReadOnly = IsReadOnly;

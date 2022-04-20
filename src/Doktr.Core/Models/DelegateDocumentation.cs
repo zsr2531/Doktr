@@ -26,7 +26,7 @@ public class DelegateDocumentation : TypeDocumentation, IHasParameters, IHasRetu
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not DelegateDocumentation otherDelegate)
-            throw new InvalidOperationException("Cannot copy documentation to a non-delegate member.");
+            throw new ArgumentException("Cannot copy documentation to a non-delegate member.", nameof(other));
         
         otherDelegate.Parameters = Parameters.Clone();
         otherDelegate.Returns = Returns.Clone();

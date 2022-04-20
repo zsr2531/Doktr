@@ -64,7 +64,7 @@ public class OperatorDocumentation : MemberDocumentation, IHasStatic, IHasParame
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not OperatorDocumentation otherOp)
-            throw new InvalidOperationException("Cannot copy documentation to a non-operator member.");
+            throw new ArgumentException("Cannot copy documentation to a non-operator member.", nameof(other));
         
         otherOp.Parameters = Parameters.Clone();
         otherOp.Returns = Returns.Clone();

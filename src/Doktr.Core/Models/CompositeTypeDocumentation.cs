@@ -25,7 +25,7 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
         if (other is not CompositeTypeDocumentation otherCompositeType)
-            throw new InvalidOperationException("Cannot copy documentation to non-composite type member.");
+            throw new ArgumentException("Cannot copy documentation to non-composite type member.", nameof(other));
 
         otherCompositeType.Interfaces = Interfaces.Clone();
         otherCompositeType.Events = Events.Clone();
