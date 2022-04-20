@@ -2,13 +2,19 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models;
 
-public abstract class CompositeTypeDocumentation : TypeDocumentation
+public abstract class CompositeTypeDocumentation : TypeDocumentation,
+    IHasStatic,
+    IHasAbstract,
+    IHasCommonTypeCharacteristics
 {
     protected CompositeTypeDocumentation(string name, MemberVisibility visibility)
         : base(name, visibility)
     {
     }
 
+    public bool IsStatic { get; set; }
+    public bool IsAbstract { get; set; }
+    public bool IsSealed { get; set; }
     public TypeSignatureCollection Interfaces { get; set; } = new();
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<FieldDocumentation> Fields { get; set; } = new();
@@ -27,6 +33,9 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation
         if (other is not CompositeTypeDocumentation otherCompositeType)
             throw new ArgumentException("Cannot copy documentation to non-composite type member.", nameof(other));
 
+        otherCompositeType.IsStatic = IsStatic;
+        otherCompositeType.IsAbstract = IsAbstract;
+        otherCompositeType.IsSealed = IsSealed;
         otherCompositeType.Interfaces = Interfaces.Clone();
         otherCompositeType.Events = Events.Clone();
         otherCompositeType.Fields = Fields.Clone();
