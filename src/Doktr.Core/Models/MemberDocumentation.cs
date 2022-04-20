@@ -2,7 +2,7 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models;
 
-public abstract class MemberDocumentation : IEquatable<MemberDocumentation>, ICloneable
+public abstract class MemberDocumentation : ICloneable
 {
     protected MemberDocumentation(string name, MemberVisibility visibility)
     {
@@ -12,10 +12,12 @@ public abstract class MemberDocumentation : IEquatable<MemberDocumentation>, ICl
 
     public string Name { get; set; }
     public MemberVisibility Visibility { get; set; }
+    public CodeReference? InheritDocumentationFrom { get; set; }
     public DocumentationFragmentCollection Summary { get; set; } = new();
     public DocumentationFragmentCollection Examples { get; set; } = new();
     public DocumentationFragmentCollection Remarks { get; set; } = new();
     public ProductVersionsSegmentCollection AppliesTo { get; set; } = new();
+    public bool InheritsDocumentation => InheritDocumentationFrom.HasValue;
 
     public abstract MemberDocumentation Clone();
 
@@ -28,27 +30,4 @@ public abstract class MemberDocumentation : IEquatable<MemberDocumentation>, ICl
         other.Remarks = Remarks.Clone();
         other.AppliesTo = AppliesTo.Clone();
     }
-
-    public bool Equals(MemberDocumentation? other)
-    {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-
-        return Name == other.Name;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-
-        return Equals((MemberDocumentation) obj);
-    }
-
-    public override int GetHashCode() => Name.GetHashCode();
-
-    public static bool operator ==(MemberDocumentation? left, MemberDocumentation? right) => Equals(left, right);
-
-    public static bool operator !=(MemberDocumentation? left, MemberDocumentation? right) => !Equals(left, right);
 }
