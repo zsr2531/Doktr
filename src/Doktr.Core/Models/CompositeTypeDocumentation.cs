@@ -13,7 +13,6 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<FieldDocumentation> Fields { get; set; } = new();
     public MemberCollection<ConstructorDocumentation> Constructors { get; set; } = new();
-    public FinalizerDocumentation? Finalizer { get; set; }
     public MemberCollection<IndexerDocumentation> Indexers { get; set; } = new();
     public MemberCollection<PropertyDocumentation> Properties { get; set; } = new();
     public MemberCollection<MethodDocumentation> Methods { get; set; } = new();
@@ -32,7 +31,6 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation
         otherCompositeType.Events = Events.Clone();
         otherCompositeType.Fields = Fields.Clone();
         otherCompositeType.Constructors = Constructors.Clone();
-        otherCompositeType.Finalizer = Finalizer?.Clone();
         otherCompositeType.Indexers = Indexers.Clone();
         otherCompositeType.Properties = Properties.Clone();
         otherCompositeType.Methods = Methods.Clone();
