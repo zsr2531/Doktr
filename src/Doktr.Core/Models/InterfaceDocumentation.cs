@@ -25,14 +25,15 @@ public class InterfaceDocumentation : TypeDocumentation, IHasCommonTypeCharacter
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not InterfaceDocumentation otherInterface)
-            throw new ArgumentException("Cannot copy documentation to non-interface member.", nameof(other));
+        if (other is InterfaceDocumentation otherInterface)
+        {
+            otherInterface.Interfaces = Interfaces.Clone();
+            otherInterface.Events = Events.Clone();
+            otherInterface.Indexers = Indexers.Clone();
+            otherInterface.Properties = Properties.Clone();
+            otherInterface.Methods = Methods.Clone();
+        }
 
-        otherInterface.Interfaces = Interfaces.Clone();
-        otherInterface.Events = Events.Clone();
-        otherInterface.Indexers = Indexers.Clone();
-        otherInterface.Properties = Properties.Clone();
-        otherInterface.Methods = Methods.Clone();
         base.CopyDocumentationTo(other);
     }
 }

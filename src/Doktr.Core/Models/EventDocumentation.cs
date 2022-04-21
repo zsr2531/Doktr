@@ -9,7 +9,7 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     {
         HandlerType = handlerType;
     }
-    
+
     public TypeSignature HandlerType { get; set; }
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
@@ -21,20 +21,21 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     {
         var clone = new EventDocumentation(Name, Visibility, HandlerType.Clone());
         CopyDocumentationTo(clone);
-        
+
         return clone;
     }
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not EventDocumentation otherEvent)
-            throw new ArgumentException("Cannot copy documentation to non-event member.", nameof(other));
-        
-        otherEvent.IsStatic = IsStatic;
-        otherEvent.IsVirtual = IsVirtual;
-        otherEvent.IsOverride = IsOverride;
-        otherEvent.IsAbstract = IsAbstract;
-        otherEvent.IsSealed = IsSealed;
+        if (other is EventDocumentation otherEvent)
+        {
+            otherEvent.IsStatic = IsStatic;
+            otherEvent.IsVirtual = IsVirtual;
+            otherEvent.IsOverride = IsOverride;
+            otherEvent.IsAbstract = IsAbstract;
+            otherEvent.IsSealed = IsSealed;
+        }
+
         base.CopyDocumentationTo(other);
     }
 }

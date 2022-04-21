@@ -25,6 +25,7 @@ public abstract class MemberDocumentation : ICloneable
     
     protected virtual void CopyDocumentationTo(MemberDocumentation other)
     {
+        other.InheritDocumentationFrom = InheritDocumentationFrom;
         other.Summary = Summary.Clone();
         other.Examples = Examples.Clone();
         other.Remarks = Remarks.Clone();

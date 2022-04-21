@@ -22,11 +22,12 @@ public class ConstructorDocumentation : MemberDocumentation, IHasParameters, IHa
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not ConstructorDocumentation otherConstructor)
-            throw new ArgumentException("Cannot copy documentation to a non-constructor member.", nameof(other));
-        
-        otherConstructor.Parameters = Parameters.Clone();
-        otherConstructor.Exceptions = Exceptions.Clone();
+        if (other is ConstructorDocumentation otherConstructor)
+        {
+            otherConstructor.Parameters = Parameters.Clone();
+            otherConstructor.Exceptions = Exceptions.Clone();
+        }
+
         base.CopyDocumentationTo(other);
     }
 }

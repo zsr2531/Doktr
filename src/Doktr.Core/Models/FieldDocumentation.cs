@@ -31,15 +31,16 @@ public class FieldDocumentation : MemberDocumentation, IHasStatic, IHasReadOnly,
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not FieldDocumentation otherField)
-            throw new ArgumentException("Cannot copy documentation to a non-field member.", nameof(other));
-        
-        otherField.IsStatic = IsStatic;
-        otherField.IsVolatile = IsVolatile;
-        otherField.IsConstant = IsConstant;
-        otherField.IsReadOnly = IsReadOnly;
-        otherField.ConstantValue = ConstantValue;
-        otherField.Value = Value.Clone();
+        if (other is FieldDocumentation otherField)
+        {
+            otherField.IsStatic = IsStatic;
+            otherField.IsVolatile = IsVolatile;
+            otherField.IsConstant = IsConstant;
+            otherField.IsReadOnly = IsReadOnly;
+            otherField.ConstantValue = ConstantValue;
+            otherField.Value = Value.Clone();
+        }
+
         base.CopyDocumentationTo(other);
     }
 }

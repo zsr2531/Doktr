@@ -20,11 +20,12 @@ public class StructDocumentation : CompositeTypeDocumentation, IHasReadOnly
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not StructDocumentation otherStruct)
-            throw new ArgumentException("Cannot copy documentation to non-struct member.", nameof(other));
+        if (other is StructDocumentation otherStruct)
+        {
+            otherStruct.IsReadOnly = IsReadOnly;
+            otherStruct.IsByRef = IsByRef;
+        }
 
-        otherStruct.IsReadOnly = IsReadOnly;
-        otherStruct.IsByRef = IsByRef;
         base.CopyDocumentationTo(other);
     }
 }

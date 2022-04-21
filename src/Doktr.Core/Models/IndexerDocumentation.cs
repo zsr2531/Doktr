@@ -15,17 +15,18 @@ public class IndexerDocumentation : PropertyDocumentation, IHasParameters
     public override IndexerDocumentation Clone()
     {
         var clone = new IndexerDocumentation(Name, Visibility, Type.Clone());
-            
+
         CopyDocumentationTo(clone);
         return clone;
     }
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not IndexerDocumentation otherIndexer)
-            throw new ArgumentException("Cannot copy documentation to a non-indexer member.", nameof(other));
-        
-        otherIndexer.Parameters = Parameters.Clone();
+        if (other is IndexerDocumentation otherIndexer)
+        {
+            otherIndexer.Parameters = Parameters.Clone();
+        }
+
         base.CopyDocumentationTo(other);
     }
 }

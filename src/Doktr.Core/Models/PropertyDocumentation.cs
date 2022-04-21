@@ -10,7 +10,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     {
         Type = type;
     }
-    
+
     public TypeSignature Type { get; set; }
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
@@ -26,23 +26,25 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     {
         var clone = new PropertyDocumentation(Name, Visibility, Type.Clone());
         CopyDocumentationTo(clone);
+
         return clone;
     }
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not PropertyDocumentation otherProperty)
-            throw new ArgumentException("Cannot copy documentation to a non-property member.", nameof(other));
+        if (other is PropertyDocumentation otherProperty)
+        {
+            otherProperty.IsStatic = IsStatic;
+            otherProperty.IsVirtual = IsVirtual;
+            otherProperty.IsOverride = IsOverride;
+            otherProperty.IsAbstract = IsAbstract;
+            otherProperty.IsSealed = IsSealed;
+            otherProperty.Getter = Getter?.Clone();
+            otherProperty.Setter = Setter?.Clone();
+            otherProperty.Value = Value.Clone();
+            otherProperty.Exceptions = Exceptions.Clone();
+        }
 
-        otherProperty.IsStatic = IsStatic;
-        otherProperty.IsVirtual = IsVirtual;
-        otherProperty.IsOverride = IsOverride;
-        otherProperty.IsAbstract = IsAbstract;
-        otherProperty.IsSealed = IsSealed;
-        otherProperty.Getter = Getter?.Clone();
-        otherProperty.Setter = Setter?.Clone();
-        otherProperty.Value = Value.Clone();
-        otherProperty.Exceptions = Exceptions.Clone();
         base.CopyDocumentationTo(other);
     }
 
@@ -57,7 +59,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
 
         object ICloneable.Clone() => Clone();
     }
-    
+
     public class PropertySetter : ICloneable
     {
         public MemberVisibility Visibility { get; set; } = MemberVisibility.Public;

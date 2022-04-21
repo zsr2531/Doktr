@@ -30,22 +30,23 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation,
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not CompositeTypeDocumentation otherCompositeType)
-            throw new ArgumentException("Cannot copy documentation to non-composite type member.", nameof(other));
+        if (other is CompositeTypeDocumentation otherCompositeType)
+        {
+            otherCompositeType.IsStatic = IsStatic;
+            otherCompositeType.IsAbstract = IsAbstract;
+            otherCompositeType.IsSealed = IsSealed;
+            otherCompositeType.Interfaces = Interfaces.Clone();
+            otherCompositeType.Events = Events.Clone();
+            otherCompositeType.Fields = Fields.Clone();
+            otherCompositeType.Constructors = Constructors.Clone();
+            otherCompositeType.Indexers = Indexers.Clone();
+            otherCompositeType.Properties = Properties.Clone();
+            otherCompositeType.Methods = Methods.Clone();
+            otherCompositeType.Operators = Operators.Clone();
+            otherCompositeType.ConversionOperators = ConversionOperators.Clone();
+            otherCompositeType.ExplicitImplementations = ExplicitImplementations.Clone();
+        }
 
-        otherCompositeType.IsStatic = IsStatic;
-        otherCompositeType.IsAbstract = IsAbstract;
-        otherCompositeType.IsSealed = IsSealed;
-        otherCompositeType.Interfaces = Interfaces.Clone();
-        otherCompositeType.Events = Events.Clone();
-        otherCompositeType.Fields = Fields.Clone();
-        otherCompositeType.Constructors = Constructors.Clone();
-        otherCompositeType.Indexers = Indexers.Clone();
-        otherCompositeType.Properties = Properties.Clone();
-        otherCompositeType.Methods = Methods.Clone();
-        otherCompositeType.Operators = Operators.Clone();
-        otherCompositeType.ConversionOperators = ConversionOperators.Clone();
-        otherCompositeType.ExplicitImplementations = ExplicitImplementations.Clone();
         base.CopyDocumentationTo(other);
     }
 }

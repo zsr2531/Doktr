@@ -21,11 +21,12 @@ public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHas
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not ClassDocumentation otherClass)
-            throw new ArgumentException("Cannot copy documentation to non-class member.", nameof(other));
+        if (other is ClassDocumentation otherClass)
+        {
+            otherClass.BaseType = BaseType;
+            otherClass.Finalizer = Finalizer?.Clone();
+        }
 
-        otherClass.BaseType = BaseType;
-        otherClass.Finalizer = Finalizer?.Clone();
         base.CopyDocumentationTo(other);
     }
 }

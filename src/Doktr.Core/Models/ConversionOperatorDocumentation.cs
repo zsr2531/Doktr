@@ -45,13 +45,14 @@ public class ConversionOperatorDocumentation : MemberDocumentation,
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not ConversionOperatorDocumentation otherConvOp)
-            throw new ArgumentException("Cannot copy documentation to a non-conversion operator member.", nameof(other));
-        
-        otherConvOp.Kind = Kind;
-        otherConvOp.Parameters = Parameters.Clone();
-        otherConvOp.Returns = Returns.Clone();
-        otherConvOp.Exceptions = Exceptions.Clone();
+        if (other is ConversionOperatorDocumentation otherConvOp)
+        {
+            otherConvOp.Kind = Kind;
+            otherConvOp.Parameters = Parameters.Clone();
+            otherConvOp.Returns = Returns.Clone();
+            otherConvOp.Exceptions = Exceptions.Clone();
+        }
+
         base.CopyDocumentationTo(other);
     }
 }

@@ -18,11 +18,12 @@ public abstract class TypeDocumentation : MemberDocumentation,
 
     protected override void CopyDocumentationTo(MemberDocumentation other)
     {
-        if (other is not TypeDocumentation otherType)
-            throw new ArgumentException("Cannot copy documentation to a non-type member.", nameof(other));
+        if (other is TypeDocumentation otherType)
+        {
+            otherType.TypeParameters = TypeParameters.Clone();
+            otherType.ExtensionMethods = ExtensionMethods.Clone();
+        }
 
-        otherType.TypeParameters = TypeParameters.Clone();
-        otherType.ExtensionMethods = ExtensionMethods.Clone();
-        base.CopyDocumentationTo(otherType);
+        base.CopyDocumentationTo(other);
     }
 }
