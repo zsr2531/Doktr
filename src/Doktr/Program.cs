@@ -4,6 +4,7 @@ using CommandLine;
 using Doktr;
 using Doktr.Core;
 using Doktr.Decompiler;
+using MediatR;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -32,6 +33,8 @@ static IContainer CreateContainer(CommandLineOptions options)
 
     container.RegisterInstance(logger);
     container.RegisterInstance(configuration);
+
+    container.RegisterGeneric(typeof(LoggerPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>)).SingleInstance();
 
     container.RegisterAssemblyTypes(typeof(DecompileMemberHandler).Assembly)
              .AsImplementedInterfaces();
