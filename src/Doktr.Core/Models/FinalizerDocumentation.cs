@@ -7,5 +7,7 @@ public class FinalizerDocumentation : MemberDocumentation
     {
     }
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitFinalizer(this);
+
     public override FinalizerDocumentation Clone() => new(Name, Visibility);
 }

@@ -22,6 +22,7 @@ public class MethodDocumentation : MemberDocumentation,
     public bool IsReadOnly { get; set; }
     public bool IsVirtual { get; set; }
     public bool IsOverride { get; set; }
+    public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }
     public bool IsSealed { get; set; }
     public bool IsExtension { get; set; }
@@ -30,6 +31,8 @@ public class MethodDocumentation : MemberDocumentation,
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();
+
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitMethod(this);
 
     public override MethodDocumentation Clone()
     {
@@ -47,6 +50,7 @@ public class MethodDocumentation : MemberDocumentation,
             otherMethod.IsReadOnly = IsReadOnly;
             otherMethod.IsVirtual = IsVirtual;
             otherMethod.IsOverride = IsOverride;
+            otherMethod.Overrides = Overrides;
             otherMethod.IsAbstract = IsAbstract;
             otherMethod.IsSealed = IsSealed;
             otherMethod.IsExtension = IsExtension;

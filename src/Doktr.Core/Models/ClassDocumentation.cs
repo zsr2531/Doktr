@@ -11,6 +11,8 @@ public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHas
     public CodeReference? BaseType { get; set; }
     public FinalizerDocumentation? Finalizer { get; set; }
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitClass(this);
+
     public override ClassDocumentation Clone()
     {
         var clone = new ClassDocumentation(Name, Visibility);

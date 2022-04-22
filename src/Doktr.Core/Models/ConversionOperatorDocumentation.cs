@@ -35,6 +35,8 @@ public class ConversionOperatorDocumentation : MemberDocumentation,
     public DocumentationFragmentCollection Returns { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitConversionOperator(this);
+
     public override ConversionOperatorDocumentation Clone()
     {
         var clone = new ConversionOperatorDocumentation(Name, Visibility, ReturnType.Clone(), Kind);

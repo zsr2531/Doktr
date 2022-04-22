@@ -53,6 +53,8 @@ public class OperatorDocumentation : MemberDocumentation, IHasStatic, IHasParame
     public DocumentationFragmentCollection Returns { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitOperator(this);
+
     public override OperatorDocumentation Clone()
     {
         var clone = new OperatorDocumentation(Name, Visibility, ReturnType.Clone(), Symbol);

@@ -19,6 +19,8 @@ public abstract class MemberDocumentation : ICloneable
     public ProductVersionsSegmentCollection AppliesTo { get; set; } = new();
     public bool InheritsDocumentation => InheritDocumentationFrom.HasValue;
 
+    public abstract void AcceptVisitor(IDocumentationMemberVisitor visitor);
+
     public abstract MemberDocumentation Clone();
 
     object ICloneable.Clone() => Clone();

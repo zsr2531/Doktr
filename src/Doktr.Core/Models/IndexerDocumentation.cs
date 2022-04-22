@@ -12,6 +12,8 @@ public class IndexerDocumentation : PropertyDocumentation, IHasParameters
 
     public ParameterSegmentCollection Parameters { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitIndexer(this);
+
     public override IndexerDocumentation Clone()
     {
         var clone = new IndexerDocumentation(Name, Visibility, Type.Clone());

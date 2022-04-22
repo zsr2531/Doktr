@@ -12,6 +12,8 @@ public class RecordDocumentation : CompositeTypeDocumentation, IHasBaseType, IHa
     public CodeReference? BaseType { get; set; }
     public ParameterSegmentCollection Parameters { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitRecord(this);
+
     public override RecordDocumentation Clone()
     {
         var clone = new RecordDocumentation(Name, Visibility);

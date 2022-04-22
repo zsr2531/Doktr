@@ -14,8 +14,11 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
     public bool IsOverride { get; set; }
+    public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }
     public bool IsSealed { get; set; }
+
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitEvent(this);
 
     public override EventDocumentation Clone()
     {
@@ -32,6 +35,7 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
             otherEvent.IsStatic = IsStatic;
             otherEvent.IsVirtual = IsVirtual;
             otherEvent.IsOverride = IsOverride;
+            otherEvent.Overrides = Overrides;
             otherEvent.IsAbstract = IsAbstract;
             otherEvent.IsSealed = IsSealed;
         }

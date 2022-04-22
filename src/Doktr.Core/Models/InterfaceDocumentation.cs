@@ -15,6 +15,8 @@ public class InterfaceDocumentation : TypeDocumentation, IHasCommonTypeCharacter
     public MemberCollection<PropertyDocumentation> Properties { get; set; } = new();
     public MemberCollection<MethodDocumentation> Methods { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitInterface(this);
+
     public override InterfaceDocumentation Clone()
     {
         var clone = new InterfaceDocumentation(Name, Visibility);

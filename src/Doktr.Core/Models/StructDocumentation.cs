@@ -10,6 +10,8 @@ public class StructDocumentation : CompositeTypeDocumentation, IHasReadOnly
     public bool IsReadOnly { get; set; }
     public bool IsByRef { get; set; }
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitStruct(this);
+
     public override StructDocumentation Clone()
     {
         var clone = new StructDocumentation(Name, Visibility);

@@ -21,6 +21,8 @@ public class FieldDocumentation : MemberDocumentation, IHasStatic, IHasReadOnly,
     public object? ConstantValue { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitField(this);
+
     public override FieldDocumentation Clone()
     {
         var clone = new FieldDocumentation(Name, Visibility, Type.Clone());

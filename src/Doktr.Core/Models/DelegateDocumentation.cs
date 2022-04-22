@@ -15,6 +15,8 @@ public class DelegateDocumentation : TypeDocumentation, IHasParameters, IHasRetu
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
 
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitDelegate(this);
+
     public override DelegateDocumentation Clone()
     {
         var clone = new DelegateDocumentation(Name, Visibility, ReturnType.Clone());

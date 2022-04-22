@@ -14,6 +14,8 @@ public abstract class TypeDocumentation : MemberDocumentation,
     public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
     public CodeReferenceCollection ExtensionMethods { get; set; } = new();
 
+    public abstract override void AcceptVisitor(IDocumentationMemberVisitor visitor);
+
     public abstract override TypeDocumentation Clone();
 
     protected override void CopyDocumentationTo(MemberDocumentation other)

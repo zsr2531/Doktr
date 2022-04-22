@@ -15,12 +15,15 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
     public bool IsOverride { get; set; }
+    public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }
     public bool IsSealed { get; set; }
     public PropertyGetter? Getter { get; set; }
     public PropertySetter? Setter { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();
+
+    public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitProperty(this);
 
     public override PropertyDocumentation Clone()
     {
@@ -37,6 +40,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
             otherProperty.IsStatic = IsStatic;
             otherProperty.IsVirtual = IsVirtual;
             otherProperty.IsOverride = IsOverride;
+            otherProperty.Overrides = Overrides;
             otherProperty.IsAbstract = IsAbstract;
             otherProperty.IsSealed = IsSealed;
             otherProperty.Getter = Getter?.Clone();
