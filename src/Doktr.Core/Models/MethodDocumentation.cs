@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 
@@ -21,6 +22,7 @@ public class MethodDocumentation : MemberDocumentation,
     public bool IsStatic { get; set; }
     public bool IsReadOnly { get; set; }
     public bool IsVirtual { get; set; }
+    [MemberNotNullWhen(true, nameof(Overrides))]
     public bool IsOverride { get; set; }
     public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }

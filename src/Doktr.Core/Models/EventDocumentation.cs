@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
@@ -13,6 +14,7 @@ public class EventDocumentation : MemberDocumentation, IHasStatic, IHasVirtual
     public TypeSignature HandlerType { get; set; }
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
+    [MemberNotNullWhen(true, nameof(Overrides))]
     public bool IsOverride { get; set; }
     public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }

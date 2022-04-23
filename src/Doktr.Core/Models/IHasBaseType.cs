@@ -1,6 +1,8 @@
+using Doktr.Core.Models.Signatures;
+
 namespace Doktr.Core.Models;
 
 public interface IHasBaseType
 {
-    CodeReference? BaseType { get; }
+    TypeSignature? BaseType { get; }
 }

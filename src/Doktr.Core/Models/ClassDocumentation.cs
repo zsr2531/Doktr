@@ -1,3 +1,5 @@
+using Doktr.Core.Models.Signatures;
+
 namespace Doktr.Core.Models;
 
 public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHasFinalizer
@@ -8,7 +10,7 @@ public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHas
     }
 
 
-    public CodeReference? BaseType { get; set; }
+    public TypeSignature? BaseType { get; set; }
     public FinalizerDocumentation? Finalizer { get; set; }
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitClass(this);

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 
@@ -14,6 +15,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     public TypeSignature Type { get; set; }
     public bool IsStatic { get; set; }
     public bool IsVirtual { get; set; }
+    [MemberNotNullWhen(true, nameof(Overrides))]
     public bool IsOverride { get; set; }
     public CodeReference? Overrides { get; set; }
     public bool IsAbstract { get; set; }

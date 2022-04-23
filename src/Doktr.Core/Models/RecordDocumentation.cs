@@ -1,4 +1,5 @@
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
@@ -9,7 +10,7 @@ public class RecordDocumentation : CompositeTypeDocumentation, IHasBaseType, IHa
     {
     }
 
-    public CodeReference? BaseType { get; set; }
+    public TypeSignature? BaseType { get; set; }
     public ParameterSegmentCollection Parameters { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitRecord(this);
