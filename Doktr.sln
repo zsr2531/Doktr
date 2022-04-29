@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doktr", "src\Doktr\Doktr.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doktr.Decompiler", "src\Doktr.Decompiler\Doktr.Decompiler.csproj", "{69E3550C-C789-42C5-B1A7-3063CD107CDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doktr.Decompiler.Tests", "test\Doktr.Decompiler.Tests\Doktr.Decompiler.Tests.csproj", "{C9BD722A-9766-4533-99F9-E1A3160FAE56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{A9D5C50C-3EF5-4EF0-B74A-83FCCE0C8DD3} = {1F55A92F-11CC-443C-B6B2-E8A8E49D1898}
 		{AFBFB8A5-4939-41AE-ABA5-D004B7D6E4DA} = {52632806-9BA5-46B9-83F7-B8534028E282}
 		{69E3550C-C789-42C5-B1A7-3063CD107CDE} = {52632806-9BA5-46B9-83F7-B8534028E282}
+		{C9BD722A-9766-4533-99F9-E1A3160FAE56} = {1F55A92F-11CC-443C-B6B2-E8A8E49D1898}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B275AB5-E9BB-4899-8C00-7F88B1BC3A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{69E3550C-C789-42C5-B1A7-3063CD107CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69E3550C-C789-42C5-B1A7-3063CD107CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69E3550C-C789-42C5-B1A7-3063CD107CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BD722A-9766-4533-99F9-E1A3160FAE56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BD722A-9766-4533-99F9-E1A3160FAE56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BD722A-9766-4533-99F9-E1A3160FAE56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BD722A-9766-4533-99F9-E1A3160FAE56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
