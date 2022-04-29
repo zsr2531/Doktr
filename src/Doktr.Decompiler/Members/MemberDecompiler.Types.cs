@@ -108,9 +108,12 @@ public partial class MemberDecompiler
     {
         if (typeDocumentation.IsStatic)
             _sb.Append("static ");
-        else if (typeDocumentation.IsAbstract)
+        if (typeDocumentation is not IHasAbstract hasAbstract)
+            return;
+
+        if (hasAbstract.IsAbstract)
             _sb.Append("abstract ");
-        else if (typeDocumentation.IsSealed)
+        else if (hasAbstract.IsSealed)
             _sb.Append("sealed ");
     }
 
