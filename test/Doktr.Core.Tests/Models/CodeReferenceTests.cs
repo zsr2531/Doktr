@@ -41,7 +41,7 @@ public class CodeReferenceTests
     public void Valid_Prefix_Colon_And_Data_Should_Construct(char prefix, CodeReferenceKind kind)
     {
         var codeReference = new CodeReference(prefix + ":test");
-        Assert.True("test" == codeReference.Name);
+        Assert.Equal("test", codeReference.Name.ToString());
         Assert.Equal(prefix, codeReference.Prefix);
         Assert.Equal(kind, codeReference.Kind);
     }
