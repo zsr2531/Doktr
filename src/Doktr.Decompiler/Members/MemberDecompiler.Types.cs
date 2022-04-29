@@ -4,7 +4,7 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Decompiler.Members;
 
-internal partial class MemberDecompiler
+public partial class MemberDecompiler
 {
     public void VisitClass(ClassDocumentation classDocumentation)
     {
@@ -21,19 +21,88 @@ internal partial class MemberDecompiler
         if (!hasAnyParents)
             return;
 
-        _sb.Append(" : ");
         WriteParentTypes(hasBaseType
             ? classDocumentation.Interfaces.Prepend(classDocumentation.BaseType!)
             : classDocumentation.Interfaces);
+        WriteTypeParameterConstraints(classDocumentation);
     }
 
-    public void VisitInterface(InterfaceDocumentation interfaceDocumentation) => throw new NotImplementedException();
+    public void VisitInterface(InterfaceDocumentation interfaceDocumentation)
+    {
+        WriteVisibility(interfaceDocumentation);
+        _sb.Append("interface ");
+        _sb.Append(interfaceDocumentation.Name);
 
-    public void VisitRecord(RecordDocumentation recordDocumentation) => throw new NotImplementedException();
+        if (!interfaceDocumentation.TypeParameters.IsEmpty())
+            WriteTypeParameters(interfaceDocumentation);
 
-    public void VisitStruct(StructDocumentation structDocumentation) => throw new NotImplementedException();
+        bool hasAnyParents = !interfaceDocumentation.Interfaces.IsEmpty();
+        if (!hasAnyParents)
+            return;
 
-    public void VisitDelegate(DelegateDocumentation delegateDocumentation) => throw new NotImplementedException();
+        WriteParentTypes(interfaceDocumentation.Interfaces);
+        WriteTypeParameterConstraints(interfaceDocumentation);
+    }
+
+    public void VisitRecord(RecordDocumentation recordDocumentation)
+    {
+        WriteVisibility(recordDocumentation);
+        WriteTypeAccessModifiers(recordDocumentation);
+        _sb.Append("record ");
+        _sb.Append(recordDocumentation.Name);
+
+        if (!recordDocumentation.TypeParameters.IsEmpty())
+            WriteTypeParameters(recordDocumentation);
+
+        bool hasBaseType = recordDocumentation.BaseType is not null;
+        bool hasAnyParents = hasBaseType || !recordDocumentation.Interfaces.IsEmpty();
+        if (!hasAnyParents)
+            return;
+
+        WriteParentTypes(hasBaseType
+            ? recordDocumentation.Interfaces.Prepend(recordDocumentation.BaseType!)
+            : recordDocumentation.Interfaces);
+        WriteTypeParameterConstraints(recordDocumentation);
+    }
+
+    public void VisitStruct(StructDocumentation structDocumentation)
+    {
+        WriteVisibility(structDocumentation);
+        WriteTypeAccessModifiers(structDocumentation);
+
+        if (structDocumentation.IsReadOnly)
+            _sb.Append("readonly ");
+        if (structDocumentation.IsByRef)
+            _sb.Append("ref ");
+
+        _sb.Append("struct ");
+        _sb.Append(structDocumentation.Name);
+
+        if (!structDocumentation.TypeParameters.IsEmpty())
+            WriteTypeParameters(structDocumentation);
+
+        bool hasAnyParents = !structDocumentation.Interfaces.IsEmpty();
+        if (!hasAnyParents)
+            return;
+
+        WriteParentTypes(structDocumentation.Interfaces);
+        WriteTypeParameterConstraints(structDocumentation);
+    }
+
+    public void VisitDelegate(DelegateDocumentation delegateDocumentation)
+    {
+        WriteVisibility(delegateDocumentation);
+        _sb.Append("delegate ");
+
+        string returnType = DecompileTypeSignature(delegateDocumentation.ReturnType);
+        _sb.Append(returnType);
+        _sb.Append(' ');
+
+        _sb.Append(delegateDocumentation.Name);
+        WriteTypeParameters(delegateDocumentation);
+        WriteParameters(delegateDocumentation);
+        WriteTypeParameterConstraints(delegateDocumentation);
+    }
 
     private void WriteTypeAccessModifiers(CompositeTypeDocumentation typeDocumentation)
     {
@@ -47,15 +116,8 @@ internal partial class MemberDecompiler
 
     private void WriteParentTypes(IEnumerable<TypeSignature> parentTypes)
     {
-        var signatures = parentTypes.ToArray();
-        for (int i = 0; i < signatures.Length; i++)
-        {
-            var current = signatures[i];
-            string decompiled = DecompileTypeSignature(current);
-            _sb.Append(decompiled);
-
-            if (i + 1 < signatures.Length)
-                _sb.Append(", ");
-        }
+        var signatures = parentTypes.Select(DecompileTypeSignature);
+        _sb.Append(" : ");
+        _sb.AppendJoin(", ", signatures);
     }
 }
