@@ -15,19 +15,19 @@ public class DecompileTypeSignatureHandler : IRequestHandler<DecompileTypeSignat
 
     public Task<string> Handle(DecompileTypeSignature request, CancellationToken cancellationToken)
     {
-        var (signature) = request;
+        var signature = request.Signature;
         var decompilationStrategy = CreateDecompilationStrategy();
         signature.AcceptVisitor(decompilationStrategy);
 
         return Task.FromResult(decompilationStrategy.ToString());
     }
 
-    private ITypeSignatureDecompilationStrategy CreateDecompilationStrategy()
+    private TypeSignatureDecompilationStrategy CreateDecompilationStrategy()
     {
         return _configuration.EnableNrt switch
         {
-            true => new NullableTypeSignatureDecompilationStrategy(_configuration),
-            false => new NormalTypeSignatureDecompilationStrategy()
+            true => new NullableTypeSignatureDecompilationStrategy(),
+            false => new TypeSignatureDecompilationStrategy()
         };
     }
 }
