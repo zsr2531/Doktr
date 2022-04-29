@@ -2,7 +2,7 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
-public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHasFinalizer
+public class ClassDocumentation : CompositeTypeDocumentation, IHasAbstract, IHasBaseType, IHasFinalizer
 {
     public ClassDocumentation(string name, MemberVisibility visibility)
         : base(name, visibility)
@@ -10,6 +10,8 @@ public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHas
     }
 
 
+    public bool IsAbstract { get; set; }
+    public bool IsSealed { get; set; }
     public TypeSignature? BaseType { get; set; }
     public FinalizerDocumentation? Finalizer { get; set; }
 
@@ -27,6 +29,8 @@ public class ClassDocumentation : CompositeTypeDocumentation, IHasBaseType, IHas
     {
         if (other is ClassDocumentation otherClass)
         {
+            otherClass.IsAbstract = IsAbstract;
+            otherClass.IsSealed = IsSealed;
             otherClass.BaseType = BaseType;
             otherClass.Finalizer = Finalizer?.Clone();
         }

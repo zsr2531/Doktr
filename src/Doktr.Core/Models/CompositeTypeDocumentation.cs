@@ -4,7 +4,6 @@ namespace Doktr.Core.Models;
 
 public abstract class CompositeTypeDocumentation : TypeDocumentation,
     IHasStatic,
-    IHasAbstract,
     IHasCommonTypeCharacteristics
 {
     protected CompositeTypeDocumentation(string name, MemberVisibility visibility)
@@ -13,8 +12,6 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation,
     }
 
     public bool IsStatic { get; set; }
-    public bool IsAbstract { get; set; }
-    public bool IsSealed { get; set; }
     public TypeSignatureCollection Interfaces { get; set; } = new();
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<FieldDocumentation> Fields { get; set; } = new();
@@ -33,8 +30,6 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation,
         if (other is CompositeTypeDocumentation otherCompositeType)
         {
             otherCompositeType.IsStatic = IsStatic;
-            otherCompositeType.IsAbstract = IsAbstract;
-            otherCompositeType.IsSealed = IsSealed;
             otherCompositeType.Interfaces = Interfaces.Clone();
             otherCompositeType.Events = Events.Clone();
             otherCompositeType.Fields = Fields.Clone();

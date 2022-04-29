@@ -3,13 +3,15 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
-public class RecordDocumentation : CompositeTypeDocumentation, IHasBaseType, IHasParameters
+public class RecordDocumentation : CompositeTypeDocumentation, IHasAbstract, IHasBaseType, IHasParameters
 {
     public RecordDocumentation(string name, MemberVisibility visibility)
         : base(name, visibility)
     {
     }
 
+    public bool IsAbstract { get; set; }
+    public bool IsSealed { get; set; }
     public TypeSignature? BaseType { get; set; }
     public ParameterSegmentCollection Parameters { get; set; } = new();
 
@@ -27,6 +29,8 @@ public class RecordDocumentation : CompositeTypeDocumentation, IHasBaseType, IHa
     {
         if (other is RecordDocumentation otherRecord)
         {
+            otherRecord.IsAbstract = IsAbstract;
+            otherRecord.IsSealed = IsSealed;
             otherRecord.BaseType = BaseType;
             otherRecord.Parameters = Parameters.Clone();
         }
