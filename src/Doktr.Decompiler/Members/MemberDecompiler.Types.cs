@@ -13,8 +13,7 @@ public partial class MemberDecompiler
         _sb.Append("class ");
         _sb.Append(classDocumentation.Name);
 
-        if (!classDocumentation.TypeParameters.IsEmpty())
-            WriteTypeParameters(classDocumentation);
+        WriteTypeParameters(classDocumentation);
 
         bool hasBaseType = classDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !classDocumentation.Interfaces.IsEmpty();
@@ -33,8 +32,7 @@ public partial class MemberDecompiler
         _sb.Append("interface ");
         _sb.Append(interfaceDocumentation.Name);
 
-        if (!interfaceDocumentation.TypeParameters.IsEmpty())
-            WriteTypeParameters(interfaceDocumentation);
+        WriteTypeParameters(interfaceDocumentation);
 
         bool hasAnyParents = !interfaceDocumentation.Interfaces.IsEmpty();
         if (!hasAnyParents)
@@ -51,8 +49,7 @@ public partial class MemberDecompiler
         _sb.Append("record ");
         _sb.Append(recordDocumentation.Name);
 
-        if (!recordDocumentation.TypeParameters.IsEmpty())
-            WriteTypeParameters(recordDocumentation);
+        WriteTypeParameters(recordDocumentation);
 
         bool hasBaseType = recordDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !recordDocumentation.Interfaces.IsEmpty();
@@ -70,16 +67,14 @@ public partial class MemberDecompiler
         WriteVisibility(structDocumentation);
         WriteTypeAccessModifiers(structDocumentation);
 
-        if (structDocumentation.IsReadOnly)
-            _sb.Append("readonly ");
+        WriteReadOnly(structDocumentation);
         if (structDocumentation.IsByRef)
             _sb.Append("ref ");
 
         _sb.Append("struct ");
         _sb.Append(structDocumentation.Name);
 
-        if (!structDocumentation.TypeParameters.IsEmpty())
-            WriteTypeParameters(structDocumentation);
+        WriteTypeParameters(structDocumentation);
 
         bool hasAnyParents = !structDocumentation.Interfaces.IsEmpty();
         if (!hasAnyParents)
@@ -94,20 +89,37 @@ public partial class MemberDecompiler
         WriteVisibility(delegateDocumentation);
         _sb.Append("delegate ");
 
-        string returnType = DecompileTypeSignature(delegateDocumentation.ReturnType);
-        _sb.Append(returnType);
-        _sb.Append(' ');
+        WriteReturnType(delegateDocumentation);
 
+        _sb.Append(' ');
         _sb.Append(delegateDocumentation.Name);
+
         WriteTypeParameters(delegateDocumentation);
         WriteParameters(delegateDocumentation);
         WriteTypeParameterConstraints(delegateDocumentation);
     }
 
+    public void VisitEnum(EnumDocumentation enumDocumentation)
+    {
+        if (enumDocumentation.IsFlags)
+            _sb.Append("[Flags]\n");
+
+        WriteVisibility(enumDocumentation);
+
+        _sb.Append(" enum ");
+        _sb.Append(enumDocumentation.Name);
+
+        if (enumDocumentation.BaseType is not null)
+        {
+            _sb.Append(" : ");
+            string type = DecompileTypeSignature(enumDocumentation.BaseType);
+            _sb.Append(type);
+        }
+    }
+
     private void WriteTypeAccessModifiers(CompositeTypeDocumentation typeDocumentation)
     {
-        if (typeDocumentation.IsStatic)
-            _sb.Append("static ");
+        WriteStatic(typeDocumentation);
         if (typeDocumentation is not IHasAbstract hasAbstract)
             return;
 

@@ -18,26 +18,6 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
         _mediator = mediator;
     }
 
-    public void VisitEvent(EventDocumentation eventDocumentation) => throw new NotImplementedException();
-
-    public void VisitField(FieldDocumentation fieldDocumentation) => throw new NotImplementedException();
-
-    public void VisitConstructor(ConstructorDocumentation constructorDocumentation) =>
-        throw new NotImplementedException();
-
-    public void VisitFinalizer(FinalizerDocumentation finalizerDocumentation) => throw new NotImplementedException();
-
-    public void VisitIndexer(IndexerDocumentation indexerDocumentation) => throw new NotImplementedException();
-
-    public void VisitProperty(PropertyDocumentation propertyDocumentation) => throw new NotImplementedException();
-
-    public void VisitMethod(MethodDocumentation methodDocumentation) => throw new NotImplementedException();
-
-    public void VisitOperator(OperatorDocumentation operatorDocumentation) => throw new NotImplementedException();
-
-    public void VisitConversionOperator(ConversionOperatorDocumentation conversionOperatorDocumentation) =>
-        throw new NotImplementedException();
-
     public override string ToString() => _sb.ToString();
 
     private void WriteVisibility(MemberDocumentation member)
@@ -54,9 +34,31 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
         });
     }
 
+    private void WriteStatic(IHasStatic member)
+    {
+        if (member.IsStatic)
+            _sb.Append("static ");
+    }
+
+    private void WriteVirtual(IHasVirtual member)
+    {
+        if (member.IsSealed)
+            _sb.Append("sealed ");
+
+        if (member.IsOverride)
+            _sb.Append("override ");
+        else if (member.IsVirtual)
+            _sb.Append("virtual ");
+        else if (member.IsAbstract)
+            _sb.Append("abstract ");
+    }
+
     private void WriteTypeParameters(IHasTypeParameters member)
     {
         var typeParameters = member.TypeParameters;
+        if (typeParameters.IsEmpty())
+            return;
+
         _sb.Append('<');
 
         for (int i = 0; i < typeParameters.Count; i++)
@@ -79,28 +81,27 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
         _sb.Append('>');
     }
 
-    private void WriteParameters(IHasParameters member)
+    private void WriteParameters(IHasParameters member, char opening = '(', char closing = ')')
     {
         var parameters = member.Parameters;
-        _sb.Append('(');
+        _sb.Append(opening);
 
         for (int i = 0; i < parameters.Count; i++)
         {
-            var current = parameters[i];
-            WriteParameterModifier(current);
-
-            string type = DecompileTypeSignature(current.Type);
+            var parameter = parameters[i];
+            WriteParameterModifier(parameter);
+            string type = DecompileTypeSignature(parameter.Type);
             _sb.Append(type);
-            _sb.Append(' ');
-            _sb.Append(current.Name);
 
-            WriteDefaultValue(current);
+            _sb.Append(' ');
+            _sb.Append(parameter.Name);
+            WriteDefaultValue(parameter);
 
             if (i + 1 < parameters.Count)
                 _sb.Append(", ");
         }
 
-        _sb.Append(')');
+        _sb.Append(closing);
 
         void WriteParameterModifier(ParameterSegment parameter)
         {
@@ -176,6 +177,12 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
             default:
                 throw new ArgumentOutOfRangeException(nameof(constraint));
         }
+    }
+
+    private void WriteReadOnly(IHasReadOnly member)
+    {
+        if (member.IsReadOnly)
+            _sb.Append("readonly ");
     }
 
     private string DecompileTypeSignature(TypeSignature signature)
