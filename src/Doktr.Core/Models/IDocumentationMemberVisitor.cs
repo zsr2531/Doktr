@@ -12,6 +12,8 @@ public interface IDocumentationMemberVisitor
 
     void VisitDelegate(DelegateDocumentation delegateDocumentation);
 
+    void VisitEnum(EnumDocumentation enumDocumentation);
+
     void VisitEvent(EventDocumentation eventDocumentation);
 
     void VisitField(FieldDocumentation fieldDocumentation);

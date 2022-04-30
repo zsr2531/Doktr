@@ -3,7 +3,7 @@ using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
 
-public class DelegateDocumentation : TypeDocumentation, IHasParameters, IHasReturns
+public class DelegateDocumentation : TypeDocumentation, IHasTypeParameters, IHasParameters, IHasReturns
 {
     public DelegateDocumentation(string name, MemberVisibility visibility, TypeSignature returnType)
         : base(name, visibility)
@@ -11,6 +11,8 @@ public class DelegateDocumentation : TypeDocumentation, IHasParameters, IHasRetu
         ReturnType = returnType;
     }
 
+
+    public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
     public ParameterSegmentCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
@@ -29,6 +31,7 @@ public class DelegateDocumentation : TypeDocumentation, IHasParameters, IHasRetu
     {
         if (other is DelegateDocumentation otherDelegate)
         {
+            otherDelegate.TypeParameters = TypeParameters.Clone();
             otherDelegate.Parameters = Parameters.Clone();
             otherDelegate.Returns = Returns.Clone();
         }

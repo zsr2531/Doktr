@@ -2,13 +2,15 @@ using Doktr.Core.Models.Collections;
 
 namespace Doktr.Core.Models;
 
-public class InterfaceDocumentation : TypeDocumentation, IHasCommonTypeCharacteristics
+public class InterfaceDocumentation : TypeDocumentation, IHasTypeParameters, IHasCommonTypeCharacteristics
 {
     public InterfaceDocumentation(string name, MemberVisibility visibility)
         : base(name, visibility)
     {
     }
 
+
+    public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
     public TypeSignatureCollection Interfaces { get; set; } = new();
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<IndexerDocumentation> Indexers { get; set; } = new();
@@ -29,6 +31,7 @@ public class InterfaceDocumentation : TypeDocumentation, IHasCommonTypeCharacter
     {
         if (other is InterfaceDocumentation otherInterface)
         {
+            otherInterface.TypeParameters = TypeParameters.Clone();
             otherInterface.Interfaces = Interfaces.Clone();
             otherInterface.Events = Events.Clone();
             otherInterface.Indexers = Indexers.Clone();
