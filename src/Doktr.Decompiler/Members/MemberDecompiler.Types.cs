@@ -17,12 +17,11 @@ public partial class MemberDecompiler
 
         bool hasBaseType = classDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !classDocumentation.Interfaces.IsEmpty();
-        if (!hasAnyParents)
-            return;
+        if (hasAnyParents)
+            WriteParentTypes(hasBaseType
+                ? classDocumentation.Interfaces.Prepend(classDocumentation.BaseType!)
+                : classDocumentation.Interfaces);
 
-        WriteParentTypes(hasBaseType
-            ? classDocumentation.Interfaces.Prepend(classDocumentation.BaseType!)
-            : classDocumentation.Interfaces);
         WriteTypeParameterConstraints(classDocumentation);
     }
 
@@ -35,10 +34,9 @@ public partial class MemberDecompiler
         WriteTypeParameters(interfaceDocumentation);
 
         bool hasAnyParents = !interfaceDocumentation.Interfaces.IsEmpty();
-        if (!hasAnyParents)
-            return;
+        if (hasAnyParents)
+            WriteParentTypes(interfaceDocumentation.Interfaces);
 
-        WriteParentTypes(interfaceDocumentation.Interfaces);
         WriteTypeParameterConstraints(interfaceDocumentation);
     }
 
@@ -50,15 +48,15 @@ public partial class MemberDecompiler
         _sb.Append(recordDocumentation.Name);
 
         WriteTypeParameters(recordDocumentation);
+        WriteParameters(recordDocumentation);
 
         bool hasBaseType = recordDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !recordDocumentation.Interfaces.IsEmpty();
-        if (!hasAnyParents)
-            return;
+        if (hasAnyParents)
+            WriteParentTypes(hasBaseType
+                ? recordDocumentation.Interfaces.Prepend(recordDocumentation.BaseType!)
+                : recordDocumentation.Interfaces);
 
-        WriteParentTypes(hasBaseType
-            ? recordDocumentation.Interfaces.Prepend(recordDocumentation.BaseType!)
-            : recordDocumentation.Interfaces);
         WriteTypeParameterConstraints(recordDocumentation);
     }
 
@@ -77,10 +75,9 @@ public partial class MemberDecompiler
         WriteTypeParameters(structDocumentation);
 
         bool hasAnyParents = !structDocumentation.Interfaces.IsEmpty();
-        if (!hasAnyParents)
-            return;
+        if (hasAnyParents)
+            WriteParentTypes(structDocumentation.Interfaces);
 
-        WriteParentTypes(structDocumentation.Interfaces);
         WriteTypeParameterConstraints(structDocumentation);
     }
 
@@ -106,7 +103,7 @@ public partial class MemberDecompiler
 
         WriteVisibility(enumDocumentation);
 
-        _sb.Append(" enum ");
+        _sb.Append("enum ");
         _sb.Append(enumDocumentation.Name);
 
         if (enumDocumentation.BaseType is not null)
