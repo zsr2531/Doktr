@@ -25,6 +25,6 @@ public class NullableTypeSignatureDecompilationStrategy : TypeSignatureDecompila
     private void WriteNullability(TypeSignature typeSignature)
     {
         if (typeSignature.Nullability == NullabilityKind.Nullable)
-            _sb.Append('?');
+            Builder.Append('?');
     }
 }
