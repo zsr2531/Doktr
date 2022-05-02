@@ -7,4 +7,6 @@ public interface ITypeSignatureVisitor
     void VisitGenericInstance(GenericInstanceTypeSignature genericInstanceTypeSignature);
 
     void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature);
+
+    void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature);
 }

@@ -5,7 +5,6 @@ namespace Doktr.Core.Models.Signatures;
 public class GenericInstanceTypeSignature : TypeSignature
 {
     public GenericInstanceTypeSignature(TypeSignature genericType)
-        : base(genericType.Name)
     {
         GenericType = genericType;
     }

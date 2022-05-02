@@ -2,8 +2,7 @@ namespace Doktr.Core.Models.Signatures;
 
 public class VanillaTypeSignature : TypeSignature
 {
-    public VanillaTypeSignature(string name, CodeReference type)
-        : base(name)
+    public VanillaTypeSignature(CodeReference type)
     {
         Type = type;
     }
@@ -12,5 +11,5 @@ public class VanillaTypeSignature : TypeSignature
 
     public override void AcceptVisitor(ITypeSignatureVisitor visitor) => visitor.VisitVanilla(this);
 
-    public override VanillaTypeSignature Clone() => new(Name, Type);
+    public override VanillaTypeSignature Clone() => new(Type);
 }
