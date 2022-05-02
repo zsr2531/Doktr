@@ -10,7 +10,7 @@ public class GenericInstanceTypeSignatureTests
     [Fact]
     public void CustomType_With_GenericParameter_Normal()
     {
-        var genericTypeSignature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T");
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
         signature.TypeArguments.Add(genericParameter);
@@ -24,7 +24,7 @@ public class GenericInstanceTypeSignatureTests
     [Fact]
     public void CustomType_With_Multiple_GenericParameters_Normal()
     {
-        var genericTypeSignature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T");
         var genericParameter2 = new GenericParameterTypeSignature("U");
         var genericParameter3 = new GenericParameterTypeSignature("V");
@@ -42,7 +42,7 @@ public class GenericInstanceTypeSignatureTests
     [Fact]
     public void CustomType_With_Nullable_GenericParameter_Normal()
     {
-        var genericTypeSignature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T")
         {
             Nullability = NullabilityKind.Nullable
@@ -59,7 +59,7 @@ public class GenericInstanceTypeSignatureTests
     [Fact]
     public void CustomType_With_Nullable_GenericParameter_Nullable()
     {
-        var genericTypeSignature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T")
         {
             Nullability = NullabilityKind.Nullable
@@ -76,7 +76,7 @@ public class GenericInstanceTypeSignatureTests
     [Fact]
     public void Custom_Type_With_Normal_And_Nullable_GenericParameters_Nullable()
     {
-        var genericTypeSignature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T")
         {
             Nullability = NullabilityKind.Nullable

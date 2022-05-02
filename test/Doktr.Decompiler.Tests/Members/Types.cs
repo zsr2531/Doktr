@@ -50,7 +50,7 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            BaseType = new VanillaTypeSignature("Base", new CodeReference("T:NS.Base"))
+            BaseType = new VanillaTypeSignature(new CodeReference("T:NS.Base"))
         };
 
         classDocumentation.AcceptVisitor(decompiler);
@@ -68,13 +68,13 @@ public class Types
         {
             Interfaces = new TypeSignatureCollection
             {
-                new VanillaTypeSignature("ICloneable", new CodeReference("T:System.ICloneable")),
-                new GenericInstanceTypeSignature(new VanillaTypeSignature("IEquatable",
+                new VanillaTypeSignature(new CodeReference("T:System.ICloneable")),
+                new GenericInstanceTypeSignature(new VanillaTypeSignature(
                     new CodeReference("T:System.IEquatable`1")))
                 {
                     TypeArguments = new TypeSignatureCollection
                     {
-                        new VanillaTypeSignature("Test", new CodeReference("T:NS.Test"))
+                        new VanillaTypeSignature(new CodeReference("T:NS.Test"))
                     }
                 }
             }
@@ -93,16 +93,16 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            BaseType = new VanillaTypeSignature("Base", new CodeReference("T:NS.Base")),
+            BaseType = new VanillaTypeSignature(new CodeReference("T:NS.Base")),
             Interfaces = new TypeSignatureCollection
             {
-                new VanillaTypeSignature("ICloneable", new CodeReference("T:System.ICloneable")),
-                new GenericInstanceTypeSignature(new VanillaTypeSignature("IEquatable",
+                new VanillaTypeSignature(new CodeReference("T:System.ICloneable")),
+                new GenericInstanceTypeSignature(new VanillaTypeSignature(
                     new CodeReference("T:System.IEquatable`1")))
                 {
                     TypeArguments = new TypeSignatureCollection
                     {
-                        new VanillaTypeSignature("Test", new CodeReference("T:NS.Test"))
+                        new VanillaTypeSignature(new CodeReference("T:NS.Test"))
                     }
                 }
             }
@@ -148,7 +148,7 @@ public class Types
                     Constraints = new TypeArgumentConstraintCollection
                     {
                         new ValueTypeParameterConstraint(),
-                        new InterfaceTypeParameterConstraint(new VanillaTypeSignature("ICloneable",
+                        new InterfaceTypeParameterConstraint(new VanillaTypeSignature(
                             new CodeReference("T:System.ICloneable"))),
                     }
                 }
@@ -204,9 +204,9 @@ public class Types
                     {
                         new ReferenceTypeParameterConstraint
                         {
-                            BaseType = new VanillaTypeSignature("Base", new CodeReference("T:Base"))
+                            BaseType = new VanillaTypeSignature(new CodeReference("T:Base"))
                         },
-                        new InterfaceTypeParameterConstraint(new VanillaTypeSignature("ICloneable",
+                        new InterfaceTypeParameterConstraint(new VanillaTypeSignature(
                             new CodeReference("T:System.ICloneable"))),
                     }
                 },
@@ -343,8 +343,8 @@ public class Types
         {
             Interfaces = new TypeSignatureCollection
             {
-                new VanillaTypeSignature("ICloneable", new CodeReference("T:System.ICloneable")),
-                new VanillaTypeSignature("IDisposable", new CodeReference("T:System.IDisposable"))
+                new VanillaTypeSignature(new CodeReference("T:System.ICloneable")),
+                new VanillaTypeSignature(new CodeReference("T:System.IDisposable"))
             }
         };
 
@@ -374,7 +374,7 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var enumDocumentation = new EnumDocumentation("Test", MemberVisibility.Public)
         {
-            BaseType = new VanillaTypeSignature("UInt64", new CodeReference("T:System.UInt64"))
+            BaseType = new VanillaTypeSignature(new CodeReference("T:System.UInt64"))
         };
 
         enumDocumentation.AcceptVisitor(decompiler);
@@ -467,7 +467,7 @@ public class Types
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var delegateDocumentation = new DelegateDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")));
+            new VanillaTypeSignature(new CodeReference("T:System.Void")));
 
         delegateDocumentation.AcceptVisitor(decompiler);
         string decompiled = decompiler.ToString();
@@ -476,12 +476,12 @@ public class Types
     }
 
     [Fact]
-    public void Delegate_With_TypeParameters()
+    public void Generic_Delegate()
     {
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var delegateDocumentation = new DelegateDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             TypeParameters = new TypeParameterSegmentCollection
             {
@@ -515,7 +515,7 @@ public class Types
             },
             Parameters = new ParameterSegmentCollection
             {
-                new(new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), "First"),
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "First"),
                 new(new GenericParameterTypeSignature("T"), "Second")
             }
         };

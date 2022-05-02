@@ -10,7 +10,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void CustomType_Normal()
     {
-        var signature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var signature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -21,7 +21,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void CustomType_Normal_WithNullable()
     {
-        var signature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"))
+        var signature = new VanillaTypeSignature(new CodeReference("T:My.Test"))
         {
             Nullability = NullabilityKind.Nullable
         };
@@ -35,7 +35,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void CustomType_NotNullable()
     {
-        var signature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"));
+        var signature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var decompiler = new NullableTypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -46,7 +46,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void CustomType_Nullable()
     {
-        var signature = new VanillaTypeSignature("Test", new CodeReference("T:My.Test"))
+        var signature = new VanillaTypeSignature(new CodeReference("T:My.Test"))
         {
             Nullability = NullabilityKind.Nullable
         };
@@ -60,7 +60,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void Primitive_Int32()
     {
-        var signature = new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32"));
+        var signature = new VanillaTypeSignature(new CodeReference("T:System.Int32"));
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -71,7 +71,7 @@ public class VanillaTypeSignatureTests
     [Fact]
     public void Primitive_String()
     {
-        var signature = new VanillaTypeSignature("String", new CodeReference("T:System.String"));
+        var signature = new VanillaTypeSignature(new CodeReference("T:System.String"));
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 

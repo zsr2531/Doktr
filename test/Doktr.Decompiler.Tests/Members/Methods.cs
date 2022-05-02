@@ -35,7 +35,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")));
+            new VanillaTypeSignature(new CodeReference("T:System.Void")));
 
         methodDocumentation.AcceptVisitor(decompiler);
         string decompiled = decompiler.ToString();
@@ -64,7 +64,7 @@ public class Methods
                     {
                         Constraints = new TypeArgumentConstraintCollection
                         {
-                            new InterfaceTypeParameterConstraint(new VanillaTypeSignature("ICloneable",
+                            new InterfaceTypeParameterConstraint(new VanillaTypeSignature(
                                 new CodeReference("T:System.ICloneable")))
                         }
                     },
@@ -82,7 +82,7 @@ public class Methods
                 Parameters = new ParameterSegmentCollection
                 {
                     new(new GenericParameterTypeSignature("U"), "first"),
-                    new(new GenericInstanceTypeSignature(new VanillaTypeSignature("IEquatable",
+                    new(new GenericInstanceTypeSignature(new VanillaTypeSignature(
                         new CodeReference("T:System.IEquatable")))
                     {
                         TypeArguments = new TypeSignatureCollection
@@ -107,7 +107,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsAbstract = true
         };
@@ -124,7 +124,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsVirtual = true
         };
@@ -141,7 +141,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsSealed = true
         };
@@ -158,7 +158,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsStatic = true
         };
@@ -175,7 +175,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsSealed = true,
             IsOverride = true
@@ -193,7 +193,7 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
-            new VanillaTypeSignature("Void", new CodeReference("T:System.Void")))
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
             IsReadOnly = true
         };
@@ -236,11 +236,11 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var operatorDocumentation = new OperatorDocumentation("op_True", MemberVisibility.Public,
-            new VanillaTypeSignature("Boolean", new CodeReference("T:System.Boolean")), OperatorKind.UnaryTrue)
+            new VanillaTypeSignature(new CodeReference("T:System.Boolean")), OperatorKind.UnaryTrue)
         {
             Parameters = new ParameterSegmentCollection
             {
-                new(new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), "value")
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "value")
             }
         };
 
@@ -256,12 +256,12 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var operatorDocumentation = new OperatorDocumentation("op_Addition", MemberVisibility.Public,
-            new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), OperatorKind.UnaryPlus)
+            new VanillaTypeSignature(new CodeReference("T:System.Int32")), OperatorKind.UnaryPlus)
         {
             Parameters = new ParameterSegmentCollection
             {
-                new(new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), "left"),
-                new(new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), "right")
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "left"),
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "right")
             }
         };
 
@@ -277,12 +277,12 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var conversionOperatorDocumentation = new ConversionOperatorDocumentation("op_Explicit",
-            MemberVisibility.Public, new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")),
+            MemberVisibility.Public, new VanillaTypeSignature(new CodeReference("T:System.Int32")),
             ConversionKind.Explicit)
         {
             Parameters = new ParameterSegmentCollection
             {
-                new(new VanillaTypeSignature("Boolean", new CodeReference("T:System.Boolean")), "value")
+                new(new VanillaTypeSignature(new CodeReference("T:System.Boolean")), "value")
             }
         };
 
@@ -298,12 +298,12 @@ public class Methods
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var conversionOperatorDocumentation = new ConversionOperatorDocumentation("op_Implicit",
-            MemberVisibility.Public, new VanillaTypeSignature("Boolean", new CodeReference("T:System.Boolean")),
+            MemberVisibility.Public, new VanillaTypeSignature(new CodeReference("T:System.Boolean")),
             ConversionKind.Implicit)
         {
             Parameters = new ParameterSegmentCollection
             {
-                new(new VanillaTypeSignature("Int32", new CodeReference("T:System.Int32")), "value")
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "value")
             }
         };
 
