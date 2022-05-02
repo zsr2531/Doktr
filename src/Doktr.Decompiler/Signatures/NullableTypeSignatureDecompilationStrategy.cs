@@ -22,6 +22,12 @@ public class NullableTypeSignatureDecompilationStrategy : TypeSignatureDecompila
         WriteNullability(genericParameterTypeSignature);
     }
 
+    public override void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature)
+    {
+        base.VisitSzArray(szArrayTypeSignature);
+        WriteNullability(szArrayTypeSignature);
+    }
+
     private void WriteNullability(TypeSignature typeSignature)
     {
         if (typeSignature.Nullability == NullabilityKind.Nullable)

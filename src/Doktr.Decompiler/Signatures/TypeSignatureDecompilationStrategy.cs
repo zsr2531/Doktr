@@ -32,9 +32,17 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
     public virtual void VisitVanilla(VanillaTypeSignature vanillaTypeSignature)
     {
         var codeReference = vanillaTypeSignature.Type;
-        Builder.Append(Primitives.TryGetValue(codeReference, out string? primitive)
-            ? primitive
-            : vanillaTypeSignature.Name);
+        if (Primitives.TryGetValue(codeReference, out string? primitive))
+        {
+            Builder.Append(primitive);
+            return;
+        }
+
+        var fullName = vanillaTypeSignature.Type.Name;
+        var name = fullName.TrimUntilLastDot();
+        var ticksRemoved = name.TrimTicks();
+
+        Builder.Append(ticksRemoved);
     }
 
     public virtual void VisitGenericInstance(GenericInstanceTypeSignature genericInstanceTypeSignature)
@@ -58,6 +66,12 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
     public virtual void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature)
     {
         Builder.Append(genericParameterTypeSignature.Name);
+    }
+
+    public virtual void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature)
+    {
+        szArrayTypeSignature.ArrayType.AcceptVisitor(this);
+        Builder.Append("[]");
     }
 
     public override string ToString() => Builder.ToString();
