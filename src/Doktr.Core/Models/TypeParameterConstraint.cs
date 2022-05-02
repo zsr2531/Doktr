@@ -16,9 +16,19 @@ public abstract class TypeKindTypeParameterConstraint : TypeParameterConstraint
 
 public class ReferenceTypeParameterConstraint : TypeKindTypeParameterConstraint
 {
+    private NullabilityKind _nullability;
+
     public TypeSignature? BaseType { get; set; }
-    // Note that this only has meaning if BaseType is null.
-    public NullabilityKind Nullability { get; set; }
+
+    public NullabilityKind Nullability
+    {
+        get => BaseType is null
+            ? _nullability
+            : _nullability = BaseType.Nullability;
+        set => _nullability = BaseType is null
+            ? value
+            : BaseType.Nullability = value;
+    }
 
     public override ReferenceTypeParameterConstraint Clone() => new()
     {
@@ -30,7 +40,7 @@ public class ReferenceTypeParameterConstraint : TypeKindTypeParameterConstraint
 public class ValueTypeParameterConstraint : TypeKindTypeParameterConstraint
 {
     public bool IsUnmanaged { get; set; }
-    
+
     public override ValueTypeParameterConstraint Clone() => new()
     {
         IsUnmanaged = IsUnmanaged
