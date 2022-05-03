@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core;
 using Doktr.Decompiler.Members;
 using MediatR;
 
 namespace Doktr.Decompiler;
 
+[ExcludeFromCodeCoverage]
 public class DecompileMemberHandler : IRequestHandler<DecompileMember, string>
 {
     private readonly DoktrConfiguration _configuration;

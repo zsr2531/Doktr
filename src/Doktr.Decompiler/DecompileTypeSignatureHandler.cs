@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Core;
 using Doktr.Decompiler.Signatures;
 using MediatR;
 
 namespace Doktr.Decompiler;
 
+[ExcludeFromCodeCoverage]
 public class DecompileTypeSignatureHandler : IRequestHandler<DecompileTypeSignature, string>
 {
     private readonly DoktrConfiguration _configuration;

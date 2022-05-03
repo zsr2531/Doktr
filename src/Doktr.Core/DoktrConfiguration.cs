@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Doktr.Core;
 
+[ExcludeFromCodeCoverage]
 public class DoktrConfiguration
 {
     public bool EnableNrt { get; set; } = true;

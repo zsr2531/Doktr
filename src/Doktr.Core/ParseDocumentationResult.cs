@@ -3,6 +3,7 @@ using Doktr.Core.Models;
 
 namespace Doktr.Core;
 
+[ExcludeFromCodeCoverage]
 public readonly struct ParseDocumentationResult
 {
     public ParseDocumentationResult(MemberDocumentation documentation)
