@@ -105,7 +105,7 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
 
         _sb.Append(closing);
 
-        void WriteParameterModifier(ParameterSegment parameter)
+        void WriteParameterModifier(ParameterDocumentation parameter)
         {
             if (parameter.IsIn)
                 _sb.Append("in ");
@@ -117,7 +117,7 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
                 _sb.Append("params ");
         }
 
-        void WriteDefaultValue(ParameterSegment parameter)
+        void WriteDefaultValue(ParameterDocumentation parameter)
         {
             if (!parameter.HasDefaultValue)
                 return;

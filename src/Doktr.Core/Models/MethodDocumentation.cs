@@ -29,7 +29,7 @@ public class MethodDocumentation : MemberDocumentation,
     public bool IsSealed { get; set; }
     public bool IsExtension { get; set; }
     public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
-    public ParameterSegmentCollection Parameters { get; set; } = new();
+    public ParameterDocumentationCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();

@@ -10,7 +10,7 @@ public class IndexerDocumentation : PropertyDocumentation, IHasParameters
     {
     }
 
-    public ParameterSegmentCollection Parameters { get; set; } = new();
+    public ParameterDocumentationCollection Parameters { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitIndexer(this);
 

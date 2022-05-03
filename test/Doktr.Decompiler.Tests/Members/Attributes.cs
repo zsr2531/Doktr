@@ -100,7 +100,7 @@ public class Attributes
         var indexerDocumentation = new IndexerDocumentation("Test", MemberVisibility.Public,
             new VanillaTypeSignature(new CodeReference("T:System.String")))
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "index")
             },

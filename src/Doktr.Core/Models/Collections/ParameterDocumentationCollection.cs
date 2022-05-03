@@ -1,13 +1,12 @@
 using System.Collections.ObjectModel;
-using Doktr.Core.Models.Segments;
 
 namespace Doktr.Core.Models.Collections;
 
-public class ParameterSegmentCollection : Collection<ParameterSegment>, ICloneable
+public class ParameterDocumentationCollection : Collection<ParameterDocumentation>, ICloneable
 {
-    public ParameterSegmentCollection Clone()
+    public ParameterDocumentationCollection Clone()
     {
-        var clone = new ParameterSegmentCollection();
+        var clone = new ParameterDocumentationCollection();
         foreach (var segment in this)
             clone.Add(segment.Clone());
 

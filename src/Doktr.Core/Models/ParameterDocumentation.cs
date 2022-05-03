@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 
-namespace Doktr.Core.Models.Segments;
+namespace Doktr.Core.Models;
 
 [Flags]
 public enum ParameterModifierFlags
@@ -15,9 +15,9 @@ public enum ParameterModifierFlags
     Params = 16
 }
 
-public class ParameterSegment : ICloneable
+public class ParameterDocumentation : ICloneable
 {
-    public ParameterSegment(TypeSignature type, string name)
+    public ParameterDocumentation(TypeSignature type, string name)
     {
         Type = type;
         Name = name;
@@ -31,12 +31,13 @@ public class ParameterSegment : ICloneable
     public bool IsIn => (Modifiers & ParameterModifierFlags.In) != 0;
     public bool IsOut => (Modifiers & ParameterModifierFlags.Out) != 0;
     public bool IsRef => (Modifiers & ParameterModifierFlags.Ref) != 0;
+    [MemberNotNullWhen(true, nameof(DefaultValue))]
     public bool IsOptional => (Modifiers & ParameterModifierFlags.Optional) != 0;
     public bool IsParams => (Modifiers & ParameterModifierFlags.Params) != 0;
     [MemberNotNullWhen(true, nameof(DefaultValue))]
     public bool HasDefaultValue => IsOptional;
 
-    public ParameterSegment Clone() => new(Type.Clone(), Name)
+    public ParameterDocumentation Clone() => new(Type.Clone(), Name)
     {
         Modifiers = Modifiers,
         DefaultValue = DefaultValue,

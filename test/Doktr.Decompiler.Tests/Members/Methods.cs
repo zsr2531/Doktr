@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
-using Doktr.Core.Models.Segments;
 using Doktr.Core.Models.Signatures;
 using Doktr.Decompiler.Members;
 using Doktr.Decompiler.Signatures;
@@ -80,7 +79,7 @@ public class Methods
                         }
                     }
                 },
-                Parameters = new ParameterSegmentCollection
+                Parameters = new ParameterDocumentationCollection
                 {
                     new(new GenericParameterTypeSignature("U"), "first"),
                     new(new GenericInstanceTypeSignature(new VanillaTypeSignature(
@@ -110,7 +109,7 @@ public class Methods
         var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
             new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "first"),
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "second")
@@ -266,7 +265,7 @@ public class Methods
         var operatorDocumentation = new OperatorDocumentation("op_True", MemberVisibility.Public,
             new VanillaTypeSignature(new CodeReference("T:System.Boolean")), OperatorKind.UnaryTrue)
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "value")
             }
@@ -286,7 +285,7 @@ public class Methods
         var operatorDocumentation = new OperatorDocumentation("op_Addition", MemberVisibility.Public,
             new VanillaTypeSignature(new CodeReference("T:System.Int32")), OperatorKind.UnaryPlus)
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "left"),
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "right")
@@ -308,7 +307,7 @@ public class Methods
             MemberVisibility.Public, new VanillaTypeSignature(new CodeReference("T:System.Int32")),
             ConversionKind.Explicit)
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Boolean")), "value")
             }
@@ -329,7 +328,7 @@ public class Methods
             MemberVisibility.Public, new VanillaTypeSignature(new CodeReference("T:System.Boolean")),
             ConversionKind.Implicit)
         {
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "value")
             }

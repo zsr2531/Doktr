@@ -4,5 +4,5 @@ namespace Doktr.Core.Models;
 
 public interface IHasParameters
 {
-    ParameterSegmentCollection Parameters { get; }
+    ParameterDocumentationCollection Parameters { get; }
 }

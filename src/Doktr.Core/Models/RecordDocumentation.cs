@@ -13,7 +13,7 @@ public class RecordDocumentation : CompositeTypeDocumentation, IHasAbstract, IHa
     public bool IsAbstract { get; set; }
     public bool IsSealed { get; set; }
     public TypeSignature? BaseType { get; set; }
-    public ParameterSegmentCollection Parameters { get; set; } = new();
+    public ParameterDocumentationCollection Parameters { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitRecord(this);
 

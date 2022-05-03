@@ -30,7 +30,7 @@ public class ConversionOperatorDocumentation : MemberDocumentation,
     public bool IsStatic => true;
     public TypeSignature InputType => Parameters[0].Type;
     public TypeSignature ResultType => ReturnType;
-    public ParameterSegmentCollection Parameters { get; set; } = new();
+    public ParameterDocumentationCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
     public ExceptionSegmentCollection Exceptions { get; set; } = new();

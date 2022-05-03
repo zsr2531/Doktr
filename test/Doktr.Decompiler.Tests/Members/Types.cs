@@ -494,7 +494,7 @@ public class Types
                 }
             }
         };
-        delegateDocumentation.Parameters.Add(new ParameterSegment(new GenericParameterTypeSignature("T"), "param"));
+        delegateDocumentation.Parameters.Add(new ParameterDocumentation(new GenericParameterTypeSignature("T"), "param"));
 
         delegateDocumentation.AcceptVisitor(decompiler);
         string decompiled = decompiler.ToString();
@@ -513,7 +513,7 @@ public class Types
             {
                 new("T")
             },
-            Parameters = new ParameterSegmentCollection
+            Parameters = new ParameterDocumentationCollection
             {
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "First"),
                 new(new GenericParameterTypeSignature("T"), "Second")
