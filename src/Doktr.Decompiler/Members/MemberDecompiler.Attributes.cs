@@ -12,8 +12,7 @@ public partial class MemberDecompiler
 
         _sb.Append("event ");
 
-        string handlerType = DecompileTypeSignature(eventDocumentation.HandlerType);
-        _sb.Append(handlerType);
+        WriteTypeSignature(eventDocumentation.HandlerType);
 
         _sb.Append(' ');
         _sb.Append(eventDocumentation.Name);
@@ -27,8 +26,7 @@ public partial class MemberDecompiler
         if (fieldDocumentation.IsConstant)
             _sb.Append("const ");
 
-        string type = DecompileTypeSignature(fieldDocumentation.Type);
-        _sb.Append(type);
+        WriteTypeSignature(fieldDocumentation.Type);
 
         _sb.Append(' ');
         _sb.Append(fieldDocumentation.Name);
@@ -46,8 +44,7 @@ public partial class MemberDecompiler
         WriteStatic(indexerDocumentation);
         WriteVirtual(indexerDocumentation);
 
-        string type = DecompileTypeSignature(indexerDocumentation.Type);
-        _sb.Append(type);
+        WriteTypeSignature(indexerDocumentation.Type);
 
         _sb.Append(" this");
         WriteParameters(indexerDocumentation, '[', ']');
@@ -66,8 +63,7 @@ public partial class MemberDecompiler
         WriteStatic(propertyDocumentation);
         WriteVirtual(propertyDocumentation);
 
-        string type = DecompileTypeSignature(propertyDocumentation.Type);
-        _sb.Append(type);
+        WriteTypeSignature(propertyDocumentation.Type);
 
         _sb.Append(' ');
         _sb.Append(propertyDocumentation.Name);

@@ -96,11 +96,5 @@ public partial class MemberDecompiler
         WriteParameters(conversionOperatorDocumentation);
     }
 
-    private void WriteReturnType(IHasReturns member)
-    {
-        var returnType = member.ReturnType;
-        string decompiled = DecompileTypeSignature(returnType);
-
-        _sb.Append(decompiled);
-    }
+    private void WriteReturnType(IHasReturns member) => WriteTypeSignature(member.ReturnType);
 }

@@ -109,8 +109,7 @@ public partial class MemberDecompiler
         if (enumDocumentation.BaseType is not null)
         {
             _sb.Append(" : ");
-            string type = DecompileTypeSignature(enumDocumentation.BaseType);
-            _sb.Append(type);
+            WriteTypeSignature(enumDocumentation.BaseType);
         }
     }
 
@@ -128,8 +127,16 @@ public partial class MemberDecompiler
 
     private void WriteParentTypes(IEnumerable<TypeSignature> parentTypes)
     {
-        var signatures = parentTypes.Select(DecompileTypeSignature);
+        var signatures = parentTypes.ToArray();
         _sb.Append(" : ");
-        _sb.AppendJoin(", ", signatures);
+
+        for (int i = 0; i < signatures.Length; i++)
+        {
+            var current = signatures[i];
+            WriteTypeSignature(current);
+
+            if (i + 1 < signatures.Length)
+                _sb.Append(", ");
+        }
     }
 }

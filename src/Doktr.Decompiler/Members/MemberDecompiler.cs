@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Doktr.Decompiler.Members;
 
-public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVisitor
+public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVisitor, ITypeParameterConstraintVisitor
 {
     private readonly StringBuilder _sb = new();
     private readonly IMediator _mediator;
@@ -93,8 +93,7 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVi
         {
             var parameter = parameters[i];
             WriteParameterModifier(parameter);
-            string type = DecompileTypeSignature(parameter.Type);
-            _sb.Append(type);
+            WriteTypeSignature(parameter.Type);
 
             _sb.Append(' ');
             _sb.Append(parameter.Name);
@@ -143,41 +142,11 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVi
             for (int i = 0; i < constraints.Count; i++)
             {
                 var current = constraints[i];
-                WriteTypeParameterConstraint(current);
+                current.AcceptVisitor(this);
 
                 if (i + 1 < constraints.Count)
                     _sb.Append(", ");
             }
-        }
-    }
-
-    private void WriteTypeParameterConstraint(TypeParameterConstraint constraint)
-    {
-        switch (constraint)
-        {
-            case ReferenceTypeParameterConstraint { BaseType: null } refType:
-                _sb.Append(refType.Nullability switch
-                {
-                    NullabilityKind.NullOblivious or NullabilityKind.NotNullable => "class",
-                    NullabilityKind.Nullable => "class?",
-                    _ => throw new ArgumentOutOfRangeException(nameof(constraint))
-                });
-                break;
-
-            case ReferenceTypeParameterConstraint { BaseType: { } baseType }:
-                _sb.Append(DecompileTypeSignature(baseType));
-                break;
-
-            case ValueTypeParameterConstraint valType:
-                _sb.Append(valType.IsUnmanaged ? "unmanaged" : "struct");
-                break;
-
-            case InterfaceTypeParameterConstraint infType:
-                _sb.Append(DecompileTypeSignature(infType.InterfaceType));
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException(nameof(constraint));
         }
     }
 
@@ -187,11 +156,17 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVi
             _sb.Append("readonly ");
     }
 
-    private string DecompileTypeSignature(TypeSignature signature)
+    private void WriteTypeSignature(TypeSignature signature)
     {
-        var request = new DecompileTypeSignature(signature);
-        var task = _mediator.Send(request);
+        string decompiled = DecompileTypeSignature();
+        _sb.Append(decompiled);
 
-        return task.WaitForResult();
+        string DecompileTypeSignature()
+        {
+            var request = new DecompileTypeSignature(signature);
+            var task = _mediator.Send(request);
+
+            return task.WaitForResult();
+        }
     }
 }
