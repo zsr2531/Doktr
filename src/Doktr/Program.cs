@@ -10,18 +10,20 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 
 Parser.Default.ParseArguments<CommandLineOptions>(args)
-      .WithParsed(Start);
+      .WithParsed(result => Start(result).GetAwaiter().GetResult());
 
-static void Start(CommandLineOptions options)
+static async Task Start(CommandLineOptions options)
 {
     try
     {
         var container = CreateContainer(options);
         var logger = container.Resolve<ILogger>();
+        var mediator = container.Resolve<IMediator>();
     }
     catch (Exception ex)
     {
         Console.Error.WriteLine("An unexpected error occurred:\n" + ex);
+        Environment.ExitCode = 1; // Needed in order for CI to fail the build
     }
 }
 
@@ -29,17 +31,26 @@ static IContainer CreateContainer(CommandLineOptions options)
 {
     var logger = CreateLogger(options.Verbose);
     var configuration = LoadDoktrConfiguration(options.ProjectFilePath, logger);
-    var container = new ContainerBuilder();
+    var builder = new ContainerBuilder();
 
-    container.RegisterInstance(logger);
-    container.RegisterInstance(configuration);
+    // Singleton stuff
+    builder.RegisterInstance(logger);
+    builder.RegisterInstance(configuration);
 
-    container.RegisterGeneric(typeof(LoggerPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>)).SingleInstance();
+    // Stuff needed for MediatR
+    builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
+    builder.RegisterGeneric(typeof(LoggerPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>)).SingleInstance();
+    builder.Register<ServiceFactory>(ctx =>
+    {
+        var c = ctx.Resolve<IComponentContext>();
+        return t => c.Resolve(t);
+    });
 
-    container.RegisterAssemblyTypes(typeof(DecompileMemberHandler).Assembly)
-             .AsImplementedInterfaces();
+    // MediatR handlers
+    builder.RegisterAssemblyTypes(typeof(DecompileMemberHandler).Assembly)
+           .AsImplementedInterfaces();
 
-    return container.Build();
+    return builder.Build();
 }
 
 static ILogger CreateLogger(bool verbose)
@@ -61,6 +72,7 @@ static DoktrConfiguration LoadDoktrConfiguration(string path, ILogger logger)
     catch (Exception ex)
     {
         logger.Fatal(ex, "Failed to load configuration file");
-        throw;
+        // throw;
+        return new DoktrConfiguration();
     }
 }
