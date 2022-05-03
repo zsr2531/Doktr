@@ -2,13 +2,14 @@ using System.Text;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
-using Doktr.Core.Models.Segments;
+using Doktr.Core.Models.Constants;
+using Doktr.Core.Models.Constraints;
 using Doktr.Core.Models.Signatures;
 using MediatR;
 
 namespace Doktr.Decompiler.Members;
 
-public partial class MemberDecompiler : IDocumentationMemberVisitor
+public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVisitor
 {
     private readonly StringBuilder _sb = new();
     private readonly IMediator _mediator;
@@ -69,8 +70,8 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
             var variance = current.Variance;
             _sb.Append(variance switch
             {
-                TypeArgumentVarianceKind.Covariant => "out ",
-                TypeArgumentVarianceKind.Contravariant => "in ",
+                TypeParameterVarianceKind.Covariant => "out ",
+                TypeParameterVarianceKind.Contravariant => "in ",
                 _ => string.Empty
             });
 
@@ -123,8 +124,7 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
                 return;
 
             _sb.Append(" = ");
-            // TODO: This needs to be refactored to allow proper formatting.
-            _sb.Append(parameter.DefaultValue ?? "null");
+            parameter.DefaultValue.AcceptVisitor(this);
         }
     }
 
