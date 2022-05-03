@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Doktr.Core.Models;
 
 public enum MemberVisibility
@@ -5,11 +7,12 @@ public enum MemberVisibility
     Private,
     ProtectedAndAssembly,
     Assembly,
-    Protected,
     ProtectedOrAssembly,
+    Protected,
     Public
 }
 
+[ExcludeFromCodeCoverage]
 public static class MemberVisibilityExtensions
 {
     public static bool IsVisibleOutsideAssembly(this MemberVisibility memberVisibility)
