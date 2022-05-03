@@ -54,11 +54,9 @@ public partial class MemberDecompiler
 
         _sb.Append(" { ");
         if (indexerDocumentation.Getter is not null)
-            _sb.Append("get; ");
-        if (indexerDocumentation.Setter is { IsInit: false })
-            _sb.Append("set; ");
-        if (indexerDocumentation.Setter is { IsInit: true })
-            _sb.Append("init; ");
+            WriteGetter(indexerDocumentation.Visibility, indexerDocumentation.Getter);
+        if (indexerDocumentation.Setter is not null)
+            WriteSetter(indexerDocumentation.Visibility, indexerDocumentation.Setter);
         _sb.Append('}');
     }
 
@@ -76,11 +74,27 @@ public partial class MemberDecompiler
 
         _sb.Append(" { ");
         if (propertyDocumentation.Getter is not null)
-            _sb.Append("get; ");
-        if (propertyDocumentation.Setter is { IsInit: false })
-            _sb.Append("set; ");
-        if (propertyDocumentation.Setter is { IsInit: true })
-            _sb.Append("init; ");
+            WriteGetter(propertyDocumentation.Visibility, propertyDocumentation.Getter);
+        if (propertyDocumentation.Setter is not null)
+            WriteSetter(propertyDocumentation.Visibility, propertyDocumentation.Setter);
         _sb.Append('}');
+    }
+
+    private void WriteGetter(MemberVisibility parentVisibility, PropertyDocumentation.PropertyGetter getter)
+    {
+        if (parentVisibility > getter.Visibility)
+            WriteVisibility(getter.Visibility);
+
+        _sb.Append("get; ");
+    }
+
+    private void WriteSetter(MemberVisibility parentVisibility, PropertyDocumentation.PropertySetter setter)
+    {
+        if (parentVisibility > setter.Visibility)
+            WriteVisibility(setter.Visibility);
+
+        _sb.Append(setter.IsInit
+            ? "init; "
+            : "set; ");
     }
 }

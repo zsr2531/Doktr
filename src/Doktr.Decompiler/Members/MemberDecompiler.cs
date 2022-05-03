@@ -20,9 +20,11 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
 
     public override string ToString() => _sb.ToString();
 
-    private void WriteVisibility(MemberDocumentation member)
+    private void WriteVisibility(MemberDocumentation member) => WriteVisibility(member.Visibility);
+
+    private void WriteVisibility(MemberVisibility visibility)
     {
-        _sb.Append(member.Visibility switch
+        _sb.Append(visibility switch
         {
             MemberVisibility.Private => "private ",
             MemberVisibility.ProtectedAndAssembly => "private protected ",
@@ -30,7 +32,7 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor
             MemberVisibility.Protected => "protected ",
             MemberVisibility.ProtectedOrAssembly => "protected internal ",
             MemberVisibility.Public => "public ",
-            _ => throw new ArgumentOutOfRangeException(nameof(member))
+            _ => throw new ArgumentOutOfRangeException(nameof(visibility))
         });
     }
 
