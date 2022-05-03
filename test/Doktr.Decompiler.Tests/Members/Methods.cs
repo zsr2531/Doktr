@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Segments;
 using Doktr.Core.Models.Signatures;
 using Doktr.Decompiler.Members;
 using Doktr.Decompiler.Signatures;
@@ -98,6 +99,33 @@ public class Methods
 
         Assert.Equal(
             "public T Test<T, U, V>(U first, IEquatable<V> second)\n    where T : unmanaged\n    where U : ICloneable\n    where V : class?",
+            decompiled);
+    }
+
+    [Fact]
+    public void Method_With_Optional_Parameters()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var methodDocumentation = new MethodDocumentation("Test", MemberVisibility.Public,
+            new VanillaTypeSignature(new CodeReference("T:System.Void")))
+        {
+            Parameters = new ParameterSegmentCollection
+            {
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "first"),
+                new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "second")
+                {
+                    Modifiers = ParameterModifierFlags.Optional,
+                    DefaultValue = 123
+                },
+            }
+        };
+
+        methodDocumentation.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal(
+            "public void Test(int first, int second = 123)",
             decompiled);
     }
 
