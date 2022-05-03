@@ -1,8 +1,9 @@
 using System.Collections.ObjectModel;
+using Doktr.Core.Models.Constraints;
 
 namespace Doktr.Core.Models.Collections;
 
-public class TypeArgumentConstraintCollection : Collection<TypeParameterConstraint>, ICloneable
+public class TypeParameterConstraintCollection : Collection<TypeParameterConstraint>, ICloneable
 {
     public void AssertAtMostOneTypeKindConstraint()
     {
@@ -16,9 +17,9 @@ public class TypeArgumentConstraintCollection : Collection<TypeParameterConstrai
         }
     }
     
-    public TypeArgumentConstraintCollection Clone()
+    public TypeParameterConstraintCollection Clone()
     {
-        var clone = new TypeArgumentConstraintCollection();
+        var clone = new TypeParameterConstraintCollection();
         foreach (var constraint in this)
             clone.Add(constraint.Clone());
 

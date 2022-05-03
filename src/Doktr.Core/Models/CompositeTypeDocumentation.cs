@@ -14,7 +14,7 @@ public abstract class CompositeTypeDocumentation : TypeDocumentation,
 
     public bool IsStatic { get; set; }
 
-    public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
+    public TypeParameterDocumentationCollection TypeParameters { get; set; } = new();
     public TypeSignatureCollection Interfaces { get; set; } = new();
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<FieldDocumentation> Fields { get; set; } = new();

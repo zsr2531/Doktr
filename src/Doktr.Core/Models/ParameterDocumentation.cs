@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Constants;
 using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
@@ -26,7 +27,7 @@ public class ParameterDocumentation : ICloneable
     public TypeSignature Type { get; set; }
     public string Name { get; set; }
     public ParameterModifierFlags Modifiers { get; set; } = ParameterModifierFlags.None;
-    public object? DefaultValue { get; set; }
+    public Constant? DefaultValue { get; set; }
     public DocumentationFragmentCollection Documentation { get; set; } = new();
     public bool IsIn => (Modifiers & ParameterModifierFlags.In) != 0;
     public bool IsOut => (Modifiers & ParameterModifierFlags.Out) != 0;

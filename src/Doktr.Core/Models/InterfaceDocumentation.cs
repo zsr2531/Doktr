@@ -10,7 +10,7 @@ public class InterfaceDocumentation : TypeDocumentation, IHasTypeParameters, IHa
     }
 
 
-    public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
+    public TypeParameterDocumentationCollection TypeParameters { get; set; } = new();
     public TypeSignatureCollection Interfaces { get; set; } = new();
     public MemberCollection<EventDocumentation> Events { get; set; } = new();
     public MemberCollection<IndexerDocumentation> Indexers { get; set; } = new();

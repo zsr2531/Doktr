@@ -1,27 +1,27 @@
 using Doktr.Core.Models.Collections;
 
-namespace Doktr.Core.Models.Segments;
+namespace Doktr.Core.Models;
 
-public enum TypeArgumentVarianceKind
+public enum TypeParameterVarianceKind
 {
     Invariant,
     Covariant,
     Contravariant
 }
 
-public class TypeParameterSegment : ICloneable
+public class TypeParameterDocumentation : ICloneable
 {
-    public TypeParameterSegment(string name)
+    public TypeParameterDocumentation(string name)
     {
         Name = name;
     }
 
     public string Name { get; set; }
-    public TypeArgumentVarianceKind Variance { get; set; } = TypeArgumentVarianceKind.Invariant;
-    public TypeArgumentConstraintCollection Constraints { get; set; } = new();
+    public TypeParameterVarianceKind Variance { get; set; } = TypeParameterVarianceKind.Invariant;
+    public TypeParameterConstraintCollection Constraints { get; set; } = new();
     public DocumentationFragmentCollection Documentation { get; set; } = new();
 
-    public TypeParameterSegment Clone() => new(Name)
+    public TypeParameterDocumentation Clone() => new(Name)
     {
         Variance = Variance,
         Constraints = Constraints.Clone(),

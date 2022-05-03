@@ -12,7 +12,7 @@ public class DelegateDocumentation : TypeDocumentation, IHasTypeParameters, IHas
     }
 
 
-    public TypeParameterSegmentCollection TypeParameters { get; set; } = new();
+    public TypeParameterDocumentationCollection TypeParameters { get; set; } = new();
     public ParameterDocumentationCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
