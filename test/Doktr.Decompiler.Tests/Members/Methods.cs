@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Constants;
+using Doktr.Core.Models.Constraints;
 using Doktr.Core.Models.Signatures;
 using Doktr.Decompiler.Members;
 using Doktr.Decompiler.Signatures;
@@ -51,18 +53,18 @@ public class Methods
         var methodDocumentation =
             new MethodDocumentation("Test", MemberVisibility.Public, new GenericParameterTypeSignature("T"))
             {
-                TypeParameters = new TypeParameterSegmentCollection
+                TypeParameters = new TypeParameterDocumentationCollection
                 {
                     new("T")
                     {
-                        Constraints = new TypeArgumentConstraintCollection
+                        Constraints = new TypeParameterConstraintCollection
                         {
                             new ValueTypeParameterConstraint { IsUnmanaged = true }
                         }
                     },
                     new("U")
                     {
-                        Constraints = new TypeArgumentConstraintCollection
+                        Constraints = new TypeParameterConstraintCollection
                         {
                             new InterfaceTypeParameterConstraint(new VanillaTypeSignature(
                                 new CodeReference("T:System.ICloneable")))
@@ -70,7 +72,7 @@ public class Methods
                     },
                     new("V")
                     {
-                        Constraints = new TypeArgumentConstraintCollection
+                        Constraints = new TypeParameterConstraintCollection
                         {
                             new ReferenceTypeParameterConstraint
                             {
@@ -115,7 +117,7 @@ public class Methods
                 new(new VanillaTypeSignature(new CodeReference("T:System.Int32")), "second")
                 {
                     Modifiers = ParameterModifierFlags.Optional,
-                    DefaultValue = 123
+                    DefaultValue = new ObjectConstant(123)
                 },
             }
         };

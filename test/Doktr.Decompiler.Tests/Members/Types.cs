@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
-using Doktr.Core.Models.Segments;
+using Doktr.Core.Models.Constraints;
 using Doktr.Core.Models.Signatures;
 using Doktr.Decompiler.Members;
 using Doktr.Decompiler.Signatures;
@@ -121,7 +121,7 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T"),
                 new("U")
@@ -141,11 +141,11 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
                 {
-                    Constraints = new TypeArgumentConstraintCollection
+                    Constraints = new TypeParameterConstraintCollection
                     {
                         new ValueTypeParameterConstraint(),
                         new InterfaceTypeParameterConstraint(new VanillaTypeSignature(
@@ -168,11 +168,11 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
                 {
-                    Constraints = new TypeArgumentConstraintCollection
+                    Constraints = new TypeParameterConstraintCollection
                     {
                         new ValueTypeParameterConstraint
                         {
@@ -196,11 +196,11 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var classDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
                 {
-                    Constraints = new TypeArgumentConstraintCollection
+                    Constraints = new TypeParameterConstraintCollection
                     {
                         new ReferenceTypeParameterConstraint
                         {
@@ -212,7 +212,7 @@ public class Types
                 },
                 new("U")
                 {
-                    Constraints = new TypeArgumentConstraintCollection
+                    Constraints = new TypeParameterConstraintCollection
                     {
                         new ReferenceTypeParameterConstraint
                         {
@@ -310,16 +310,16 @@ public class Types
     }
 
     [Theory]
-    [InlineData(TypeArgumentVarianceKind.Invariant, "")]
-    [InlineData(TypeArgumentVarianceKind.Covariant, "out ")]
-    [InlineData(TypeArgumentVarianceKind.Contravariant, "in ")]
-    public void Interface_With_Variant_TypeParameter(TypeArgumentVarianceKind kind, string expected)
+    [InlineData(TypeParameterVarianceKind.Invariant, "")]
+    [InlineData(TypeParameterVarianceKind.Covariant, "out ")]
+    [InlineData(TypeParameterVarianceKind.Contravariant, "in ")]
+    public void Interface_With_Variant_TypeParameter(TypeParameterVarianceKind kind, string expected)
     {
         var mediator = CreateMockMediator();
         var decompiler = new MemberDecompiler(mediator);
         var interfaceDocumentation = new InterfaceDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
                 {
@@ -483,11 +483,11 @@ public class Types
         var delegateDocumentation = new DelegateDocumentation("Test", MemberVisibility.Public,
             new VanillaTypeSignature(new CodeReference("T:System.Void")))
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
                 {
-                    Constraints = new TypeArgumentConstraintCollection
+                    Constraints = new TypeParameterConstraintCollection
                     {
                         new ValueTypeParameterConstraint()
                     }
@@ -509,7 +509,7 @@ public class Types
         var decompiler = new MemberDecompiler(mediator);
         var recordDocumentation = new RecordDocumentation("Test", MemberVisibility.Public)
         {
-            TypeParameters = new TypeParameterSegmentCollection
+            TypeParameters = new TypeParameterDocumentationCollection
             {
                 new("T")
             },
