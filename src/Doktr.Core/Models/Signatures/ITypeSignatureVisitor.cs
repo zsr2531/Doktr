@@ -2,21 +2,21 @@ namespace Doktr.Core.Models.Signatures;
 
 public interface ITypeSignatureVisitor
 {
-    void VisitVanilla(VanillaTypeSignature vanillaTypeSignature);
+    void VisitVanilla(VanillaTypeSignature signature);
     
-    void VisitGenericInstance(GenericInstanceTypeSignature genericInstanceTypeSignature);
+    void VisitGenericInstance(GenericInstanceTypeSignature signature);
 
-    void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature);
+    void VisitGenericParameter(GenericParameterTypeSignature signature);
 
-    void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature);
+    void VisitSzArray(SzArrayTypeSignature signature);
 
-    void VisitNullableValue(NullableValueTypeSignature nullableValueTypeSignature);
+    void VisitNullableValue(NullableValueTypeSignature signature);
 
-    void VisitValueTuple(ValueTupleTypeSignature valueTupleTypeSignature);
+    void VisitValueTuple(ValueTupleTypeSignature signature);
 
-    void VisitPointer(PointerTypeSignature pointerTypeSignature);
+    void VisitPointer(PointerTypeSignature signature);
 
-    void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature);
+    void VisitJaggedArray(JaggedArrayTypeSignature signature);
 
-    void VisitFunctionPointer(FunctionPointerTypeSignature functionPointerTypeSignature);
+    void VisitFunctionPointer(FunctionPointerTypeSignature signature);
 }

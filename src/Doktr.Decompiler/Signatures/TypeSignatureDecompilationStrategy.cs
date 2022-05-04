@@ -31,85 +31,85 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
 
     protected readonly StringBuilder Builder = new();
 
-    public virtual void VisitVanilla(VanillaTypeSignature vanillaTypeSignature)
+    public virtual void VisitVanilla(VanillaTypeSignature signature)
     {
-        var codeReference = vanillaTypeSignature.Type;
+        var codeReference = signature.Type;
         if (Primitives.TryGetValue(codeReference, out string? primitive))
         {
             Builder.Append(primitive);
             return;
         }
 
-        var fullName = vanillaTypeSignature.Type.Name;
+        var fullName = signature.Type.Name;
         var name = fullName.TrimUntilLastDot();
         var ticksRemoved = name.TrimTicks();
 
         Builder.Append(ticksRemoved);
     }
 
-    public virtual void VisitGenericInstance(GenericInstanceTypeSignature genericInstanceTypeSignature)
+    public virtual void VisitGenericInstance(GenericInstanceTypeSignature signature)
     {
-        genericInstanceTypeSignature.GenericType.AcceptVisitor(this);
+        signature.GenericType.AcceptVisitor(this);
         Builder.Append('<');
 
-        var typeParams = genericInstanceTypeSignature.TypeParameters;
+        var typeParams = signature.TypeParameters;
         WriteTypeSignatures(typeParams);
 
         Builder.Append('>');
     }
 
-    public virtual void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature)
+    public virtual void VisitGenericParameter(GenericParameterTypeSignature signature)
     {
-        Builder.Append(genericParameterTypeSignature.Name);
+        Builder.Append(signature.Name);
     }
 
-    public virtual void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature)
+    public virtual void VisitSzArray(SzArrayTypeSignature signature)
     {
-        szArrayTypeSignature.ArrayType.AcceptVisitor(this);
+        signature.ArrayType.AcceptVisitor(this);
         Builder.Append("[]");
     }
 
-    public void VisitNullableValue(NullableValueTypeSignature nullableValueTypeSignature)
+    public void VisitNullableValue(NullableValueTypeSignature signature)
     {
-        nullableValueTypeSignature.ValueType.AcceptVisitor(this);
+        signature.ValueType.AcceptVisitor(this);
         Builder.Append('?');
     }
 
-    public void VisitValueTuple(ValueTupleTypeSignature valueTupleTypeSignature)
+    public void VisitValueTuple(ValueTupleTypeSignature signature)
     {
         Builder.Append('(');
 
-        var parameters = valueTupleTypeSignature.Parameters;
+        var parameters = signature.Parameters;
         WriteTypeSignatures(parameters);
 
         Builder.Append(')');
     }
 
-    public void VisitPointer(PointerTypeSignature pointerTypeSignature)
+    public void VisitPointer(PointerTypeSignature signature)
     {
-        pointerTypeSignature.PointedToType.AcceptVisitor(this);
+        signature.PointedToType.AcceptVisitor(this);
         Builder.Append('*');
     }
 
-    public virtual void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature)
+    public virtual void VisitJaggedArray(JaggedArrayTypeSignature signature)
     {
-        jaggedArrayTypeSignature.ArrayType.AcceptVisitor(this);
+        signature.ArrayType.AcceptVisitor(this);
         Builder.Append('[');
 
-        for (int i = 0; i < jaggedArrayTypeSignature.Dimensions; i++)
+        for (int i = 0; i < signature.Dimensions; i++)
             Builder.Append(',');
 
         Builder.Append(']');
     }
 
-    public void VisitFunctionPointer(FunctionPointerTypeSignature functionPointerTypeSignature)
+    public void VisitFunctionPointer(FunctionPointerTypeSignature signature)
     {
         Builder.Append("delegate*");
-        WriteCallingConvention(functionPointerTypeSignature.CallingConvention);
+        WriteCallingConvention(signature.CallingConvention);
 
         Builder.Append('<');
 
-        var parameters = functionPointerTypeSignature.Parameters;
+        var parameters = signature.Parameters;
         WriteTypeSignatures(parameters);
 
         Builder.Append('>');

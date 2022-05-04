@@ -4,34 +4,34 @@ namespace Doktr.Decompiler.Signatures;
 
 public class NullableTypeSignatureDecompilationStrategy : TypeSignatureDecompilationStrategy
 {
-    public override void VisitVanilla(VanillaTypeSignature vanillaTypeSignature)
+    public override void VisitVanilla(VanillaTypeSignature signature)
     {
-        base.VisitVanilla(vanillaTypeSignature);
-        WriteNullability(vanillaTypeSignature);
+        base.VisitVanilla(signature);
+        WriteNullability(signature);
     }
 
-    public override void VisitGenericInstance(GenericInstanceTypeSignature genericInstanceTypeSignature)
+    public override void VisitGenericInstance(GenericInstanceTypeSignature signature)
     {
-        base.VisitGenericInstance(genericInstanceTypeSignature);
-        WriteNullability(genericInstanceTypeSignature);
+        base.VisitGenericInstance(signature);
+        WriteNullability(signature);
     }
 
-    public override void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature)
+    public override void VisitGenericParameter(GenericParameterTypeSignature signature)
     {
-        base.VisitGenericParameter(genericParameterTypeSignature);
-        WriteNullability(genericParameterTypeSignature);
+        base.VisitGenericParameter(signature);
+        WriteNullability(signature);
     }
 
-    public override void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature)
+    public override void VisitSzArray(SzArrayTypeSignature signature)
     {
-        base.VisitSzArray(szArrayTypeSignature);
-        WriteNullability(szArrayTypeSignature);
+        base.VisitSzArray(signature);
+        WriteNullability(signature);
     }
 
-    public override void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature)
+    public override void VisitJaggedArray(JaggedArrayTypeSignature signature)
     {
-        base.VisitJaggedArray(jaggedArrayTypeSignature);
-        WriteNullability(jaggedArrayTypeSignature);
+        base.VisitJaggedArray(signature);
+        WriteNullability(signature);
     }
 
     private void WriteNullability(TypeSignature typeSignature)
