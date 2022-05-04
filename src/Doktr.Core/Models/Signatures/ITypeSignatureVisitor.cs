@@ -9,4 +9,14 @@ public interface ITypeSignatureVisitor
     void VisitGenericParameter(GenericParameterTypeSignature genericParameterTypeSignature);
 
     void VisitSzArray(SzArrayTypeSignature szArrayTypeSignature);
+
+    void VisitNullableValue(NullableValueTypeSignature nullableValueTypeSignature);
+
+    void VisitValueTuple(ValueTupleTypeSignature valueTupleTypeSignature);
+
+    void VisitPointer(PointerTypeSignature pointerTypeSignature);
+
+    void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature);
+
+    void VisitFunctionPointer(FunctionPointerTypeSignature functionPointerTypeSignature);
 }
