@@ -13,7 +13,7 @@ public class GenericInstanceTypeSignatureTests
         var genericTypeSignature = new VanillaTypeSignature(new CodeReference("T:My.Test"));
         var genericParameter = new GenericParameterTypeSignature("T");
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
-        signature.TypeArguments.Add(genericParameter);
+        signature.TypeParameters.Add(genericParameter);
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -29,9 +29,9 @@ public class GenericInstanceTypeSignatureTests
         var genericParameter2 = new GenericParameterTypeSignature("U");
         var genericParameter3 = new GenericParameterTypeSignature("V");
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
-        signature.TypeArguments.Add(genericParameter);
-        signature.TypeArguments.Add(genericParameter2);
-        signature.TypeArguments.Add(genericParameter3);
+        signature.TypeParameters.Add(genericParameter);
+        signature.TypeParameters.Add(genericParameter2);
+        signature.TypeParameters.Add(genericParameter3);
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -48,7 +48,7 @@ public class GenericInstanceTypeSignatureTests
             Nullability = NullabilityKind.Nullable
         };
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
-        signature.TypeArguments.Add(genericParameter);
+        signature.TypeParameters.Add(genericParameter);
         var decompiler = new TypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -65,7 +65,7 @@ public class GenericInstanceTypeSignatureTests
             Nullability = NullabilityKind.Nullable
         };
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
-        signature.TypeArguments.Add(genericParameter);
+        signature.TypeParameters.Add(genericParameter);
         var decompiler = new NullableTypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 
@@ -86,8 +86,8 @@ public class GenericInstanceTypeSignatureTests
             Nullability = NullabilityKind.Nullable
         };
         var signature = new GenericInstanceTypeSignature(genericTypeSignature);
-        signature.TypeArguments.Add(genericParameter);
-        signature.TypeArguments.Add(genericParameter2);
+        signature.TypeParameters.Add(genericParameter);
+        signature.TypeParameters.Add(genericParameter2);
         var decompiler = new NullableTypeSignatureDecompilationStrategy();
         signature.AcceptVisitor(decompiler);
 

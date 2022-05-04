@@ -10,12 +10,12 @@ public class GenericInstanceTypeSignature : TypeSignature
     }
 
     public TypeSignature GenericType { get; set; }
-    public TypeSignatureCollection TypeArguments { get; set; } = new();
+    public TypeSignatureCollection TypeParameters { get; set; } = new();
 
     public override void AcceptVisitor(ITypeSignatureVisitor visitor) => visitor.VisitGenericInstance(this);
 
     public override GenericInstanceTypeSignature Clone() => new(GenericType.Clone())
     {
-        TypeArguments = TypeArguments.Clone()
+        TypeParameters = TypeParameters.Clone()
     };
 }

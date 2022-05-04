@@ -72,7 +72,7 @@ public class Types
                 new GenericInstanceTypeSignature(new VanillaTypeSignature(
                     new CodeReference("T:System.IEquatable`1")))
                 {
-                    TypeArguments = new TypeSignatureCollection
+                    TypeParameters = new TypeSignatureCollection
                     {
                         new VanillaTypeSignature(new CodeReference("T:NS.Test"))
                     }
@@ -100,7 +100,7 @@ public class Types
                 new GenericInstanceTypeSignature(new VanillaTypeSignature(
                     new CodeReference("T:System.IEquatable`1")))
                 {
-                    TypeArguments = new TypeSignatureCollection
+                    TypeParameters = new TypeSignatureCollection
                     {
                         new VanillaTypeSignature(new CodeReference("T:NS.Test"))
                     }

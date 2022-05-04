@@ -1,5 +1,6 @@
 using System.Text;
 using Doktr.Core.Models;
+using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Decompiler.Signatures;
@@ -8,6 +9,7 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
 {
     private static readonly Dictionary<CodeReference, string> Primitives = new()
     {
+        [new CodeReference("T:System.Void")] = "void",
         [new CodeReference("T:System.Int8")] = "sbyte",
         [new CodeReference("T:System.Int16")] = "short",
         [new CodeReference("T:System.Int32")] = "int",
@@ -50,15 +52,8 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
         genericInstanceTypeSignature.GenericType.AcceptVisitor(this);
         Builder.Append('<');
 
-        var typeArgs = genericInstanceTypeSignature.TypeArguments;
-        for (int i = 0; i < typeArgs.Count; i++)
-        {
-            var current = typeArgs[i];
-            current.AcceptVisitor(this);
-
-            if (i + 1 < typeArgs.Count)
-                Builder.Append(", ");
-        }
+        var typeParams = genericInstanceTypeSignature.TypeParameters;
+        WriteTypeSignatures(typeParams);
 
         Builder.Append('>');
     }
@@ -72,6 +67,85 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
     {
         szArrayTypeSignature.ArrayType.AcceptVisitor(this);
         Builder.Append("[]");
+    }
+
+    public void VisitNullableValue(NullableValueTypeSignature nullableValueTypeSignature)
+    {
+        nullableValueTypeSignature.ValueType.AcceptVisitor(this);
+        Builder.Append('?');
+    }
+
+    public void VisitValueTuple(ValueTupleTypeSignature valueTupleTypeSignature)
+    {
+        Builder.Append('(');
+
+        var parameters = valueTupleTypeSignature.Parameters;
+        WriteTypeSignatures(parameters);
+
+        Builder.Append(')');
+    }
+
+    public void VisitPointer(PointerTypeSignature pointerTypeSignature)
+    {
+        pointerTypeSignature.PointedToType.AcceptVisitor(this);
+        Builder.Append('*');
+    }
+
+    public virtual void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature)
+    {
+        jaggedArrayTypeSignature.ArrayType.AcceptVisitor(this);
+        Builder.Append('[');
+
+        for (int i = 0; i < jaggedArrayTypeSignature.Dimensions; i++)
+            Builder.Append(',');
+
+        Builder.Append(']');
+    }
+
+    public void VisitFunctionPointer(FunctionPointerTypeSignature functionPointerTypeSignature)
+    {
+        Builder.Append("delegate*");
+        WriteCallingConvention(functionPointerTypeSignature.CallingConvention);
+
+        Builder.Append('<');
+
+        var parameters = functionPointerTypeSignature.Parameters;
+        WriteTypeSignatures(parameters);
+
+        Builder.Append('>');
+    }
+
+    private void WriteCallingConvention(CallingConventions callingConvention)
+    {
+        if (callingConvention == CallingConventions.Managed)
+            return;
+
+        Builder.Append('[');
+
+        Builder.Append(callingConvention switch
+        {
+            CallingConventions.Cdecl => "Cdecl",
+            CallingConventions.Fastcall => "Fastcall",
+            CallingConventions.Stdcall => "Stdcall",
+            CallingConventions.Thiscall => "Thiscall",
+            CallingConventions.MemberFunction => "MemberFunction",
+            CallingConventions.SuppressGCTransition => "SuppressGCTransition",
+            _ => throw new ArgumentOutOfRangeException(nameof(callingConvention))
+        });
+
+        Builder.Append(']');
+    }
+
+    private void WriteTypeSignatures(TypeSignatureCollection signatures)
+    {
+        for (int i = 0; i < signatures.Count; i++)
+        {
+            var current = signatures[i];
+            current.AcceptVisitor(this);
+
+            if (i + 1 < signatures.Count)
+                Builder.Append(", ");
+        }
     }
 
     public override string ToString() => Builder.ToString();

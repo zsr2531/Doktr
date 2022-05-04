@@ -28,6 +28,12 @@ public class NullableTypeSignatureDecompilationStrategy : TypeSignatureDecompila
         WriteNullability(szArrayTypeSignature);
     }
 
+    public override void VisitJaggedArray(JaggedArrayTypeSignature jaggedArrayTypeSignature)
+    {
+        base.VisitJaggedArray(jaggedArrayTypeSignature);
+        WriteNullability(jaggedArrayTypeSignature);
+    }
+
     private void WriteNullability(TypeSignature typeSignature)
     {
         if (typeSignature.Nullability == NullabilityKind.Nullable)

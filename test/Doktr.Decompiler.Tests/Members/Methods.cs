@@ -87,7 +87,7 @@ public class Methods
                     new(new GenericInstanceTypeSignature(new VanillaTypeSignature(
                         new CodeReference("T:System.IEquatable")))
                     {
-                        TypeArguments = new TypeSignatureCollection
+                        TypeParameters = new TypeSignatureCollection
                         {
                             new GenericParameterTypeSignature("V")
                         }
