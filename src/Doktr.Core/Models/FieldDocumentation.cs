@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Constants;
 using Doktr.Core.Models.Signatures;
 
 namespace Doktr.Core.Models;
@@ -18,7 +19,7 @@ public class FieldDocumentation : MemberDocumentation, IHasStatic, IHasReadOnly,
     [MemberNotNullWhen(true, nameof(ConstantValue))]
     public bool IsConstant { get; set; }
     public bool IsReadOnly { get; set; }
-    public object? ConstantValue { get; set; }
+    public Constant? ConstantValue { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitField(this);
@@ -39,7 +40,7 @@ public class FieldDocumentation : MemberDocumentation, IHasStatic, IHasReadOnly,
             otherField.IsVolatile = IsVolatile;
             otherField.IsConstant = IsConstant;
             otherField.IsReadOnly = IsReadOnly;
-            otherField.ConstantValue = ConstantValue;
+            otherField.ConstantValue = ConstantValue?.Clone();
             otherField.Value = Value.Clone();
         }
 

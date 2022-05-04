@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Doktr.Core;
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
+using Doktr.Core.Models.Constants;
 using Doktr.Core.Models.Signatures;
 using Doktr.Decompiler.Members;
 using Doktr.Decompiler.Signatures;
@@ -83,7 +84,7 @@ public class Attributes
             new VanillaTypeSignature(new CodeReference("T:System.Int32")))
         {
             IsConstant = true,
-            ConstantValue = 123
+            ConstantValue = new ObjectConstant(123)
         };
 
         fieldDocumentation.AcceptVisitor(decompiler);

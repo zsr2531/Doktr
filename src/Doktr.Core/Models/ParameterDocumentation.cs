@@ -41,7 +41,7 @@ public class ParameterDocumentation : ICloneable
     public ParameterDocumentation Clone() => new(Type.Clone(), Name)
     {
         Modifiers = Modifiers,
-        DefaultValue = DefaultValue,
+        DefaultValue = DefaultValue?.Clone(),
         Documentation = Documentation.Clone()
     };
 

@@ -34,7 +34,7 @@ public partial class MemberDecompiler
         if (fieldDocumentation.IsConstant)
         {
             _sb.Append(" = ");
-            _sb.Append(fieldDocumentation.ConstantValue ?? "null");
+            fieldDocumentation.ConstantValue.AcceptVisitor(this);
         }
     }
 
