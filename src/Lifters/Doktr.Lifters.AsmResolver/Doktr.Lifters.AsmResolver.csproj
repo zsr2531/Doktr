@@ -9,6 +9,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Doktr.Core\Doktr.Core.csproj" />
+      <ProjectReference Include="..\Doktr.Lifters.Common\Doktr.Lifters.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AsmResolver.DotNet" Version="4.10.0" />
     </ItemGroup>
 
 </Project>
