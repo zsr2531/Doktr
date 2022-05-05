@@ -19,4 +19,6 @@ public interface ITypeSignatureVisitor
     void VisitJaggedArray(JaggedArrayTypeSignature signature);
 
     void VisitFunctionPointer(FunctionPointerTypeSignature signature);
+
+    void VisitNested(NestedTypeSignature signature);
 }

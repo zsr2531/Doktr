@@ -12,7 +12,7 @@ public static class StringUtils
 
     public static ReadOnlySpan<char> TrimTicks(this ReadOnlySpan<char> str)
     {
-        int tick = str.IndexOf('`');
+        int tick = str.LastIndexOf('`');
         return tick == -1
             ? str
             : str[..tick];

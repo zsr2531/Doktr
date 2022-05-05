@@ -115,6 +115,13 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
         Builder.Append('>');
     }
 
+    public void VisitNested(NestedTypeSignature signature)
+    {
+        signature.Parent.AcceptVisitor(this);
+        Builder.Append('.');
+        signature.Child.AcceptVisitor(this);
+    }
+
     private void WriteCallingConvention(CallingConventions callingConvention)
     {
         if (callingConvention == CallingConventions.Managed)
