@@ -16,6 +16,12 @@ public partial class MemberDecompiler
     public void VisitValueType(ValueTypeParameterConstraint constraint) =>
         _sb.Append(constraint.IsUnmanaged ? "unmanaged" : "struct");
 
+    public void VisitNotNullType(NotNullTypeKindTypeParameterConstraint constraint) => _sb.Append("notnull");
+
+    public void VisitDefaultType(DefaultTypeKindTypeParameterConstraint constraint) => _sb.Append("default");
+
     public void VisitInterface(InterfaceTypeParameterConstraint constraint) =>
         WriteTypeSignature(constraint.InterfaceType);
+
+    public void VisitConstructor(ConstructorTypeParameterConstraint constraint) => _sb.Append("new()");
 }

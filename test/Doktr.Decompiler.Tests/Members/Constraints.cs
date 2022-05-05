@@ -150,4 +150,43 @@ public class Constraints
 
         Assert.Equal("ITest?", decompiled);
     }
+
+    [Fact]
+    public void NotNull()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var notNullType = new NotNullTypeKindTypeParameterConstraint();
+
+        notNullType.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("notnull", decompiled);
+    }
+
+    [Fact]
+    public void Default()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var defaultType = new DefaultTypeKindTypeParameterConstraint();
+
+        defaultType.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("default", decompiled);
+    }
+
+    [Fact]
+    public void Constructor()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var constructor = new ConstructorTypeParameterConstraint();
+
+        constructor.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("new()", decompiled);
+    }
 }

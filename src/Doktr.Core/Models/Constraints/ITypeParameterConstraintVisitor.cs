@@ -6,5 +6,11 @@ public interface ITypeParameterConstraintVisitor
 
     void VisitValueType(ValueTypeParameterConstraint constraint);
 
+    void VisitNotNullType(NotNullTypeKindTypeParameterConstraint constraint);
+
+    void VisitDefaultType(DefaultTypeKindTypeParameterConstraint constraint);
+
     void VisitInterface(InterfaceTypeParameterConstraint constraint);
+
+    void VisitConstructor(ConstructorTypeParameterConstraint constraint);
 }
