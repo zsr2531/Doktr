@@ -11,6 +11,8 @@ public partial class MemberDecompiler
         WriteVisibility(classDocumentation);
         WriteTypeAccessModifiers(classDocumentation);
         _sb.Append("class ");
+
+        WriteParentType(classDocumentation);
         _sb.Append(classDocumentation.Name);
 
         WriteTypeParameters(classDocumentation);
@@ -18,11 +20,11 @@ public partial class MemberDecompiler
         bool hasBaseType = classDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !classDocumentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteParentTypes(hasBaseType
+            WriteBaseTypes(hasBaseType
                 ? classDocumentation.Interfaces.Prepend(classDocumentation.BaseType!)
                 : classDocumentation.Interfaces);
 
-        WriteTypeParameterConstraints(classDocumentation);
+        WriteTypeParameterConstraintsType(classDocumentation);
     }
 
     public void VisitInterface(InterfaceDocumentation interfaceDocumentation)
@@ -35,9 +37,9 @@ public partial class MemberDecompiler
 
         bool hasAnyParents = !interfaceDocumentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteParentTypes(interfaceDocumentation.Interfaces);
+            WriteBaseTypes(interfaceDocumentation.Interfaces);
 
-        WriteTypeParameterConstraints(interfaceDocumentation);
+        WriteTypeParameterConstraintsType(interfaceDocumentation);
     }
 
     public void VisitRecord(RecordDocumentation recordDocumentation)
@@ -53,11 +55,11 @@ public partial class MemberDecompiler
         bool hasBaseType = recordDocumentation.BaseType is not null;
         bool hasAnyParents = hasBaseType || !recordDocumentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteParentTypes(hasBaseType
+            WriteBaseTypes(hasBaseType
                 ? recordDocumentation.Interfaces.Prepend(recordDocumentation.BaseType!)
                 : recordDocumentation.Interfaces);
 
-        WriteTypeParameterConstraints(recordDocumentation);
+        WriteTypeParameterConstraintsType(recordDocumentation);
     }
 
     public void VisitStruct(StructDocumentation structDocumentation)
@@ -76,9 +78,9 @@ public partial class MemberDecompiler
 
         bool hasAnyParents = !structDocumentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteParentTypes(structDocumentation.Interfaces);
+            WriteBaseTypes(structDocumentation.Interfaces);
 
-        WriteTypeParameterConstraints(structDocumentation);
+        WriteTypeParameterConstraintsType(structDocumentation);
     }
 
     public void VisitDelegate(DelegateDocumentation delegateDocumentation)
@@ -93,7 +95,7 @@ public partial class MemberDecompiler
 
         WriteTypeParameters(delegateDocumentation);
         WriteParameters(delegateDocumentation);
-        WriteTypeParameterConstraints(delegateDocumentation);
+        WriteTypeParameterConstraintsType(delegateDocumentation);
     }
 
     public void VisitEnum(EnumDocumentation enumDocumentation)
@@ -125,7 +127,7 @@ public partial class MemberDecompiler
             _sb.Append("sealed ");
     }
 
-    private void WriteParentTypes(IEnumerable<TypeSignature> parentTypes)
+    private void WriteBaseTypes(IEnumerable<TypeSignature> parentTypes)
     {
         var signatures = parentTypes.ToArray();
         _sb.Append(" : ");
@@ -138,5 +140,31 @@ public partial class MemberDecompiler
             if (i + 1 < signatures.Length)
                 _sb.Append(", ");
         }
+    }
+
+    private void WriteParentType(TypeDocumentation type)
+    {
+        var parent = type.ParentType;
+        if (parent is null)
+            return;
+
+        WriteParentType(parent);
+
+        _sb.Append(parent.Name);
+        WriteTypeParameters(parent);
+
+        _sb.Append('.');
+    }
+
+    private void WriteTypeParameterConstraintsType(TypeDocumentation type)
+    {
+        var parent = type.ParentType;
+        if (parent is not null)
+            WriteTypeParameterConstraintsType(parent);
+
+        if (type is not IHasTypeParameters withTypeParams)
+            return;
+
+        WriteTypeParameterConstraints(withTypeParams);
     }
 }

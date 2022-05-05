@@ -297,6 +297,86 @@ public class Types
     }
 
     [Fact]
+    public void Nested_Class()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var parentClassDocumentation = new ClassDocumentation("Test", MemberVisibility.Public);
+        var childClassDocumentation = new ClassDocumentation("Child", MemberVisibility.Public)
+        {
+            ParentType = parentClassDocumentation
+        };
+
+        childClassDocumentation.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("public class Test.Child", decompiled);
+    }
+
+    [Fact]
+    public void Nested_Class_Three_Levels_Deep()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var parentClassDocumentation = new ClassDocumentation("Test", MemberVisibility.Public);
+        var childClassDocumentation = new ClassDocumentation("Child", MemberVisibility.Public)
+        {
+            ParentType = parentClassDocumentation
+        };
+        var grandChildClassDocumentation = new ClassDocumentation("GrandChild", MemberVisibility.Public)
+        {
+            ParentType = childClassDocumentation
+        };
+
+        grandChildClassDocumentation.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("public class Test.Child.GrandChild", decompiled);
+    }
+
+    [Fact]
+    public void Nested_Generic_Classes_With_Constraints()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var parentClassDocumentation = new ClassDocumentation("Test", MemberVisibility.Public)
+        {
+            TypeParameters = new TypeParameterDocumentationCollection
+            {
+                new("T")
+                {
+                    Constraints = new TypeParameterConstraintCollection
+                    {
+                        new ReferenceTypeParameterConstraint()
+                    }
+                }
+            }
+        };
+        var childClassDocumentation = new ClassDocumentation("Child", MemberVisibility.Public)
+        {
+            ParentType = parentClassDocumentation,
+            TypeParameters = new TypeParameterDocumentationCollection
+            {
+                new("U")
+                {
+                    Constraints = new TypeParameterConstraintCollection
+                    {
+                        new ValueTypeParameterConstraint(),
+                        new InterfaceTypeParameterConstraint(
+                            new VanillaTypeSignature(new CodeReference("T:System.ICloneable"))),
+                    }
+                }
+            }
+        };
+
+        childClassDocumentation.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("public class Test<T>.Child<U>\n    where T : class\n    where U : struct, ICloneable",
+            decompiled);
+    }
+
+    [Fact]
     public void Interface()
     {
         var mediator = CreateMockMediator();
@@ -494,7 +574,8 @@ public class Types
                 }
             }
         };
-        delegateDocumentation.Parameters.Add(new ParameterDocumentation(new GenericParameterTypeSignature("T"), "param"));
+        delegateDocumentation.Parameters.Add(
+            new ParameterDocumentation(new GenericParameterTypeSignature("T"), "param"));
 
         delegateDocumentation.AcceptVisitor(decompiler);
         string decompiled = decompiler.ToString();
