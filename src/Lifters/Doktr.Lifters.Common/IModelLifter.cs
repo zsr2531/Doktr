@@ -1,6 +1,6 @@
 using Doktr.Core.Models.Collections;
 
-namespace Doktr.Core;
+namespace Doktr.Lifters.Common;
 
 public interface IModelLifter
 {
