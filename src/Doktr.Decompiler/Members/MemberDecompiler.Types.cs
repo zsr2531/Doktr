@@ -31,6 +31,8 @@ public partial class MemberDecompiler
     {
         WriteVisibility(interfaceDocumentation);
         _sb.Append("interface ");
+
+        WriteParentType(interfaceDocumentation);
         _sb.Append(interfaceDocumentation.Name);
 
         WriteTypeParameters(interfaceDocumentation);
@@ -47,6 +49,8 @@ public partial class MemberDecompiler
         WriteVisibility(recordDocumentation);
         WriteTypeAccessModifiers(recordDocumentation);
         _sb.Append("record ");
+
+        WriteParentType(recordDocumentation);
         _sb.Append(recordDocumentation.Name);
 
         WriteTypeParameters(recordDocumentation);
@@ -72,6 +76,8 @@ public partial class MemberDecompiler
             _sb.Append("ref ");
 
         _sb.Append("struct ");
+
+        WriteParentType(structDocumentation);
         _sb.Append(structDocumentation.Name);
 
         WriteTypeParameters(structDocumentation);
@@ -91,6 +97,8 @@ public partial class MemberDecompiler
         WriteReturnType(delegateDocumentation);
 
         _sb.Append(' ');
+
+        WriteParentType(delegateDocumentation);
         _sb.Append(delegateDocumentation.Name);
 
         WriteTypeParameters(delegateDocumentation);
@@ -106,6 +114,8 @@ public partial class MemberDecompiler
         WriteVisibility(enumDocumentation);
 
         _sb.Append("enum ");
+
+        WriteParentType(enumDocumentation);
         _sb.Append(enumDocumentation.Name);
 
         if (enumDocumentation.BaseType is not null)

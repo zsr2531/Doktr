@@ -435,6 +435,23 @@ public class Types
     }
 
     [Fact]
+    public void Interface_With_Nested_Struct()
+    {
+        var mediator = CreateMockMediator();
+        var decompiler = new MemberDecompiler(mediator);
+        var interfaceDocumentation = new InterfaceDocumentation("Test", MemberVisibility.Public);
+        var nestedStructDocumentation = new StructDocumentation("Nested", MemberVisibility.Public)
+        {
+            ParentType = interfaceDocumentation
+        };
+
+        nestedStructDocumentation.AcceptVisitor(decompiler);
+        string decompiled = decompiler.ToString();
+
+        Assert.Equal("public struct Test.Nested", decompiled);
+    }
+
+    [Fact]
     public void Enum()
     {
         var mediator = CreateMockMediator();

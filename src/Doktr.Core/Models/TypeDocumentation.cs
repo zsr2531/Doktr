@@ -9,7 +9,7 @@ public abstract class TypeDocumentation : MemberDocumentation, IHasExtensionMeth
     {
     }
 
-    public CompositeTypeDocumentation? ParentType { get; set; }
+    public CommonTypeCharacteristics? ParentType { get; set; }
     public CodeReferenceCollection ExtensionMethods { get; set; } = new();
 
     public abstract override void AcceptVisitor(IDocumentationMemberVisitor visitor);
