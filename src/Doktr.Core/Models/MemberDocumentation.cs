@@ -12,12 +12,11 @@ public abstract class MemberDocumentation : ICloneable
 
     public string Name { get; set; }
     public MemberVisibility Visibility { get; set; }
-    public CodeReference? InheritDocumentationFrom { get; set; }
     public DocumentationFragmentCollection Summary { get; set; } = new();
     public DocumentationFragmentCollection Examples { get; set; } = new();
     public DocumentationFragmentCollection Remarks { get; set; } = new();
+    public LinkDocumentationFragmentCollection SeeAlso { get; set; } = new();
     public ProductVersionsSegmentCollection AppliesTo { get; set; } = new();
-    public bool InheritsDocumentation => InheritDocumentationFrom.HasValue;
 
     public abstract void AcceptVisitor(IDocumentationMemberVisitor visitor);
 
@@ -27,10 +26,10 @@ public abstract class MemberDocumentation : ICloneable
     
     protected virtual void CopyDocumentationTo(MemberDocumentation other)
     {
-        other.InheritDocumentationFrom = InheritDocumentationFrom;
         other.Summary = Summary.Clone();
         other.Examples = Examples.Clone();
         other.Remarks = Remarks.Clone();
+        other.SeeAlso = SeeAlso.Clone();
         other.AppliesTo = AppliesTo.Clone();
     }
 }
