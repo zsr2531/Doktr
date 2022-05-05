@@ -10,12 +10,12 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
     private static readonly Dictionary<CodeReference, string> Primitives = new()
     {
         [new CodeReference("T:System.Void")] = "void",
-        [new CodeReference("T:System.Int8")] = "sbyte",
+        [new CodeReference("T:System.SByte")] = "sbyte",
         [new CodeReference("T:System.Int16")] = "short",
         [new CodeReference("T:System.Int32")] = "int",
         [new CodeReference("T:System.Int64")] = "long",
         [new CodeReference("T:System.IntPtr")] = "nint",
-        [new CodeReference("T:System.UInt8")] = "byte",
+        [new CodeReference("T:System.Byte")] = "byte",
         [new CodeReference("T:System.UInt16")] = "ushort",
         [new CodeReference("T:System.UInt32")] = "uint",
         [new CodeReference("T:System.UInt64")] = "ulong",
