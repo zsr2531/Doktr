@@ -2,33 +2,33 @@ namespace Doktr.Core.Models;
 
 public interface IDocumentationMemberVisitor
 {
-    void VisitClass(ClassDocumentation classDocumentation);
+    void VisitClass(ClassDocumentation documentation);
 
-    void VisitInterface(InterfaceDocumentation interfaceDocumentation);
+    void VisitInterface(InterfaceDocumentation documentation);
 
-    void VisitRecord(RecordDocumentation recordDocumentation);
+    void VisitRecord(RecordDocumentation documentation);
 
-    void VisitStruct(StructDocumentation structDocumentation);
+    void VisitStruct(StructDocumentation documentation);
 
-    void VisitDelegate(DelegateDocumentation delegateDocumentation);
+    void VisitDelegate(DelegateDocumentation documentation);
 
-    void VisitEnum(EnumDocumentation enumDocumentation);
+    void VisitEnum(EnumDocumentation documentation);
 
-    void VisitEvent(EventDocumentation eventDocumentation);
+    void VisitEvent(EventDocumentation documentation);
 
-    void VisitField(FieldDocumentation fieldDocumentation);
+    void VisitField(FieldDocumentation documentation);
 
-    void VisitConstructor(ConstructorDocumentation constructorDocumentation);
+    void VisitConstructor(ConstructorDocumentation documentation);
 
-    void VisitFinalizer(FinalizerDocumentation finalizerDocumentation);
+    void VisitFinalizer(FinalizerDocumentation documentation);
 
-    void VisitIndexer(IndexerDocumentation indexerDocumentation);
+    void VisitIndexer(IndexerDocumentation documentation);
 
-    void VisitProperty(PropertyDocumentation propertyDocumentation);
+    void VisitProperty(PropertyDocumentation documentation);
 
-    void VisitMethod(MethodDocumentation methodDocumentation);
+    void VisitMethod(MethodDocumentation documentation);
 
-    void VisitOperator(OperatorDocumentation operatorDocumentation);
+    void VisitOperator(OperatorDocumentation documentation);
 
-    void VisitConversionOperator(ConversionOperatorDocumentation conversionOperatorDocumentation);
+    void VisitConversionOperator(ConversionOperatorDocumentation documentation);
 }

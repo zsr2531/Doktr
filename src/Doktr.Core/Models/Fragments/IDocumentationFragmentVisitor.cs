@@ -2,35 +2,35 @@ namespace Doktr.Core.Models.Fragments;
 
 public interface IDocumentationFragmentVisitor
 {
-    void VisitText(TextFragment textFragment);
+    void VisitText(TextFragment fragment);
 
-    void VisitBold(BoldFragment boldFragment);
+    void VisitBold(BoldFragment fragment);
 
-    void VisitItalic(ItalicFragment italicFragment);
+    void VisitItalic(ItalicFragment fragment);
 
-    void VisitUnderline(UnderlineFragment underlineFragment);
+    void VisitUnderline(UnderlineFragment fragment);
 
-    void VisitMonospace(MonospaceFragment monospaceFragment);
+    void VisitMonospace(MonospaceFragment fragment);
 
-    void VisitCode(CodeFragment codeFragment);
+    void VisitCode(CodeFragment fragment);
 
-    void VisitParagraph(ParagraphFragment paragraphFragment);
+    void VisitParagraph(ParagraphFragment fragment);
 
-    void VisitParameterReference(ParameterReferenceFragment parameterReferenceFragment);
+    void VisitParameterReference(ParameterReferenceFragment fragment);
 
-    void VisitTypeParameterReference(TypeParameterReferenceFragment typeParameterReferenceFragment);
+    void VisitTypeParameterReference(TypeParameterReferenceFragment fragment);
 
-    void VisitLinkReference(LinkReferenceFragment linkReferenceFragment);
+    void VisitLinkReference(LinkReferenceFragment fragment);
 
-    void VisitCodeReference(CodeReferenceFragment codeReferenceFragment);
+    void VisitCodeReference(CodeReferenceFragment fragment);
 
-    void VisitLineBreak(LineBreakFragment lineBreakFragment);
+    void VisitLineBreak(LineBreakFragment fragment);
 
-    void VisitList(ListFragment listFragment);
+    void VisitList(ListFragment fragment);
 
-    void VisitVanillaListItem(VanillaListItemFragment vanillaListItemFragment);
+    void VisitVanillaListItem(VanillaListItemFragment fragment);
 
-    void VisitDefinitionListItem(DefinitionListItemFragment definitionListItemFragment);
+    void VisitDefinitionListItem(DefinitionListItemFragment fragment);
 
-    void VisitTable(TableFragment tableFragment);
+    void VisitTable(TableFragment fragment);
 }

@@ -34,66 +34,66 @@ public partial class MemberDecompiler
         [OperatorKind.BinaryRightAngleEqual] = ">="
     };
 
-    public void VisitConstructor(ConstructorDocumentation constructorDocumentation)
+    public void VisitConstructor(ConstructorDocumentation documentation)
     {
-        WriteVisibility(constructorDocumentation);
+        WriteVisibility(documentation);
 
-        _sb.Append(constructorDocumentation.Name);
+        _sb.Append(documentation.Name);
 
-        WriteParameters(constructorDocumentation);
+        WriteParameters(documentation);
     }
 
-    public void VisitFinalizer(FinalizerDocumentation finalizerDocumentation)
+    public void VisitFinalizer(FinalizerDocumentation documentation)
     {
-        _sb.Append(finalizerDocumentation.Name);
+        _sb.Append(documentation.Name);
         _sb.Append("()");
     }
 
-    public void VisitMethod(MethodDocumentation methodDocumentation)
+    public void VisitMethod(MethodDocumentation documentation)
     {
-        WriteVisibility(methodDocumentation);
-        WriteStatic(methodDocumentation);
-        WriteVirtual(methodDocumentation);
-        WriteReadOnly(methodDocumentation);
-        WriteReturnType(methodDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
+        WriteVirtual(documentation);
+        WriteReadOnly(documentation);
+        WriteReturnType(documentation);
 
         _sb.Append(' ');
-        _sb.Append(methodDocumentation.Name);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(methodDocumentation);
-        WriteParameters(methodDocumentation);
-        WriteTypeParameterConstraints(methodDocumentation);
+        WriteTypeParameters(documentation);
+        WriteParameters(documentation);
+        WriteTypeParameterConstraints(documentation);
     }
 
-    public void VisitOperator(OperatorDocumentation operatorDocumentation)
+    public void VisitOperator(OperatorDocumentation documentation)
     {
-        WriteVisibility(operatorDocumentation);
-        WriteStatic(operatorDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
 
-        WriteReturnType(operatorDocumentation);
+        WriteReturnType(documentation);
 
         _sb.Append(" operator ");
-        _sb.Append(OperatorSymbols[operatorDocumentation.Symbol]);
+        _sb.Append(OperatorSymbols[documentation.Symbol]);
 
-        WriteParameters(operatorDocumentation);
+        WriteParameters(documentation);
     }
 
-    public void VisitConversionOperator(ConversionOperatorDocumentation conversionOperatorDocumentation)
+    public void VisitConversionOperator(ConversionOperatorDocumentation documentation)
     {
-        WriteVisibility(conversionOperatorDocumentation);
-        WriteStatic(conversionOperatorDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
 
-        _sb.Append(conversionOperatorDocumentation.Kind switch
+        _sb.Append(documentation.Kind switch
         {
             ConversionKind.Implicit => "implicit ",
             ConversionKind.Explicit => "explicit ",
-            _ => throw new ArgumentOutOfRangeException(nameof(conversionOperatorDocumentation))
+            _ => throw new ArgumentOutOfRangeException(nameof(documentation))
         });
 
         _sb.Append("operator ");
 
-        WriteReturnType(conversionOperatorDocumentation);
-        WriteParameters(conversionOperatorDocumentation);
+        WriteReturnType(documentation);
+        WriteParameters(documentation);
     }
 
     private void WriteReturnType(IHasReturns member) => WriteTypeSignature(member.ReturnType);

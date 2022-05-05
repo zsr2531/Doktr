@@ -4,75 +4,75 @@ namespace Doktr.Decompiler.Members;
 
 public partial class MemberDecompiler
 {
-    public void VisitEvent(EventDocumentation eventDocumentation)
+    public void VisitEvent(EventDocumentation documentation)
     {
-        WriteVisibility(eventDocumentation);
-        WriteStatic(eventDocumentation);
-        WriteVirtual(eventDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
+        WriteVirtual(documentation);
 
         _sb.Append("event ");
 
-        WriteTypeSignature(eventDocumentation.HandlerType);
+        WriteTypeSignature(documentation.HandlerType);
 
         _sb.Append(' ');
-        _sb.Append(eventDocumentation.Name);
+        _sb.Append(documentation.Name);
     }
 
-    public void VisitField(FieldDocumentation fieldDocumentation)
+    public void VisitField(FieldDocumentation documentation)
     {
-        WriteVisibility(fieldDocumentation);
-        WriteStatic(fieldDocumentation);
-        WriteReadOnly(fieldDocumentation);
-        if (fieldDocumentation.IsConstant)
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
+        WriteReadOnly(documentation);
+        if (documentation.IsConstant)
             _sb.Append("const ");
 
-        WriteTypeSignature(fieldDocumentation.Type);
+        WriteTypeSignature(documentation.Type);
 
         _sb.Append(' ');
-        _sb.Append(fieldDocumentation.Name);
+        _sb.Append(documentation.Name);
 
-        if (fieldDocumentation.IsConstant)
+        if (documentation.IsConstant)
         {
             _sb.Append(" = ");
-            fieldDocumentation.ConstantValue.AcceptVisitor(this);
+            documentation.ConstantValue.AcceptVisitor(this);
         }
     }
 
-    public void VisitIndexer(IndexerDocumentation indexerDocumentation)
+    public void VisitIndexer(IndexerDocumentation documentation)
     {
-        WriteVisibility(indexerDocumentation);
-        WriteStatic(indexerDocumentation);
-        WriteVirtual(indexerDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
+        WriteVirtual(documentation);
 
-        WriteTypeSignature(indexerDocumentation.Type);
+        WriteTypeSignature(documentation.Type);
 
         _sb.Append(" this");
-        WriteParameters(indexerDocumentation, '[', ']');
+        WriteParameters(documentation, '[', ']');
 
         _sb.Append(" { ");
-        if (indexerDocumentation.Getter is not null)
-            WriteGetter(indexerDocumentation.Visibility, indexerDocumentation.Getter);
-        if (indexerDocumentation.Setter is not null)
-            WriteSetter(indexerDocumentation.Visibility, indexerDocumentation.Setter);
+        if (documentation.Getter is not null)
+            WriteGetter(documentation.Visibility, documentation.Getter);
+        if (documentation.Setter is not null)
+            WriteSetter(documentation.Visibility, documentation.Setter);
         _sb.Append('}');
     }
 
-    public void VisitProperty(PropertyDocumentation propertyDocumentation)
+    public void VisitProperty(PropertyDocumentation documentation)
     {
-        WriteVisibility(propertyDocumentation);
-        WriteStatic(propertyDocumentation);
-        WriteVirtual(propertyDocumentation);
+        WriteVisibility(documentation);
+        WriteStatic(documentation);
+        WriteVirtual(documentation);
 
-        WriteTypeSignature(propertyDocumentation.Type);
+        WriteTypeSignature(documentation.Type);
 
         _sb.Append(' ');
-        _sb.Append(propertyDocumentation.Name);
+        _sb.Append(documentation.Name);
 
         _sb.Append(" { ");
-        if (propertyDocumentation.Getter is not null)
-            WriteGetter(propertyDocumentation.Visibility, propertyDocumentation.Getter);
-        if (propertyDocumentation.Setter is not null)
-            WriteSetter(propertyDocumentation.Visibility, propertyDocumentation.Setter);
+        if (documentation.Getter is not null)
+            WriteGetter(documentation.Visibility, documentation.Getter);
+        if (documentation.Setter is not null)
+            WriteSetter(documentation.Visibility, documentation.Setter);
         _sb.Append('}');
     }
 

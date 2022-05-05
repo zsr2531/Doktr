@@ -6,122 +6,122 @@ namespace Doktr.Decompiler.Members;
 
 public partial class MemberDecompiler
 {
-    public void VisitClass(ClassDocumentation classDocumentation)
+    public void VisitClass(ClassDocumentation documentation)
     {
-        WriteVisibility(classDocumentation);
-        WriteTypeAccessModifiers(classDocumentation);
+        WriteVisibility(documentation);
+        WriteTypeAccessModifiers(documentation);
         _sb.Append("class ");
 
-        WriteParentType(classDocumentation);
-        _sb.Append(classDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(classDocumentation);
+        WriteTypeParameters(documentation);
 
-        bool hasBaseType = classDocumentation.BaseType is not null;
-        bool hasAnyParents = hasBaseType || !classDocumentation.Interfaces.IsEmpty();
+        bool hasBaseType = documentation.BaseType is not null;
+        bool hasAnyParents = hasBaseType || !documentation.Interfaces.IsEmpty();
         if (hasAnyParents)
             WriteBaseTypes(hasBaseType
-                ? classDocumentation.Interfaces.Prepend(classDocumentation.BaseType!)
-                : classDocumentation.Interfaces);
+                ? documentation.Interfaces.Prepend(documentation.BaseType!)
+                : documentation.Interfaces);
 
-        WriteTypeParameterConstraintsType(classDocumentation);
+        WriteTypeParameterConstraintsType(documentation);
     }
 
-    public void VisitInterface(InterfaceDocumentation interfaceDocumentation)
+    public void VisitInterface(InterfaceDocumentation documentation)
     {
-        WriteVisibility(interfaceDocumentation);
+        WriteVisibility(documentation);
         _sb.Append("interface ");
 
-        WriteParentType(interfaceDocumentation);
-        _sb.Append(interfaceDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(interfaceDocumentation);
+        WriteTypeParameters(documentation);
 
-        bool hasAnyParents = !interfaceDocumentation.Interfaces.IsEmpty();
+        bool hasAnyParents = !documentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteBaseTypes(interfaceDocumentation.Interfaces);
+            WriteBaseTypes(documentation.Interfaces);
 
-        WriteTypeParameterConstraintsType(interfaceDocumentation);
+        WriteTypeParameterConstraintsType(documentation);
     }
 
-    public void VisitRecord(RecordDocumentation recordDocumentation)
+    public void VisitRecord(RecordDocumentation documentation)
     {
-        WriteVisibility(recordDocumentation);
-        WriteTypeAccessModifiers(recordDocumentation);
+        WriteVisibility(documentation);
+        WriteTypeAccessModifiers(documentation);
         _sb.Append("record ");
 
-        WriteParentType(recordDocumentation);
-        _sb.Append(recordDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(recordDocumentation);
-        WriteParameters(recordDocumentation);
+        WriteTypeParameters(documentation);
+        WriteParameters(documentation);
 
-        bool hasBaseType = recordDocumentation.BaseType is not null;
-        bool hasAnyParents = hasBaseType || !recordDocumentation.Interfaces.IsEmpty();
+        bool hasBaseType = documentation.BaseType is not null;
+        bool hasAnyParents = hasBaseType || !documentation.Interfaces.IsEmpty();
         if (hasAnyParents)
             WriteBaseTypes(hasBaseType
-                ? recordDocumentation.Interfaces.Prepend(recordDocumentation.BaseType!)
-                : recordDocumentation.Interfaces);
+                ? documentation.Interfaces.Prepend(documentation.BaseType!)
+                : documentation.Interfaces);
 
-        WriteTypeParameterConstraintsType(recordDocumentation);
+        WriteTypeParameterConstraintsType(documentation);
     }
 
-    public void VisitStruct(StructDocumentation structDocumentation)
+    public void VisitStruct(StructDocumentation documentation)
     {
-        WriteVisibility(structDocumentation);
-        WriteTypeAccessModifiers(structDocumentation);
+        WriteVisibility(documentation);
+        WriteTypeAccessModifiers(documentation);
 
-        WriteReadOnly(structDocumentation);
-        if (structDocumentation.IsByRef)
+        WriteReadOnly(documentation);
+        if (documentation.IsByRef)
             _sb.Append("ref ");
 
         _sb.Append("struct ");
 
-        WriteParentType(structDocumentation);
-        _sb.Append(structDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(structDocumentation);
+        WriteTypeParameters(documentation);
 
-        bool hasAnyParents = !structDocumentation.Interfaces.IsEmpty();
+        bool hasAnyParents = !documentation.Interfaces.IsEmpty();
         if (hasAnyParents)
-            WriteBaseTypes(structDocumentation.Interfaces);
+            WriteBaseTypes(documentation.Interfaces);
 
-        WriteTypeParameterConstraintsType(structDocumentation);
+        WriteTypeParameterConstraintsType(documentation);
     }
 
-    public void VisitDelegate(DelegateDocumentation delegateDocumentation)
+    public void VisitDelegate(DelegateDocumentation documentation)
     {
-        WriteVisibility(delegateDocumentation);
+        WriteVisibility(documentation);
         _sb.Append("delegate ");
 
-        WriteReturnType(delegateDocumentation);
+        WriteReturnType(documentation);
 
         _sb.Append(' ');
 
-        WriteParentType(delegateDocumentation);
-        _sb.Append(delegateDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        WriteTypeParameters(delegateDocumentation);
-        WriteParameters(delegateDocumentation);
-        WriteTypeParameterConstraintsType(delegateDocumentation);
+        WriteTypeParameters(documentation);
+        WriteParameters(documentation);
+        WriteTypeParameterConstraintsType(documentation);
     }
 
-    public void VisitEnum(EnumDocumentation enumDocumentation)
+    public void VisitEnum(EnumDocumentation documentation)
     {
-        if (enumDocumentation.IsFlags)
+        if (documentation.IsFlags)
             _sb.Append("[Flags]\n");
 
-        WriteVisibility(enumDocumentation);
+        WriteVisibility(documentation);
 
         _sb.Append("enum ");
 
-        WriteParentType(enumDocumentation);
-        _sb.Append(enumDocumentation.Name);
+        WriteParentType(documentation);
+        _sb.Append(documentation.Name);
 
-        if (enumDocumentation.BaseType is not null)
+        if (documentation.BaseType is not null)
         {
             _sb.Append(" : ");
-            WriteTypeSignature(enumDocumentation.BaseType);
+            WriteTypeSignature(documentation.BaseType);
         }
     }
 
