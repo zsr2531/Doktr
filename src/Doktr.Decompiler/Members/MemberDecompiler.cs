@@ -13,10 +13,12 @@ public partial class MemberDecompiler : IDocumentationMemberVisitor, IConstantVi
 {
     private readonly StringBuilder _sb = new();
     private readonly IMediator _mediator;
+    private readonly bool _enableNrt;
 
-    public MemberDecompiler(IMediator mediator)
+    public MemberDecompiler(IMediator mediator, bool enableNrt = true)
     {
         _mediator = mediator;
+        _enableNrt = enableNrt;
     }
 
     public override string ToString() => _sb.ToString();

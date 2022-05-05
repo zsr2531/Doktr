@@ -20,7 +20,7 @@ public class DecompileMemberHandler : IRequestHandler<DecompileMember, string>
     public Task<string> Handle(DecompileMember request, CancellationToken cancellationToken)
     {
         var member = request.Member;
-        var decompiler = new MemberDecompiler(_mediator);
+        var decompiler = new MemberDecompiler(_mediator, _configuration.EnableNrt);
         member.AcceptVisitor(decompiler);
 
         return Task.FromResult(decompiler.ToString());

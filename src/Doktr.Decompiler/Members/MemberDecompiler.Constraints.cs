@@ -7,9 +7,8 @@ public partial class MemberDecompiler
 {
     public void VisitReferenceType(ReferenceTypeParameterConstraint constraint)
     {
-        // TODO: Respect NRT setting from configuration?
         if (constraint.BaseType is null)
-            _sb.Append(constraint.Nullability == NullabilityKind.Nullable ? "class?" : "class");
+            _sb.Append(_enableNrt && constraint.Nullability == NullabilityKind.Nullable ? "class?" : "class");
         else
             WriteTypeSignature(constraint.BaseType);
     }
