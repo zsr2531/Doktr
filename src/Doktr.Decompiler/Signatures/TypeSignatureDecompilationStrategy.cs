@@ -96,7 +96,7 @@ public class TypeSignatureDecompilationStrategy : ITypeSignatureVisitor
         signature.ArrayType.AcceptVisitor(this);
         Builder.Append('[');
 
-        for (int i = 0; i < signature.Dimensions; i++)
+        for (int i = 1; i < signature.Dimensions; i++)
             Builder.Append(',');
 
         Builder.Append(']');
