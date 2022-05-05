@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Doktr.Core.Models;
+using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Signatures;
 using MediatR;
 
@@ -13,3 +14,6 @@ public record DecompileTypeSignature(TypeSignature Signature) : IRequest<string>
 
 [ExcludeFromCodeCoverage]
 public record ParseDocumentation(CodeReference MemberIdentifier, string RawXml) : IRequest<ParseDocumentationResult>;
+
+[ExcludeFromCodeCoverage]
+public record LiftModel : IRequest<TypeDocumentationCollection>;
