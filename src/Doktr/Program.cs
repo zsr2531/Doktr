@@ -30,7 +30,7 @@ static async Task Start(CommandLineOptions options)
 static IContainer CreateContainer(CommandLineOptions options)
 {
     var logger = CreateLogger(options.Verbose);
-    var configuration = LoadDoktrConfiguration(options.ProjectFilePath, logger);
+    var configuration = LoadDoktrConfiguration(options.ProjectFilePath);
     var builder = new ContainerBuilder();
 
     // Singleton stuff
@@ -62,17 +62,8 @@ static ILogger CreateLogger(bool verbose)
     return configuration.CreateLogger();
 }
 
-static DoktrConfiguration LoadDoktrConfiguration(string path, ILogger logger)
+static DoktrConfiguration LoadDoktrConfiguration(string path)
 {
-    try
-    {
-        using var file = File.OpenRead(path);
-        return JsonSerializer.Deserialize<DoktrConfiguration>(file)!;
-    }
-    catch (Exception ex)
-    {
-        logger.Fatal(ex, "Failed to load configuration file");
-        // throw;
-        return new DoktrConfiguration();
-    }
+    using var file = File.OpenRead(path);
+    return JsonSerializer.Deserialize<DoktrConfiguration>(file)!;
 }
