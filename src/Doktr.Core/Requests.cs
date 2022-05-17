@@ -16,7 +16,4 @@ public record DecompileTypeSignature(TypeSignature Signature) : IRequest<string>
 public record ParseDocumentation(CodeReference MemberIdentifier, string RawXml) : IRequest<ParseDocumentationResult>;
 
 [ExcludeFromCodeCoverage]
-public record LoadXmlDoc(string XmlPath) : IRequest<object>;
-
-[ExcludeFromCodeCoverage]
 public record LiftModel : IRequest<TypeDocumentationCollection>;
