@@ -23,7 +23,7 @@ public class DependencyNode<T> : IEquatable<DependencyNode<T>>
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
 
-        return EqualityComparer<T>.Default.Equals(Value, other.Value);
+        return Value.Equals(other.Value);
     }
 
     public override bool Equals(object? obj)
