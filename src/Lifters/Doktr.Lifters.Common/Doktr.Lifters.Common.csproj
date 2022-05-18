@@ -6,11 +6,20 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <NoWarn>1701;1702;3021</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <NoWarn>1701;1702;3021</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\Doktr.Core\Doktr.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.10.1" />
       <PackageReference Include="MediatR" Version="10.0.1" />
     </ItemGroup>
 
