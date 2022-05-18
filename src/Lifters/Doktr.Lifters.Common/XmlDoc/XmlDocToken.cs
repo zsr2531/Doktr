@@ -14,17 +14,17 @@ public abstract class XmlDocToken
 
 public class XmlDocOpenTag : XmlDocToken
 {
-    public static XmlDocOpenTag MakeOpenTag(TextSpan span, string tagName, XmlDocTokenAttributeMap attributes)
+    public static XmlDocOpenTag MakeOpenTag(TextSpan span, string tagName, XmlAttributeMap attributes)
     {
         return new XmlDocOpenTag(span, false, tagName, attributes);
     }
 
-    public static XmlDocOpenTag MakeEmptyElement(TextSpan span, string tagName, XmlDocTokenAttributeMap attributes)
+    public static XmlDocOpenTag MakeEmptyElement(TextSpan span, string tagName, XmlAttributeMap attributes)
     {
         return new XmlDocOpenTag(span, true, tagName, attributes);
     }
 
-    private XmlDocOpenTag(TextSpan span, bool isEmptyElement, string tagName, XmlDocTokenAttributeMap attributes)
+    private XmlDocOpenTag(TextSpan span, bool isEmptyElement, string tagName, XmlAttributeMap attributes)
         : base(span)
     {
         IsEmptyElement = isEmptyElement;
@@ -34,7 +34,7 @@ public class XmlDocOpenTag : XmlDocToken
 
     public bool IsEmptyElement { get; }
     public string TagName { get; }
-    public XmlDocTokenAttributeMap Attributes { get; }
+    public XmlAttributeMap Attributes { get; }
 }
 
 public class XmlDocCloseTag : XmlDocToken

@@ -177,10 +177,10 @@ public class XmlDocParser
 
     public TextSpan MakeTextSpan(int startLine, int startColumn) => new(startLine, startColumn, Line, Column);
 
-    private XmlDocTokenAttributeMap ParseAttributes()
+    private XmlAttributeMap ParseAttributes()
     {
         SkipWhitespace();
-        var attributes = new XmlDocTokenAttributeMap();
+        var attributes = new XmlAttributeMap();
         while (Lookahead is not '>' and not '/')
         {
             string name = ParseIdentifier();
