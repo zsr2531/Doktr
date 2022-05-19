@@ -1,6 +1,6 @@
 using Antlr4.Runtime;
 
-namespace Doktr.Lifters.Common.XmlDoc.Xml;
+namespace Doktr.Xml;
 
 public class XmlNodeConstructor : XmlBaseVisitor<XmlNode>
 {

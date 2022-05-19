@@ -1,6 +1,6 @@
-using Doktr.Lifters.Common.XmlDoc.Collections;
+using Doktr.Xml.Collections;
 
-namespace Doktr.Lifters.Common.XmlDoc.Xml;
+namespace Doktr.Xml;
 
 public abstract class XmlNode
 {

@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
-using Doktr.Lifters.Common.XmlDoc.Xml;
 
-namespace Doktr.Lifters.Common.XmlDoc.Collections;
+namespace Doktr.Xml.Collections;
 
 public class XmlNodeCollection : Collection<XmlNode>
 {

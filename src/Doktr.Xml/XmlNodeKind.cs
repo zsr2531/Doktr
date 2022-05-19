@@ -1,4 +1,4 @@
-namespace Doktr.Lifters.Common.XmlDoc.Xml;
+namespace Doktr.Xml;
 
 public enum XmlNodeKind
 {

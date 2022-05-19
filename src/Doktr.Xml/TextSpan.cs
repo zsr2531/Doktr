@@ -1,7 +1,15 @@
-namespace Doktr.Lifters.Common.XmlDoc;
+namespace Doktr.Xml;
 
 public readonly struct TextSpan : IEquatable<TextSpan>
 {
+    public TextSpan(int line, int column)
+    {
+        StartLine = line;
+        StartColumn = column;
+        EndLine = line;
+        EndColumn = column + 1;
+    }
+
     public TextSpan(int startLine, int startColumn, int endLine, int endColumn)
     {
         StartLine = startLine;
@@ -14,6 +22,14 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     public int StartColumn { get; }
     public int EndLine { get; }
     public int EndColumn { get; }
+
+    public void Deconstruct(out int startLine, out int startColumn, out int endLine, out int endColumn)
+    {
+        startLine = StartLine;
+        endLine = EndLine;
+        startColumn = StartColumn;
+        endColumn = EndColumn;
+    }
 
     public bool Equals(TextSpan other) => StartLine == other.StartLine && StartColumn == other.StartColumn &&
         EndLine == other.EndLine && EndColumn == other.EndColumn;

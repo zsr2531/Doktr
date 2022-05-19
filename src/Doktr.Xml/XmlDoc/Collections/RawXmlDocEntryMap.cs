@@ -1,6 +1,6 @@
 using Doktr.Core.Models;
 
-namespace Doktr.Lifters.Common.XmlDoc.Collections;
+namespace Doktr.Xml.XmlDoc.Collections;
 
 public class RawXmlDocEntryMap : Dictionary<CodeReference, RawXmlDocEntry>
 {

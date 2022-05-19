@@ -1,4 +1,4 @@
-namespace Doktr.Lifters.Common.XmlDoc;
+namespace Doktr.Xml.XmlDoc;
 
 public class XmlDocParserException : Exception
 {
@@ -11,7 +11,7 @@ public class XmlDocParserException : Exception
     public XmlDocParserException(string message, int line, int column)
     {
         Message = message + $" at ({line}:{column})";
-        Span = new TextSpan(line, column, line + 1, column + 1);
+        Span = new TextSpan(line, column);
     }
 
     public override string Message { get; }

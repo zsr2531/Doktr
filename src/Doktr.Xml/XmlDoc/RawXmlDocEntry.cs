@@ -1,8 +1,8 @@
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
-using Doktr.Lifters.Common.XmlDoc.Collections;
+using Doktr.Xml.XmlDoc.Collections;
 
-namespace Doktr.Lifters.Common.XmlDoc;
+namespace Doktr.Xml.XmlDoc;
 
 public class RawXmlDocEntry
 {

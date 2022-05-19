@@ -19,7 +19,7 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace Doktr.Lifters.Common.XmlDoc.Xml {
+namespace Doktr.Xml {
 using System;
 using System.IO;
 using System.Text;

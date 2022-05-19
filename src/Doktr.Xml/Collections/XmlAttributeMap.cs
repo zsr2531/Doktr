@@ -1,4 +1,4 @@
-namespace Doktr.Lifters.Common.XmlDoc.Collections;
+namespace Doktr.Xml.Collections;
 
 public class XmlAttributeMap : Dictionary<string, string>
 {
