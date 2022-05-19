@@ -73,9 +73,13 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
                 var transformed = node.Accept(XmlNodeConstructor.Instance);
                 nodes.Add(transformed);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // TODO: Something went wrong here, maybe log it?
+                // We *should* only get here if the input was invalid, however
+                // that implies that `SyntaxError` was already called, meaning
+                // a diagnostic was already created for the error and thus we
+                // don't need to do anything here. So we'll just ignore any
+                // invalid nodes here and try to continue with the others.
             }
         }
 
