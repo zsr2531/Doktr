@@ -17,7 +17,6 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
         _reader = reader;
     }
 
-    public bool HasFatalErrors => Diagnostics.HasFatal;
     public bool HasErrors => !Diagnostics.IsEmpty;
     public XmlDiagnosticCollection Diagnostics { get; } = new();
 
@@ -71,7 +70,8 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
             try
             {
                 var transformed = node.Accept(XmlNodeConstructor.Instance);
-                nodes.Add(transformed);
+                if (transformed != null)
+                    nodes.Add(transformed);
             }
             catch (Exception)
             {
