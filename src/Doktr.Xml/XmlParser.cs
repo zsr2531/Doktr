@@ -73,7 +73,7 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
                 if (transformed != null)
                     nodes.Add(transformed);
             }
-            catch (Exception)
+            catch
             {
                 // We *should* only get here if the input was invalid, however
                 // that implies that `SyntaxError` was already called, meaning
