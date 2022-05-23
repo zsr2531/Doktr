@@ -10,12 +10,12 @@ public class LinkReferenceFragment : DocumentationFragment
     }
 
     public string Url { get; set; }
-    public DocumentationFragmentCollection? ReplacementText { get; set; }
+    public DocumentationFragmentCollection? Replacement { get; set; }
 
     public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitLinkReference(this);
 
     public override LinkReferenceFragment Clone() => new(Url)
     {
-        ReplacementText = ReplacementText?.Clone()
+        Replacement = Replacement?.Clone()
     };
 }

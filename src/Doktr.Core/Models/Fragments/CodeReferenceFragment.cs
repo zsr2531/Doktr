@@ -10,12 +10,12 @@ public class CodeReferenceFragment : DocumentationFragment
     }
 
     public CodeReference CodeReference { get; set; }
-    public DocumentationFragmentCollection? ReplacementText { get; set; }
+    public DocumentationFragmentCollection? Replacement { get; set; }
 
     public override void AcceptVisitor(IDocumentationFragmentVisitor visitor) => visitor.VisitCodeReference(this);
 
     public override CodeReferenceFragment Clone() => new(CodeReference)
     {
-        ReplacementText = ReplacementText?.Clone()
+        Replacement = Replacement?.Clone()
     };
 }
