@@ -10,9 +10,9 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 
 Parser.Default.ParseArguments<CommandLineOptions>(args)
-      .WithParsed(result => Start(result).GetAwaiter().GetResult());
+      .WithParsed(Start);
 
-static async Task Start(CommandLineOptions options)
+static void Start(CommandLineOptions options)
 {
     try
     {
