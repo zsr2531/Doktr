@@ -25,9 +25,11 @@ public class XmlDocFixture
     public IEnumerable<IFragmentParser> Fragments => FragmentParsers;
     public IEnumerable<ISectionParser> Sections => SectionParsers;
 
-    public XmlDocParser CreateParser(string input)
+    public XmlDocParser CreateParser(params string[] inputs)
     {
-        var nodes = new XmlParser($"<member name='T:Test'>{input}</member>").ParseXmlNodes();
+        var transformed = inputs.Select((s, i) => $"<member name='T:Test{i}'>{s}</member>");
+        string input = string.Join('\n', transformed);
+        var nodes = new XmlParser(input).ParseXmlNodes();
         var doc = new XmlDocParser(Sections, Fragments, nodes);
 
         return doc;
