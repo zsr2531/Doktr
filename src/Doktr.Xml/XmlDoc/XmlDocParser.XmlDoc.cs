@@ -6,6 +6,11 @@ namespace Doktr.Xml.XmlDoc;
 
 public partial class XmlDocParser
 {
+    private const string Inheritdoc = "inheritdoc";
+    private const string Member = "member";
+    private const string Name = "name";
+    private const string Cref = "cref";
+
     public DocumentationFragment NextFragment()
     {
         return Lookahead switch
@@ -27,8 +32,8 @@ public partial class XmlDocParser
 
     private RawXmlDocEntry ParseMember()
     {
-        var member = ExpectElement("member");
-        string rawDocId = member.Attributes["name"];
+        var member = ExpectElement(Member);
+        string rawDocId = member.Attributes[Name];
         var docId = new CodeReference(rawDocId);
         var entry = new RawXmlDocEntry(docId);
 
@@ -41,7 +46,7 @@ public partial class XmlDocParser
             ParseSection(entry);
         }
 
-        ExpectEndElement("member");
+        ExpectEndElement(Member);
         return entry;
     }
 
@@ -53,6 +58,14 @@ public partial class XmlDocParser
             case XmlElementNode element when _fragmentParsers.ContainsKey(element.Name):
             case XmlEmptyElementNode emptyElement when _fragmentParsers.ContainsKey(emptyElement.Name):
                 entry.Summary.Add(NextFragment());
+                return true;
+
+            // TODO: Warn user if entry already inherits documentation? Throwing here is excessive.
+            case XmlEmptyElementNode { Name: Inheritdoc } emptyElement when !entry.InheritsDocumentation:
+                if (emptyElement.Attributes.TryGetValue(Cref, out string? from))
+                    entry.InheritsDocumentationExplicitlyFrom = new CodeReference(from);
+                else
+                    entry.InheritsDocumentationImplicitly = true;
                 return true;
 
             default:
