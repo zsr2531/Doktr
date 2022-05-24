@@ -7,6 +7,11 @@ namespace Doktr.Xml.XmlDoc;
 
 public partial class XmlDocParser : IXmlDocParser
 {
+    private const string Doc = "doc";
+    private const string Assembly = "assembly";
+    private const string Members = "members";
+    private const string Names = "name";
+
     private readonly Dictionary<string, ISectionParser> _sectionParsers;
     private readonly Dictionary<string, IFragmentParser> _fragmentParsers;
     private readonly XmlNodeCollection _nodes;
@@ -45,22 +50,22 @@ public partial class XmlDocParser : IXmlDocParser
 
     private bool ParsePrologue()
     {
-        if (Lookahead is not XmlElementNode { Name: "doc" })
+        if (Lookahead is not XmlElementNode { Name: Doc })
             return false;
 
-        ExpectElement("doc");
-        ExpectElement("assembly");
-        ExpectElement("name");
+        ExpectElement(Doc);
+        ExpectElement(Assembly);
+        ExpectElement(Names);
         ExpectText();
-        ExpectEndElement("name");
-        ExpectEndElement("assembly");
-        ExpectElement("members");
+        ExpectEndElement(Names);
+        ExpectEndElement(Assembly);
+        ExpectElement(Members);
         return true;
     }
 
     private void ParseEpilogue()
     {
-        ExpectEndElement("members");
-        ExpectEndElement("doc");
+        ExpectEndElement(Members);
+        ExpectEndElement(Doc);
     }
 }

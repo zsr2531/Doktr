@@ -7,6 +7,9 @@ namespace Doktr.Xml.XmlDoc.FragmentParsers;
 
 public class ReferenceFragmentParser : IFragmentParser
 {
+    private const string Cref = "cref";
+    private const string Href = "href";
+
     public string[] SupportedTags { get; } = { "see" };
 
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
@@ -17,9 +20,9 @@ public class ReferenceFragmentParser : IFragmentParser
         if (replacement is not null)
             processor.ExpectEndElement(name);
 
-        if (attributes.TryGetValue("cref", out string? cref))
+        if (attributes.TryGetValue(Cref, out string? cref))
             return ParseCodeReference(cref, replacement);
-        if (attributes.TryGetValue("href", out string? href))
+        if (attributes.TryGetValue(Href, out string? href))
             return ParseLinkReference(href, replacement);
 
         throw new XmlDocParserException("Expected a 'cref' or an 'href' attribute, but found neither.", start.Span);
