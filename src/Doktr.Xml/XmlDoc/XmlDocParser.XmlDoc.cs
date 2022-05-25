@@ -33,7 +33,9 @@ public partial class XmlDocParser
     private RawXmlDocEntry ParseMember()
     {
         var member = ExpectElement(Member);
-        string rawDocId = member.Attributes[Name];
+        if (!member.Attributes.TryGetValue(Name, out string? rawDocId))
+            throw new XmlDocParserException("Expected a name attribute on member tag, but found nothing", member.Span);
+
         var docId = new CodeReference(rawDocId);
         var entry = new RawXmlDocEntry(docId);
 
