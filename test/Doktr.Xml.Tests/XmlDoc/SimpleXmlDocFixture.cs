@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Doktr.Xml.XmlDoc;
@@ -7,19 +6,26 @@ using Doktr.Xml.XmlDoc.SectionParsers;
 
 namespace Doktr.Xml.Tests.XmlDoc;
 
-public class XmlDocFixture
+public class SimpleXmlDocFixture
 {
     private static readonly IEnumerable<IFragmentParser> FragmentParsers;
     private static readonly IEnumerable<ISectionParser> SectionParsers;
 
-    static XmlDocFixture()
+    static SimpleXmlDocFixture()
     {
-        var types = typeof(XmlDocParser).Assembly.GetTypes();
-        var fragments = types.Where(t => t.IsClass && t.IsAssignableTo(typeof(IFragmentParser)));
-        var sections = types.Where(t => t.IsClass && t.IsAssignableTo(typeof(ISectionParser)));
+        FragmentParsers = new IFragmentParser[]
+        {
+            new BoldFragmentParser(),
+            new ItalicFragmentParser(),
+            new UnderlineFragmentParser(),
+            new MonospaceFragmentParser()
+        };
 
-        FragmentParsers = fragments.Select(t => (IFragmentParser) Activator.CreateInstance(t)!);
-        SectionParsers = sections.Select(t => (ISectionParser) Activator.CreateInstance(t)!);
+        SectionParsers = new ISectionParser[]
+        {
+            new SummarySectionParser(),
+            new RemarksSectionParser()
+        };
     }
 
     public IEnumerable<IFragmentParser> Fragments => FragmentParsers;

@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Doktr.Xml.Tests.XmlDoc.Fragments;
 
-public class TextFragmentTests : IClassFixture<XmlDocFixture>
+public class TextFragmentTests : IClassFixture<SimpleXmlDocFixture>
 {
-    private readonly XmlDocFixture _fixture;
+    private readonly SimpleXmlDocFixture _fixture;
 
-    public TextFragmentTests(XmlDocFixture fixture) => _fixture = fixture;
+    public TextFragmentTests(SimpleXmlDocFixture fixture) => _fixture = fixture;
 
     [Fact]
     public void Dangling_Text()

@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Doktr.Xml.Tests.XmlDoc.Sections;
 
-public class SummaryTests : IClassFixture<XmlDocFixture>
+public class SummaryTests : IClassFixture<SimpleXmlDocFixture>
 {
-    private readonly XmlDocFixture _fixture;
+    private readonly SimpleXmlDocFixture _fixture;
 
-    public SummaryTests(XmlDocFixture fixture) => _fixture = fixture;
+    public SummaryTests(SimpleXmlDocFixture fixture) => _fixture = fixture;
 
     [Fact]
     public void Summary()

@@ -5,11 +5,11 @@ using Xunit;
 
 namespace Doktr.Xml.Tests.XmlDoc;
 
-public class XmlDocParserTests : IClassFixture<XmlDocFixture>
+public class XmlDocParserTests : IClassFixture<SimpleXmlDocFixture>
 {
-    private readonly XmlDocFixture _fixture;
+    private readonly SimpleXmlDocFixture _fixture;
 
-    public XmlDocParserTests(XmlDocFixture fixture) => _fixture = fixture;
+    public XmlDocParserTests(SimpleXmlDocFixture fixture) => _fixture = fixture;
 
     [Fact]
     public void Single_Member()
@@ -29,9 +29,10 @@ public class XmlDocParserTests : IClassFixture<XmlDocFixture>
     {
         const string input = "<member>Hello</member>";
         var parser = new XmlDocParser(_fixture.Sections, _fixture.Fragments, ParseInput(input));
-        var doc = parser.ParseXmlDoc();
 
-        Assert.Empty(doc);
+        var ex = Assert.Throws<XmlDocParserException>(() => parser.ParseXmlDoc());
+        Assert.Contains("name attribute", ex.Message);
+        Assert.Contains("found nothing", ex.Message);
     }
 
     private static XmlNodeCollection ParseInput(string input)
