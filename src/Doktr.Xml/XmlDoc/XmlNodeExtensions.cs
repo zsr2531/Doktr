@@ -2,6 +2,8 @@ namespace Doktr.Xml.XmlDoc;
 
 public static class XmlNodeExtensions
 {
+    public static bool IsNotEndElementOrNull(this XmlNode? node) => node is not XmlEndElementNode and not null;
+
     public static string ExpectAttribute(this XmlElementNode element, string key)
     {
         var attributes = element.Attributes;
