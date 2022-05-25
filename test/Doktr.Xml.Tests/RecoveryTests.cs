@@ -24,11 +24,8 @@ public class RecoveryTests
         var diagnostics = parser.Diagnostics;
 
         Assert.NotEmpty(diagnostics);
-        Assert.Equal(2, result.Count);
-        var first = Assert.IsType<XmlTextNode>(result[0]);
-        var second = Assert.IsType<XmlElementNode>(result[1]);
+        var node = Assert.IsType<XmlElementNode>(Assert.Single(result));
 
-        Assert.Equal("\n", first.Text);
-        Assert.Equal("hello", second.Name);
+        Assert.Equal("hello", node.Name);
     }
 }

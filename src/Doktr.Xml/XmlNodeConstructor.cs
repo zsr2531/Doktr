@@ -45,7 +45,10 @@ public class XmlNodeConstructor : XmlBaseVisitor<XmlNode>
         var span = CreateTextSpan(context);
         string text = context.TEXT().GetText();
 
-        return new XmlTextNode(span, text);
+        // If we only have whitespace, don't bother creating a node.
+        return text.All(char.IsWhiteSpace)
+            ? null!
+            : new XmlTextNode(span, text);
     }
 
     private static TextSpan CreateTextSpan(ParserRuleContext context)
