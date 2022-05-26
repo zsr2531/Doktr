@@ -10,7 +10,7 @@ public class UnderlineFragmentParser : IFragmentParser
     {
         var fragment = new UnderlineFragment();
         var start = processor.ExpectElement(SupportedTags);
-        while (processor.Lookahead is not XmlEndElementNode)
+        while (processor.Lookahead.IsNotEndElementOrNull())
             fragment.Children.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

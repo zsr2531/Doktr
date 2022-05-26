@@ -16,7 +16,7 @@ public partial class ListFragmentParser
             Style = style
         };
 
-        while (processor.Lookahead is not XmlEndElementNode)
+        while (processor.Lookahead.IsNotEndElementOrNull())
         {
             var item = ParseListItem(processor);
             list.Items.Add(item);

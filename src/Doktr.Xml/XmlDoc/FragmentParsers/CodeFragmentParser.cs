@@ -12,7 +12,7 @@ public class CodeFragmentParser : IFragmentParser
         var fragment = new CodeFragment();
         var start = processor.ExpectElement(SupportedTags);
         var sb = new StringBuilder();
-        while (processor.Lookahead is not XmlEndElementNode)
+        while (processor.Lookahead.IsNotEndElementOrNull())
         {
             var text = processor.ExpectText();
             sb.Append(text.Text);
