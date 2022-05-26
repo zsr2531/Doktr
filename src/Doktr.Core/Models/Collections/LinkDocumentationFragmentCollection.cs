@@ -3,6 +3,7 @@ using Doktr.Core.Models.Fragments;
 
 namespace Doktr.Core.Models.Collections;
 
+// TODO: Make a common base type for references so this can be nicer.
 public class LinkDocumentationFragmentCollection : Collection<DocumentationFragment>, ICloneable
 {
     protected override void InsertItem(int index, DocumentationFragment item)
