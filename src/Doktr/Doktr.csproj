@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Doktr.Core\Doktr.Core.csproj" />
       <ProjectReference Include="..\Doktr.Decompiler\Doktr.Decompiler.csproj" />
+      <ProjectReference Include="..\Lifters\Doktr.Lifters.AsmResolver\Doktr.Lifters.AsmResolver.csproj" />
     </ItemGroup>
 
 </Project>
