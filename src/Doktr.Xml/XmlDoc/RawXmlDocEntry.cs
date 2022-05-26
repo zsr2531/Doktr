@@ -20,7 +20,7 @@ public class RawXmlDocEntry
     public NamedDocumentationMap Parameters { get; set; } = new();
     public DocumentationFragmentCollection Value { get; set; } = new();
     public DocumentationFragmentCollection Returns { get; set; } = new();
-    public ExceptionSegmentCollection Exceptions { get; set; } = new();
+    public ExceptionDocumentationCollection Exceptions { get; set; } = new();
     public DocumentationFragmentCollection Examples { get; set; } = new();
     public DocumentationFragmentCollection Remarks { get; set; } = new();
     public LinkDocumentationFragmentCollection SeeAlso { get; set; } = new();

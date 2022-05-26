@@ -4,5 +4,5 @@ namespace Doktr.Core.Models;
 
 public interface IHasExceptions
 {
-    ExceptionSegmentCollection Exceptions { get; }
+    ExceptionDocumentationCollection Exceptions { get; }
 }

@@ -32,7 +32,7 @@ public class MethodDocumentation : MemberDocumentation,
     public ParameterDocumentationCollection Parameters { get; set; } = new();
     public TypeSignature ReturnType { get; set; }
     public DocumentationFragmentCollection Returns { get; set; } = new();
-    public ExceptionSegmentCollection Exceptions { get; set; } = new();
+    public ExceptionDocumentationCollection Exceptions { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitMethod(this);
 

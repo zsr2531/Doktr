@@ -10,7 +10,7 @@ public class ConstructorDocumentation : MemberDocumentation, IHasParameters, IHa
     }
 
     public ParameterDocumentationCollection Parameters { get; set; } = new();
-    public ExceptionSegmentCollection Exceptions { get; set; } = new();
+    public ExceptionDocumentationCollection Exceptions { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitConstructor(this);
 

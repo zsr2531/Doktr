@@ -23,7 +23,7 @@ public class PropertyDocumentation : MemberDocumentation, IHasStatic, IHasVirtua
     public PropertyGetter? Getter { get; set; }
     public PropertySetter? Setter { get; set; }
     public DocumentationFragmentCollection Value { get; set; } = new();
-    public ExceptionSegmentCollection Exceptions { get; set; } = new();
+    public ExceptionDocumentationCollection Exceptions { get; set; } = new();
 
     public override void AcceptVisitor(IDocumentationMemberVisitor visitor) => visitor.VisitProperty(this);
 

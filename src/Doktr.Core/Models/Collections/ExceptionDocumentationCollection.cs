@@ -1,13 +1,12 @@
 using System.Collections.ObjectModel;
-using Doktr.Core.Models.Segments;
 
 namespace Doktr.Core.Models.Collections;
 
-public class ExceptionSegmentCollection : Collection<ExceptionSegment>, ICloneable
+public class ExceptionDocumentationCollection : Collection<ExceptionDocumentation>, ICloneable
 {
-    public ExceptionSegmentCollection Clone()
+    public ExceptionDocumentationCollection Clone()
     {
-        var clone = new ExceptionSegmentCollection();
+        var clone = new ExceptionDocumentationCollection();
         foreach (var item in this)
             clone.Add(item.Clone());
         
