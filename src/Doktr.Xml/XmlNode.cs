@@ -15,12 +15,14 @@ public abstract class XmlNode
     public override string ToString() => $"<{Kind}>({Span})";
 }
 
-public interface IHasAttributes
+public interface IHasNameAndAttributes
 {
+    string Name { get; }
+
     XmlAttributeMap Attributes { get; }
 }
 
-public class XmlElementNode : XmlNode, IHasAttributes
+public class XmlElementNode : XmlNode, IHasNameAndAttributes
 {
     public XmlElementNode(TextSpan span, string name)
         : base(span)
@@ -45,7 +47,7 @@ public class XmlEndElementNode : XmlNode
     public override XmlNodeKind Kind => XmlNodeKind.EndElement;
 }
 
-public class XmlEmptyElementNode : XmlNode, IHasAttributes
+public class XmlEmptyElementNode : XmlNode, IHasNameAndAttributes
 {
     public XmlEmptyElementNode(TextSpan span, string name)
         : base(span)

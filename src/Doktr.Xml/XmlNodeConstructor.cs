@@ -59,7 +59,7 @@ public class XmlNodeConstructor : XmlBaseVisitor<XmlNode>
         return new TextSpan(start.Line, start.Column, stop.Line, stop.Column);
     }
 
-    private static void AddAttributes(IHasAttributes node, Xml.AttributeContext[] attributes)
+    private static void AddAttributes(IHasNameAndAttributes node, Xml.AttributeContext[] attributes)
     {
         foreach (var attribute in attributes)
         {
