@@ -1,7 +1,6 @@
 using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Fragments;
-using Doktr.Xml.Collections;
 
 namespace Doktr.Xml.XmlDoc.FragmentParsers;
 
@@ -15,8 +14,9 @@ public class ReferenceFragmentParser : IFragmentParser
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
         var start = processor.ExpectElementOrEmptyElement(SupportedTags);
-        (string name, var attributes) = ExtractData(start);
-        var replacement = start.Kind == XmlNodeKind.Element ? ParseReplacementText(processor) : null;
+        string name = ((IHasNameAndAttributes) start).Name;
+        var attributes = ((IHasNameAndAttributes) start).Attributes;
+        var replacement = start.Kind == XmlNodeKind.Element ? ParseReplacement(processor) : null;
         if (replacement is not null)
             processor.ExpectEndElement(name);
 
@@ -45,22 +45,12 @@ public class ReferenceFragmentParser : IFragmentParser
         };
     }
 
-    private static DocumentationFragmentCollection ParseReplacementText(IXmlDocProcessor processor)
+    private static DocumentationFragmentCollection ParseReplacement(IXmlDocProcessor processor)
     {
         var replacement = new DocumentationFragmentCollection();
         while (processor.Lookahead.IsNotEndElementOrNull())
             replacement.Add(processor.NextFragment());
 
         return replacement;
-    }
-
-    private static (string, XmlAttributeMap) ExtractData(XmlNode node)
-    {
-        return node switch
-        {
-            XmlElementNode element => (element.Name, element.Attributes),
-            XmlEmptyElementNode emptyElement => (emptyElement.Name, emptyElement.Attributes),
-            _ => throw new ArgumentOutOfRangeException(nameof(node))
-        };
     }
 }
