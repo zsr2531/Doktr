@@ -16,8 +16,7 @@ public partial class XmlDocParser
         return Lookahead switch
         {
             XmlTextNode => new TextFragment(Consume<XmlTextNode>().Text),
-            XmlElementNode { Name: { } s } => GetFragmentParser(s).ParseFragment(this),
-            XmlEmptyElementNode { Name: { } s } => GetFragmentParser(s).ParseFragment(this),
+            IHasNameAndAttributes { Name: { } s } => GetFragmentParser(s).ParseFragment(this),
             _ => throw new XmlDocParserException($"Unexpected node: {Lookahead}", Consume().Span)
         };
 
@@ -57,8 +56,7 @@ public partial class XmlDocParser
         switch (Lookahead)
         {
             case XmlTextNode:
-            case XmlElementNode element when _fragmentParsers.ContainsKey(element.Name):
-            case XmlEmptyElementNode emptyElement when _fragmentParsers.ContainsKey(emptyElement.Name):
+            case IHasNameAndAttributes element when _fragmentParsers.ContainsKey(element.Name):
                 entry.Summary.Add(NextFragment());
                 return true;
 
