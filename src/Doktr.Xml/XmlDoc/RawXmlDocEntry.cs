@@ -20,9 +20,9 @@ public class RawXmlDocEntry
     public NamedDocumentationMap Parameters { get; set; } = new();
     public DocumentationFragmentCollection Value { get; set; } = new();
     public DocumentationFragmentCollection Returns { get; set; } = new();
-    public ExceptionDocumentationCollection Exceptions { get; set; } = new();
-    public DocumentationFragmentCollection Examples { get; set; } = new();
+    public ExceptionDocumentationMap Exceptions { get; set; } = new();
+    public DocumentationFragmentCollection Example { get; set; } = new();
     public DocumentationFragmentCollection Remarks { get; set; } = new();
     public LinkDocumentationFragmentCollection SeeAlso { get; set; } = new();
-    public ProductVersionsSegmentCollection AppliesTo { get; set; } = new();
+    public ProductVersionsSegmentCollection AppliesTo { get; set; } = new(); // TODO: Figure out how to parse this.
 }
