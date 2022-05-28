@@ -8,10 +8,7 @@ public class LineBreakFragmentParser : IFragmentParser
 
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
-        var start = processor.ExpectElementOrEmptyElement(SupportedTags);
-        if (start.Kind == XmlNodeKind.Element)
-            processor.ExpectEndElement(((XmlElementNode) start).Name);
-
+        processor.ExpectEmptyElement(SupportedTags);
         return new LineBreakFragment();
     }
 }
