@@ -1,96 +1,69 @@
-﻿#nullable enable
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using AsmResolver.DotNet;
-using Doktr.Analysis;
-using Doktr.CommandLine;
-using Doktr.Generation;
-using Doktr.Resolution;
-using Doktr.Xml;
-using Doktr.Xml.Semantics;
+﻿using System.Text.Json;
+using Autofac;
+using CommandLine;
+using Doktr;
+using Doktr.Core;
+using Doktr.Decompiler;
+using MediatR;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
-namespace Doktr
+Parser.Default.ParseArguments<CommandLineOptions>(args)
+      .WithParsed(Start);
+
+static void Start(CommandLineOptions options)
 {
-    /// <summary>
-    /// Test
-    /// </summary>
-    /// <param name="One">string</param>
-    /// <param name="Two">int</param>
-    public record Test(string? One, int? Two) : IEnumerable<int?>
+    try
     {
-        /// <summary>
-        /// kek
-        /// </summary>
-        /// <returns>ayy</returns>
-        public IEnumerator<int?> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        // public unsafe void oops(in int x, ref int y, out int z, delegate* unmanaged[Cdecl]<int, int> kek)
-        // {
-        //     z = 0;
-        // }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        var container = CreateContainer(options);
+        var logger = container.Resolve<ILogger>();
+        var mediator = container.Resolve<IMediator>();
     }
-
-    public static class Program
+    catch (Exception ex)
     {
-        private const string Version = "1.0.0.0";
-        private const string RepoUrl = "https://github.com/zsr2531/Doktr";
-        private const string Usage = "dotnet Doktr.dll [options] <asm:xml>...";
-            
-        public static void Main(string[] args)
-        {
-            var arguments = new CommandLineParser(args).Parse();
-            if (arguments.HasFlag(CommandLineSwitches.Help))
-            {
-                PrintHelpMessage();
-                return;
-            }
-
-            foreach (var target in arguments.TargetFiles)
-            {
-                var module = ModuleDefinition.FromFile(target.Assembly);
-                var result = new DependencyGraphBuilder(module).BuildDependencyGraph();
-                var docs = new DocumentationReader(target.Xmldoc);
-                var documentation = new DocumentationResolver(result, docs.Loaded).MapMembers();
-                new InheritDocResolver(documentation, result, docs.Loaded).ResolveInheritDoc();
-                var semantics = new SemanticXmlDocParser(documentation);
-                foreach (var type in result.Nodes.Where(p => p.Key is TypeDefinition))
-                {
-                    if (!documentation.ContainsKey(type.Key))
-                        continue;
-                    var parsed = semantics.ParseTypeDocumentation((TypeDefinition) type.Key);
-                }
-            }
-        }
-
-        private static void PrintHelpMessage()
-        {
-            var sb = new StringBuilder($"Doktr v{Version}\n{RepoUrl}\n\nUSAGE: {Usage}\n\nCommand line options:\n");
-
-            foreach (var @switch in CommandLineSwitches.Switches)
-            {
-                string identifiers = "   " + string.Join(", ", @switch.Identifiers);
-                sb.Append(identifiers.PadRight(25));
-                sb.Append(@switch.Description);
-
-                if (@switch.HasValue)
-                    sb.AppendLine($" (default: {@switch.DefaultValue})");
-                else
-                    sb.AppendLine();
-            }
-
-            Console.WriteLine(sb.ToString());
-        }
+        Console.Error.WriteLine("An unexpected error occurred:\n" + ex);
+        Environment.ExitCode = 1; // Needed in order for CI to fail the build
     }
+}
+
+static IContainer CreateContainer(CommandLineOptions options)
+{
+    var logger = CreateLogger(options.Verbose);
+    var configuration = LoadDoktrConfiguration(options.ProjectFilePath);
+    var builder = new ContainerBuilder();
+
+    // Singleton stuff
+    builder.RegisterInstance(logger);
+    builder.RegisterInstance(configuration);
+
+    // Stuff needed for MediatR
+    builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
+    builder.RegisterGeneric(typeof(LoggerPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>)).SingleInstance();
+    builder.Register<ServiceFactory>(ctx =>
+    {
+        var c = ctx.Resolve<IComponentContext>();
+        return t => c.Resolve(t);
+    });
+
+    // MediatR handlers
+    builder.RegisterAssemblyTypes(typeof(DecompileMemberHandler).Assembly)
+           .AsImplementedInterfaces();
+
+    return builder.Build();
+}
+
+static ILogger CreateLogger(bool verbose)
+{
+    var configuration = new LoggerConfiguration();
+    configuration.MinimumLevel.Is(verbose ? LogEventLevel.Verbose : LogEventLevel.Debug);
+    configuration.WriteTo.Console(theme: AnsiConsoleTheme.Code);
+
+    return configuration.CreateLogger();
+}
+
+static DoktrConfiguration LoadDoktrConfiguration(string path)
+{
+    using var file = File.OpenRead(path);
+    return JsonSerializer.Deserialize<DoktrConfiguration>(file)!;
 }
