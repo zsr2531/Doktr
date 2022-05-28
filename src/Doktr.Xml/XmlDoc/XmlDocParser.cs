@@ -5,6 +5,7 @@ using Doktr.Xml.XmlDoc.SectionParsers;
 
 namespace Doktr.Xml.XmlDoc;
 
+// TODO: Introduce the concept of diagnostics instead of throwing for everything.
 public partial class XmlDocParser : IXmlDocParser
 {
     private const string Doc = "doc";

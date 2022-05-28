@@ -16,6 +16,7 @@ public partial class ListFragmentParser
         while (processor.Lookahead.IsNotEndElementOrNull())
         {
             // TODO: Warn if the number of columns in the header doesn't match the number of columns in the rows.
+            // TODO: And add dummy columns as needed to fit the table.
             var row = ParseRow(processor, columns);
             table.Rows.Add(row);
         }

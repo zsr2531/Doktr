@@ -40,6 +40,7 @@ public class XmlNodeConstructor : XmlBaseVisitor<XmlNode>
         return node;
     }
 
+    // TODO: Clean text from whitespace?
     public override XmlNode VisitTextElement(Xml.TextElementContext context)
     {
         var span = CreateTextSpan(context);
