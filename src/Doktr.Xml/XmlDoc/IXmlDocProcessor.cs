@@ -19,4 +19,6 @@ public interface IXmlDocProcessor
     XmlNode ExpectElementOrEmptyElement(params string[] names);
 
     XmlNode Consume();
+
+    void ReportDiagnostic(XmlDocDiagnostic diagnostic);
 }

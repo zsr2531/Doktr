@@ -2,10 +2,10 @@ using Doktr.Xml.Collections;
 using Doktr.Xml.XmlDoc.Collections;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 using Doktr.Xml.XmlDoc.SectionParsers;
+using Serilog;
 
 namespace Doktr.Xml.XmlDoc;
 
-// TODO: Introduce the concept of diagnostics instead of throwing for everything.
 public partial class XmlDocParser : IXmlDocParser
 {
     private const string Doc = "doc";
@@ -15,21 +15,26 @@ public partial class XmlDocParser : IXmlDocParser
 
     private readonly Dictionary<string, ISectionParser> _sectionParsers;
     private readonly Dictionary<string, IFragmentParser> _fragmentParsers;
+    private readonly ILogger _logger;
     private readonly XmlNodeCollection _nodes;
     private int _position;
 
     public XmlDocParser(
         IEnumerable<ISectionParser> sectionParsers,
         IEnumerable<IFragmentParser> fragmentParsers,
+        ILogger logger,
         XmlNodeCollection nodes)
     {
         _sectionParsers = sectionParsers.ToDictionary(k => k.Tag, v => v);
         _fragmentParsers = fragmentParsers
                            .SelectMany(p => p.SupportedTags.Select(t => (p, t)))
                            .ToDictionary(k => k.t, v => v.p);
+        _logger = logger;
         _nodes = nodes;
     }
 
+    public bool HasErrors => !Diagnostics.IsEmpty;
+    public XmlDocDiagnosticCollection Diagnostics { get; } = new();
     private XmlNode LastNode => _nodes[^1];
 
     public RawXmlDocEntryMap ParseXmlDoc()
@@ -47,6 +52,15 @@ public partial class XmlDocParser : IXmlDocParser
             ParseEpilogue();
 
         return map;
+    }
+
+    public void ReportDiagnostic(XmlDocDiagnostic diagnostic)
+    {
+        Diagnostics.Add(diagnostic);
+        if (diagnostic.Severity == XmlDocDiagnosticSeverity.Error)
+            _logger.Error("An error occurred while parsing XML documentation: {Diagnostic}", diagnostic);
+        else
+            _logger.Warning("There was an issue while parsing XML documentation: {Diagnostic}", diagnostic);
     }
 
     private bool ParsePrologue()
