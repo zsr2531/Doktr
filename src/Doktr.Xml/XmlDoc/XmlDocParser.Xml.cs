@@ -65,11 +65,6 @@ public partial class XmlDocParser
 
     public XmlNode Consume()
     {
-        // if (!IsEof)
-        //     return _nodes[_position++];
-        //
-        // throw new XmlDocParserException("Unexpected end of input", Lookahead.Span);
-
         var node = _nodes[_position];
         if (!IsEof)
             _position++;
