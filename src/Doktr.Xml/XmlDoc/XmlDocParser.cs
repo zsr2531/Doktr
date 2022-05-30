@@ -35,14 +35,13 @@ public partial class XmlDocParser : IXmlDocParser
 
     public bool HasErrors => !Diagnostics.IsEmpty;
     public XmlDocDiagnosticCollection Diagnostics { get; } = new();
-    private XmlNode LastNode => _nodes[^1];
 
     public RawXmlDocEntryMap ParseXmlDoc()
     {
         var map = new RawXmlDocEntryMap();
         bool hasPrologue = ParsePrologue();
 
-        while (Lookahead is not XmlEndElementNode and not null)
+        while (Lookahead.IsNotEndElementOrEof())
         {
             var entry = ParseMember();
             map[entry.DocId] = entry;

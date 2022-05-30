@@ -77,7 +77,7 @@ public partial class XmlDocParser
     {
         if (Lookahead is not XmlElementNode element)
         {
-            ThrowHelper.ThrowNodeTypeMismatch<object>(Lookahead, XmlNodeKind.Element, LastNode);
+            ThrowHelper.ThrowNodeTypeMismatch<object>(Lookahead, XmlNodeKind.Element);
             return;
         }
 

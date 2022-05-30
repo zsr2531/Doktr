@@ -11,7 +11,7 @@ public partial class XmlDocParser
     {
         var node = Lookahead;
         if (node is not XmlElementNode element)
-            return ThrowNodeTypeMismatch<XmlElementNode>(Lookahead, XmlNodeKind.Element, LastNode);
+            return ThrowNodeTypeMismatch<XmlElementNode>(Lookahead, XmlNodeKind.Element);
         if (!names.Contains(element.Name))
             return ThrowNodeNameMismatch<XmlElementNode>(element.Span, names, element.Name);
 
@@ -22,7 +22,7 @@ public partial class XmlDocParser
     {
         var node = Lookahead;
         if (node is not XmlEndElementNode element)
-            return ThrowNodeTypeMismatch<XmlEndElementNode>(Lookahead, XmlNodeKind.Element, LastNode);
+            return ThrowNodeTypeMismatch<XmlEndElementNode>(Lookahead, XmlNodeKind.Element);
         if (element.Name != name)
             return ThrowNodeNameMismatch<XmlEndElementNode>(element.Span, name, element.Name);
 
@@ -33,7 +33,7 @@ public partial class XmlDocParser
     {
         var node = Lookahead;
         if (node is not XmlEmptyElementNode element)
-            return ThrowNodeTypeMismatch<XmlEmptyElementNode>(Lookahead, XmlNodeKind.EmptyElement, LastNode);
+            return ThrowNodeTypeMismatch<XmlEmptyElementNode>(Lookahead, XmlNodeKind.EmptyElement);
         if (!names.Contains(element.Name))
             return ThrowNodeNameMismatch<XmlEmptyElementNode>(element.Span, names, element.Name);
 
@@ -44,7 +44,7 @@ public partial class XmlDocParser
     {
         var node = Lookahead;
         if (node is not XmlTextNode)
-            return ThrowNodeTypeMismatch<XmlTextNode>(Lookahead, XmlNodeKind.Text, LastNode);
+            return ThrowNodeTypeMismatch<XmlTextNode>(Lookahead, XmlNodeKind.Text);
 
         return Consume<XmlTextNode>();
     }
@@ -59,18 +59,22 @@ public partial class XmlDocParser
             XmlEmptyElementNode { Name: { } s } emptyElement => names.Contains(s)
                 ? Consume<XmlEmptyElementNode>()
                 : ThrowNodeNameMismatch<XmlNode>(emptyElement.Span, names, s),
-            _ => throw new XmlDocParserException(
-                $"Expected node type: {XmlNodeKind.Element} or {XmlNodeKind.EmptyElement}, got: {Lookahead?.Kind}",
-                Consume().Span)
+            _ => ThrowNodeTypeMismatch<XmlNode>(Consume(), XmlNodeKind.Element, XmlNodeKind.EmptyElement),
         };
     }
 
     public XmlNode Consume()
     {
-        if (!IsEof)
-            return _nodes[_position++];
+        // if (!IsEof)
+        //     return _nodes[_position++];
+        //
+        // throw new XmlDocParserException("Unexpected end of input", Lookahead.Span);
 
-        throw new XmlDocParserException("Unexpected end of input", Lookahead.Span);
+        var node = _nodes[_position];
+        if (!IsEof)
+            _position++;
+
+        return node;
     }
 
     private T Consume<T>()
