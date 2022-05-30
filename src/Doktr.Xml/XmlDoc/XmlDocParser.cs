@@ -48,8 +48,9 @@ public partial class XmlDocParser : IXmlDocParser
                 var entry = ParseMember();
                 map[entry.DocId] = entry;
             }
-            catch
+            catch (XmlDocParserException ex)
             {
+                ReportDiagnostic(XmlDocDiagnostic.MakeError(ex.Span, ex.Message));
                 RecoverToNextMember();
             }
         }
