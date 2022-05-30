@@ -60,8 +60,14 @@ public partial class XmlDocParser
                 entry.Summary.Add(NextFragment());
                 return true;
 
-            // TODO: Warn user if entry already inherits documentation? Throwing here is excessive.
-            case XmlEmptyElementNode { Name: Inheritdoc } emptyElement when !entry.InheritsDocumentation:
+            case XmlEmptyElementNode { Name: Inheritdoc } emptyElement:
+                var node = Consume();
+                if (entry.InheritsDocumentation)
+                {
+                    ReportDiagnostic(XmlDocDiagnostic.MakeWarning(node.Span,
+                        "Multiple inheritdoc tags found, using latest one"));
+                }
+
                 if (emptyElement.Attributes.TryGetValue(Cref, out string? from))
                     entry.InheritsDocumentationExplicitlyFrom = new CodeReference(from);
                 else
