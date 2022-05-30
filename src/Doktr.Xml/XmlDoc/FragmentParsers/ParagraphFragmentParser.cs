@@ -4,7 +4,7 @@ namespace Doktr.Xml.XmlDoc.FragmentParsers;
 
 public class ParagraphFragmentParser : IFragmentParser
 {
-    public string[] SupportedTags { get; } = { "p" };
+    public string[] SupportedTags { get; } = { "p", "para" };
 
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
