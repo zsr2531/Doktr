@@ -43,8 +43,15 @@ public partial class XmlDocParser : IXmlDocParser
 
         while (Lookahead.IsNotEndElementOrEof())
         {
-            var entry = ParseMember();
-            map[entry.DocId] = entry;
+            try
+            {
+                var entry = ParseMember();
+                map[entry.DocId] = entry;
+            }
+            catch
+            {
+                RecoverToNextMember();
+            }
         }
 
         if (hasPrologue)
@@ -81,5 +88,14 @@ public partial class XmlDocParser : IXmlDocParser
     {
         ExpectEndElement(Members);
         ExpectEndElement(Doc);
+    }
+
+    private void RecoverToNextMember()
+    {
+        while (IsRecoveryPoint(Lookahead))
+            Consume();
+
+        static bool IsRecoveryPoint(XmlNode node) => node is not XmlElementNode { Name: Member }
+            and not XmlEndElementNode { Name: Members } and not XmlEndOfFileNode;
     }
 }
