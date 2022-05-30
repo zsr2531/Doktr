@@ -93,10 +93,10 @@ public partial class XmlDocParser : IXmlDocParser
 
     private void RecoverToNextMember()
     {
-        while (IsRecoveryPoint(Lookahead))
+        while (!IsRecoveryPoint(Lookahead))
             Consume();
 
-        static bool IsRecoveryPoint(XmlNode node) => node is not XmlElementNode { Name: Member }
-            and not XmlEndElementNode { Name: Members } and not XmlEndOfFileNode;
+        static bool IsRecoveryPoint(XmlNode node) => node is XmlElementNode { Name: Member }
+            or XmlEndElementNode { Name: Members } or XmlEndOfFileNode;
     }
 }
