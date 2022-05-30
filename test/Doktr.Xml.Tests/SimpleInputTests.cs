@@ -12,8 +12,8 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        Assert.Empty(result);
-        var exception = Assert.Single(diagnostics).Exception;
+        Assert.Single(result);
+        var exception = diagnostics[0].Exception;
         Assert.IsType<InputMismatchException>(exception);
     }
 
@@ -24,8 +24,8 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        Assert.Empty(result);
-        var exception = Assert.Single(diagnostics).Exception;
+        Assert.Single(result);
+        var exception = diagnostics[0].Exception;
         Assert.IsType<InputMismatchException>(exception);
     }
 
@@ -36,7 +36,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlEmptyElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlEmptyElementNode>(result[0]);
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
     }
@@ -48,7 +48,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlEmptyElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlEmptyElementNode>(result[0]);
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
     }
@@ -60,7 +60,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlElementNode>(result[0]);
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
     }
@@ -72,7 +72,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlElementNode>(result[0]);
         var attributes = node.Attributes;
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
@@ -87,7 +87,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlEndElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlEndElementNode>(result[0]);
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
     }
@@ -99,7 +99,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        var node = Assert.IsType<XmlEmptyElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlEmptyElementNode>(result[0]);
         var attributes = node.Attributes;
         Assert.Empty(diagnostics);
         Assert.Equal("root", node.Name);
@@ -114,7 +114,7 @@ public class SimpleInputTests
         var result = parser.ParseXmlNodes();
         var diagnostics = parser.Diagnostics;
 
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
         var first = Assert.IsType<XmlElementNode>(result[0]);
         var second = Assert.IsType<XmlEndElementNode>(result[1]);
         Assert.Empty(diagnostics);

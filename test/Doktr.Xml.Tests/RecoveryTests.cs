@@ -12,7 +12,7 @@ public class RecoveryTests
         var diagnostics = parser.Diagnostics;
 
         Assert.NotEmpty(diagnostics);
-        var node = Assert.IsType<XmlElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlElementNode>(result[0]);
         Assert.Equal("hello", node.Name);
     }
 
@@ -24,7 +24,7 @@ public class RecoveryTests
         var diagnostics = parser.Diagnostics;
 
         Assert.NotEmpty(diagnostics);
-        var node = Assert.IsType<XmlElementNode>(Assert.Single(result));
+        var node = Assert.IsType<XmlElementNode>(result[0]);
 
         Assert.Equal("hello", node.Name);
     }
