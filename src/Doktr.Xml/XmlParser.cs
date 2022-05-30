@@ -89,11 +89,16 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
 
     private static void AppendEof(XmlNodeCollection nodes)
     {
-        var last = nodes[^1];
-        var span = last.Span;
-        var eofSpan = new TextSpan(span.EndColumn, span.EndColumn + 1, span.EndColumn, span.EndColumn + 1);
-        var eofNode = new XmlEndOfFileNode(eofSpan);
+        var span = nodes.IsEmpty
+            ? new TextSpan(1, 1, 1, 1)
+            : GetLastFromNodes();
 
-        nodes.Add(eofNode);
+        nodes.Add(new XmlEndOfFileNode(span));
+
+        TextSpan GetLastFromNodes()
+        {
+            var last = nodes[^1].Span;
+            return new TextSpan(last.StartLine, last.StartColumn + 1, last.EndLine, last.EndColumn + 1);
+        }
     }
 }
