@@ -98,7 +98,7 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
         TextSpan GetLastFromNodes()
         {
             var last = nodes[^1].Span;
-            return new TextSpan(last.StartLine, last.StartColumn + 1, last.EndLine, last.EndColumn + 1);
+            return new TextSpan(last.EndLine, last.EndColumn + 1, last.EndLine, last.EndColumn + 1);
         }
     }
 }
