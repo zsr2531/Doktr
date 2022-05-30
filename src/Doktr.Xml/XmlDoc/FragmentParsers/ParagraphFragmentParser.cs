@@ -10,7 +10,7 @@ public class ParagraphFragmentParser : IFragmentParser
     {
         var start = processor.ExpectElement(SupportedTags);
         var paragraph = new ParagraphFragment();
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             paragraph.Children.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

@@ -71,3 +71,13 @@ public class XmlTextNode : XmlNode
     public string Text { get; }
     public override XmlNodeKind Kind => XmlNodeKind.Text;
 }
+
+public class XmlEndOfFileNode : XmlNode
+{
+    public XmlEndOfFileNode(TextSpan span)
+        : base(span)
+    {
+    }
+
+    public override XmlNodeKind Kind => XmlNodeKind.EndOfFile;
+}

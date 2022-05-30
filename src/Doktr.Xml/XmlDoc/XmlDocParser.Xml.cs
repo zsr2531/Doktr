@@ -4,8 +4,8 @@ namespace Doktr.Xml.XmlDoc;
 
 public partial class XmlDocParser
 {
-    public bool IsEof => _position >= _nodes.Count;
-    public XmlNode? Lookahead => IsEof ? null : _nodes[_position];
+    public bool IsEof => _nodes[_position].Kind == XmlNodeKind.EndOfFile;
+    public XmlNode Lookahead => _nodes[_position];
 
     public XmlElementNode ExpectElement(params string[] names)
     {
@@ -70,10 +70,7 @@ public partial class XmlDocParser
         if (!IsEof)
             return _nodes[_position++];
 
-        (_, _, int line, int col) = _nodes[^1].Span;
-        var span = new TextSpan(line, col + 1, line, col + 1);
-
-        throw new XmlDocParserException("Unexpected end of input", span);
+        throw new XmlDocParserException("Unexpected end of input", Lookahead.Span);
     }
 
     private T Consume<T>()

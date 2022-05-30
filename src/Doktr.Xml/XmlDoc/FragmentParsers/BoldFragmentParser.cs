@@ -15,7 +15,7 @@ public class BoldFragmentParser : IFragmentParser
     {
         var fragment = new BoldFragment();
         var start = processor.ExpectElement(SupportedTags);
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             fragment.Children.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

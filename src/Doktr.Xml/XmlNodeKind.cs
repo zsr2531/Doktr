@@ -5,5 +5,6 @@ public enum XmlNodeKind
     Element,
     EndElement,
     EmptyElement,
-    Text
+    Text,
+    EndOfFile
 }

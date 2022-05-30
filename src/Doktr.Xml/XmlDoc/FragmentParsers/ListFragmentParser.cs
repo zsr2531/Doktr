@@ -34,7 +34,7 @@ public partial class ListFragmentParser : IFragmentParser
         var start = processor.ExpectElement(name);
         var fragments = new DocumentationFragmentCollection();
 
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             fragments.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

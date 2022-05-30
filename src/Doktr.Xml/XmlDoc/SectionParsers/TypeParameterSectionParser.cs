@@ -11,7 +11,7 @@ public class TypeParameterSectionParser : ISectionParser
         var start = processor.ExpectElement(Tag);
         string typeParamName = start.ExpectAttribute("name");
         var documentation = new DocumentationFragmentCollection();
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             documentation.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

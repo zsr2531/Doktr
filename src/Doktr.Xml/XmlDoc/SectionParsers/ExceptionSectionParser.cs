@@ -13,7 +13,7 @@ public class ExceptionSectionParser : ISectionParser
         string docId = start.ExpectAttribute("cref");
         var reference = new CodeReference(docId);
         var documentation = new DocumentationFragmentCollection();
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             documentation.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

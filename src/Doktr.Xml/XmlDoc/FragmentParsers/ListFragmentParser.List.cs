@@ -16,7 +16,7 @@ public partial class ListFragmentParser
             Style = style
         };
 
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
         {
             var item = ParseListItem(processor);
             list.Items.Add(item);
@@ -76,7 +76,7 @@ public partial class ListFragmentParser
     private static VanillaListItemFragment ParseVanillaListItem(IXmlDocProcessor processor)
     {
         var fragments = new DocumentationFragmentCollection();
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             fragments.Add(processor.NextFragment());
 
         return new VanillaListItemFragment

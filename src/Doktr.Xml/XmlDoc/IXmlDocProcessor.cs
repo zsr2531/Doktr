@@ -4,7 +4,7 @@ namespace Doktr.Xml.XmlDoc;
 
 public interface IXmlDocProcessor
 {
-    XmlNode? Lookahead { get; }
+    XmlNode Lookahead { get; }
 
     DocumentationFragment NextFragment();
 

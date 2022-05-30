@@ -48,7 +48,7 @@ public class ReferenceFragmentParser : IFragmentParser
     private static DocumentationFragmentCollection ParseReplacement(IXmlDocProcessor processor)
     {
         var replacement = new DocumentationFragmentCollection();
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             replacement.Add(processor.NextFragment());
 
         return replacement;
