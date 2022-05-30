@@ -3,6 +3,8 @@ using System.Linq;
 using Doktr.Xml.XmlDoc;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 using Doktr.Xml.XmlDoc.SectionParsers;
+using NSubstitute;
+using Serilog;
 
 namespace Doktr.Xml.Tests.XmlDoc;
 
@@ -36,7 +38,7 @@ public class SimpleXmlDocFixture
         var transformed = inputs.Select((s, i) => $"<member name='T:Test{i}'>{s}</member>");
         string input = string.Join('\n', transformed);
         var nodes = new XmlParser(input).ParseXmlNodes();
-        var doc = new XmlDocParser(Sections, Fragments, nodes);
+        var doc = new XmlDocParser(Sections, Fragments, Substitute.For<ILogger>(), nodes);
 
         return doc;
     }

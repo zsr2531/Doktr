@@ -1,6 +1,8 @@
 using Doktr.Core.Models.Fragments;
 using Doktr.Xml.Collections;
 using Doktr.Xml.XmlDoc;
+using NSubstitute;
+using Serilog;
 using Xunit;
 
 namespace Doktr.Xml.Tests.XmlDoc;
@@ -15,7 +17,8 @@ public class XmlDocParserTests : IClassFixture<SimpleXmlDocFixture>
     public void Single_Member()
     {
         const string input = "<member name='T:Test'>Hello</member>";
-        var parser = new XmlDocParser(_fixture.Sections, _fixture.Fragments, ParseInput(input));
+        var parser = new XmlDocParser(
+            _fixture.Sections, _fixture.Fragments, Substitute.For<ILogger>(), ParseInput(input));
         var doc = parser.ParseXmlDoc();
 
         var member = Assert.Single(doc);
@@ -28,7 +31,8 @@ public class XmlDocParserTests : IClassFixture<SimpleXmlDocFixture>
     public void Missing_Name()
     {
         const string input = "<member>Hello</member>";
-        var parser = new XmlDocParser(_fixture.Sections, _fixture.Fragments, ParseInput(input));
+        var parser = new XmlDocParser(
+            _fixture.Sections, _fixture.Fragments, Substitute.For<ILogger>(), ParseInput(input));
 
         var ex = Assert.Throws<XmlDocParserException>(() => parser.ParseXmlDoc());
         Assert.Contains("name attribute", ex.Message);

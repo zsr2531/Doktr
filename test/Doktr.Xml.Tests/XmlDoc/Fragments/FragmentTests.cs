@@ -4,12 +4,15 @@ using Doktr.Core.Models.Collections;
 using Doktr.Xml.XmlDoc;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 using Doktr.Xml.XmlDoc.SectionParsers;
+using NSubstitute;
+using Serilog;
 using Xunit;
 
 namespace Doktr.Xml.Tests.XmlDoc.Fragments;
 
 public abstract class FragmentTests
 {
+    private readonly ISectionParser[] _sectionParsers = Array.Empty<ISectionParser>();
     private readonly IFragmentParser[] _fragmentParsers;
 
     protected FragmentTests(IFragmentParser fragmentParser) => _fragmentParsers = new[] { fragmentParser };
@@ -27,7 +30,7 @@ public abstract class FragmentTests
     {
         string fullInput = $"<member name='T:Test'>{input}</member>";
         var nodes = new XmlParser(fullInput).ParseXmlNodes();
-        var parser = new XmlDocParser(Array.Empty<ISectionParser>(), _fragmentParsers, nodes);
+        var parser = new XmlDocParser(_sectionParsers, _fragmentParsers, Substitute.For<ILogger>(), nodes);
 
         return parser;
     }
