@@ -55,6 +55,8 @@ public readonly struct CodeReference : IEquatable<CodeReference>
 
     public override int GetHashCode() => Identifier.GetHashCode();
 
+    public override string ToString() => Identifier;
+
     public static bool operator ==(CodeReference left, CodeReference right) => left.Equals(right);
 
     public static bool operator !=(CodeReference left, CodeReference right) => !left.Equals(right);

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Doktr.Xml.Collections;
 
 namespace Doktr.Xml;
@@ -15,14 +16,21 @@ public abstract class XmlNode
     public override string ToString() => $"<{Kind}>({Span})";
 }
 
-public interface IHasNameAndAttributes
+public abstract class XmlComplexNode : XmlNode
 {
-    string Name { get; }
+    protected XmlComplexNode(TextSpan span)
+        : base(span)
+    {
+    }
 
-    XmlAttributeMap Attributes { get; }
+    public abstract string Name { get; }
+    public abstract XmlAttributeMap Attributes { get; }
+
+    public bool TryGetAttribute(string key, [NotNullWhen(true)] out string? value) =>
+        Attributes.TryGetValue(key, out value);
 }
 
-public class XmlElementNode : XmlNode, IHasNameAndAttributes
+public class XmlElementNode : XmlComplexNode
 {
     public XmlElementNode(TextSpan span, string name)
         : base(span)
@@ -30,8 +38,8 @@ public class XmlElementNode : XmlNode, IHasNameAndAttributes
         Name = name;
     }
 
-    public string Name { get; }
-    public XmlAttributeMap Attributes { get; } = new();
+    public override string Name { get; }
+    public override XmlAttributeMap Attributes { get; } = new();
     public override XmlNodeKind Kind => XmlNodeKind.Element;
 }
 
@@ -47,7 +55,7 @@ public class XmlEndElementNode : XmlNode
     public override XmlNodeKind Kind => XmlNodeKind.EndElement;
 }
 
-public class XmlEmptyElementNode : XmlNode, IHasNameAndAttributes
+public class XmlEmptyElementNode : XmlComplexNode
 {
     public XmlEmptyElementNode(TextSpan span, string name)
         : base(span)
@@ -55,8 +63,8 @@ public class XmlEmptyElementNode : XmlNode, IHasNameAndAttributes
         Name = name;
     }
 
-    public string Name { get; }
-    public XmlAttributeMap Attributes { get; } = new();
+    public override string Name { get; }
+    public override XmlAttributeMap Attributes { get; } = new();
     public override XmlNodeKind Kind => XmlNodeKind.EmptyElement;
 }
 
@@ -70,4 +78,14 @@ public class XmlTextNode : XmlNode
 
     public string Text { get; }
     public override XmlNodeKind Kind => XmlNodeKind.Text;
+}
+
+public class XmlEndOfFileNode : XmlNode
+{
+    public XmlEndOfFileNode(TextSpan span)
+        : base(span)
+    {
+    }
+
+    public override XmlNodeKind Kind => XmlNodeKind.EndOfFile;
 }

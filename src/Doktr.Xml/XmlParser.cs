@@ -83,6 +83,22 @@ public class XmlParser : IXmlParser, IAntlrErrorListener<IToken>, IAntlrErrorLis
             }
         }
 
+        AppendEof(nodes);
         return nodes;
+    }
+
+    private static void AppendEof(XmlNodeCollection nodes)
+    {
+        var span = nodes.IsEmpty
+            ? new TextSpan(1, 1, 1, 1)
+            : GetLastFromNodes();
+
+        nodes.Add(new XmlEndOfFileNode(span));
+
+        TextSpan GetLastFromNodes()
+        {
+            var last = nodes[^1].Span;
+            return new TextSpan(last.EndLine, last.EndColumn + 1, last.EndLine, last.EndColumn + 1);
+        }
     }
 }

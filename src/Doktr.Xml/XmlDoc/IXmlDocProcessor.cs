@@ -4,7 +4,7 @@ namespace Doktr.Xml.XmlDoc;
 
 public interface IXmlDocProcessor
 {
-    XmlNode? Lookahead { get; }
+    XmlNode Lookahead { get; }
 
     DocumentationFragment NextFragment();
 
@@ -16,7 +16,7 @@ public interface IXmlDocProcessor
 
     XmlTextNode ExpectText();
 
-    XmlNode ExpectElementOrEmptyElement(params string[] names);
+    XmlComplexNode ExpectElementOrEmptyElement(params string[] names);
 
     XmlNode Consume();
 

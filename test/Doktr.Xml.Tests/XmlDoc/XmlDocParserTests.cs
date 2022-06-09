@@ -33,10 +33,11 @@ public class XmlDocParserTests : IClassFixture<SimpleXmlDocFixture>
         const string input = "<member>Hello</member>";
         var parser = new XmlDocParser(
             _fixture.Sections, _fixture.Fragments, Substitute.For<ILogger>(), ParseInput(input));
+        var result = parser.ParseXmlDoc();
 
-        var ex = Assert.Throws<XmlDocParserException>(() => parser.ParseXmlDoc());
-        Assert.Contains("name attribute", ex.Message);
-        Assert.Contains("found nothing", ex.Message);
+        Assert.Empty(result);
+        Assert.NotEmpty(parser.Diagnostics);
+        Assert.True(parser.HasFatalErrors);
     }
 
     private static XmlNodeCollection ParseInput(string input)

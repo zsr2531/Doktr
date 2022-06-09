@@ -13,7 +13,7 @@ public partial class ListFragmentParser
         var table = new TableFragment();
         var header = ParseTableHeader(processor);
         int columns = header.Columns.Count;
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
         {
             // TODO: Warn if the number of columns in the header doesn't match the number of columns in the rows.
             // TODO: And add dummy columns as needed to fit the table.
@@ -36,7 +36,7 @@ public partial class ListFragmentParser
     private static RowSegment ParseRow(IXmlDocProcessor processor, int maxCount = -1)
     {
         var row = new RowSegment();
-        while ((maxCount == -1 || --maxCount > 0) && processor.Lookahead.IsNotEndElementOrNull())
+        while ((maxCount == -1 || --maxCount > 0) && processor.Lookahead.IsNotEndElementOrEof())
             row.Columns.Add(ParseColumn(processor));
 
         return row;

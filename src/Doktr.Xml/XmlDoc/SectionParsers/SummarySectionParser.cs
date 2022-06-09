@@ -7,7 +7,7 @@ public class SummarySectionParser : ISectionParser
     public void ParseSection(IXmlDocProcessor processor, RawXmlDocEntry entry)
     {
         processor.ExpectElement(Tag);
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             entry.Summary.Add(processor.NextFragment());
 
         processor.ExpectEndElement(Tag);

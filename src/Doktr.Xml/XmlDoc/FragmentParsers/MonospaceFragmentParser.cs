@@ -10,7 +10,7 @@ public class MonospaceFragmentParser : IFragmentParser
     {
         var fragment = new MonospaceFragment();
         var start = processor.ExpectElement(SupportedTags);
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             fragment.Children.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);

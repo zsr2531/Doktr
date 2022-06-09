@@ -7,7 +7,7 @@ public class RemarksSectionParser : ISectionParser
     public void ParseSection(IXmlDocProcessor processor, RawXmlDocEntry entry)
     {
         processor.ExpectElement(Tag);
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             entry.Remarks.Add(processor.NextFragment());
 
         processor.ExpectEndElement(Tag);

@@ -1,4 +1,3 @@
-using System.Text;
 using Doktr.Core.Models.Fragments;
 
 namespace Doktr.Xml.XmlDoc.FragmentParsers;
@@ -17,7 +16,7 @@ public class CodeFragmentParser : IFragmentParser
         //     var text = processor.ExpectText();
         //     sb.Append(text.Text);
         // }
-        while (processor.Lookahead.IsNotEndElementOrNull())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             fragment.Content.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);
