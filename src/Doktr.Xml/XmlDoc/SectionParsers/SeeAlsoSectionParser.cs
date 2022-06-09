@@ -14,7 +14,7 @@ public class SeeAlsoSectionParser : ISectionParser
     public void ParseSection(IXmlDocProcessor processor, RawXmlDocEntry entry)
     {
         var start = processor.ExpectElementOrEmptyElement(Tag);
-        var attributes = ((IHasNameAndAttributes) start).Attributes;
+        var attributes = start.Attributes;
         var replacement = start.Kind == XmlNodeKind.Element ? ParseReplacement(processor) : null;
         if (replacement is not null)
             processor.ExpectEndElement(Tag);

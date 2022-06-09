@@ -14,8 +14,8 @@ public class ReferenceFragmentParser : IFragmentParser
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
         var start = processor.ExpectElementOrEmptyElement(SupportedTags);
-        string name = ((IHasNameAndAttributes) start).Name;
-        var attributes = ((IHasNameAndAttributes) start).Attributes;
+        string name = start.Name;
+        var attributes = start.Attributes;
         var replacement = start.Kind == XmlNodeKind.Element ? ParseReplacement(processor) : null;
         if (replacement is not null)
             processor.ExpectEndElement(name);
