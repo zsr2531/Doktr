@@ -34,6 +34,7 @@ public partial class XmlDocParser : IXmlDocParser
     }
 
     public bool HasErrors => !Diagnostics.IsEmpty;
+    public bool HasFatalErrors => Diagnostics.HasFatalErrors;
     public XmlDocDiagnosticCollection Diagnostics { get; } = new();
 
     public RawXmlDocEntryMap ParseXmlDoc()
@@ -45,8 +46,7 @@ public partial class XmlDocParser : IXmlDocParser
         {
             try
             {
-                var entry = ParseMember();
-                map[entry.DocId] = entry;
+                ParseMember(map);
             }
             catch (XmlDocParserException ex)
             {

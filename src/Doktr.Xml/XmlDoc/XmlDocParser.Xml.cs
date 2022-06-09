@@ -49,17 +49,17 @@ public partial class XmlDocParser
         return Consume<XmlTextNode>();
     }
 
-    public XmlNode ExpectElementOrEmptyElement(params string[] names)
+    public XmlComplexNode ExpectElementOrEmptyElement(params string[] names)
     {
         return Lookahead switch
         {
             XmlElementNode { Name: { } s } element => names.Contains(s)
                 ? Consume<XmlElementNode>()
-                : ThrowNodeNameMismatch<XmlNode>(element.Span, names, s),
+                : ThrowNodeNameMismatch<XmlComplexNode>(element.Span, names, s),
             XmlEmptyElementNode { Name: { } s } emptyElement => names.Contains(s)
                 ? Consume<XmlEmptyElementNode>()
-                : ThrowNodeNameMismatch<XmlNode>(emptyElement.Span, names, s),
-            _ => ThrowNodeTypeMismatch<XmlNode>(Consume(), XmlNodeKind.Element, XmlNodeKind.EmptyElement),
+                : ThrowNodeNameMismatch<XmlComplexNode>(emptyElement.Span, names, s),
+            _ => ThrowNodeTypeMismatch<XmlComplexNode>(Consume(), XmlNodeKind.Element, XmlNodeKind.EmptyElement),
         };
     }
 

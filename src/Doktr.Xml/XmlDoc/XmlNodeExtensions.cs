@@ -5,21 +5,11 @@ public static class XmlNodeExtensions
     public static bool IsNotEndElementOrEof(this XmlNode node) =>
         node.Kind is not XmlNodeKind.EndElement and not XmlNodeKind.EndOfFile;
 
-    public static string ExpectAttribute(this XmlElementNode element, string key)
+    public static string ExpectAttribute(this XmlComplexNode node, string key)
     {
-        var attributes = element.Attributes;
-        if (attributes.TryGetValue(key, out string? value))
+        if (node.TryGetAttribute(key, out string? value))
             return value;
 
-        throw new XmlDocParserException($"Expected an attribute with name '{key}'", element.Span);
-    }
-
-    public static string ExpectAttribute(this XmlEmptyElementNode emptyElement, string key)
-    {
-        var attributes = emptyElement.Attributes;
-        if (attributes.TryGetValue(key, out string? value))
-            return value;
-
-        throw new XmlDocParserException($"Expected an attribute with name '{key}'", emptyElement.Span);
+        throw new XmlDocParserException($"Expected a '{key}' attribute", node.Span);
     }
 }

@@ -16,7 +16,7 @@ public interface IXmlDocProcessor
 
     XmlTextNode ExpectText();
 
-    XmlNode ExpectElementOrEmptyElement(params string[] names);
+    XmlComplexNode ExpectElementOrEmptyElement(params string[] names);
 
     XmlNode Consume();
 

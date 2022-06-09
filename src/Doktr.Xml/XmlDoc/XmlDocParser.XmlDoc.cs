@@ -1,5 +1,6 @@
 using Doktr.Core.Models;
 using Doktr.Core.Models.Fragments;
+using Doktr.Xml.XmlDoc.Collections;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 
 namespace Doktr.Xml.XmlDoc;
@@ -16,7 +17,7 @@ public partial class XmlDocParser
         return Lookahead switch
         {
             XmlTextNode => new TextFragment(Consume<XmlTextNode>().Text),
-            IHasNameAndAttributes { Name: { } s } => GetFragmentParser(s).ParseFragment(this),
+            XmlComplexNode { Name: { } s } => GetFragmentParser(s).ParseFragment(this),
             _ => throw new XmlDocParserException($"Unexpected node: {Lookahead}", Consume().Span)
         };
 
@@ -29,7 +30,7 @@ public partial class XmlDocParser
         }
     }
 
-    private RawXmlDocEntry ParseMember()
+    private void ParseMember(RawXmlDocEntryMap map)
     {
         var member = ExpectElement(Member);
         if (!member.Attributes.TryGetValue(Name, out string? rawDocId))
@@ -37,6 +38,7 @@ public partial class XmlDocParser
 
         var docId = new CodeReference(rawDocId);
         var entry = new RawXmlDocEntry(docId);
+        map[docId] = entry;
 
         while (Lookahead is not XmlEndElementNode)
         {
@@ -48,7 +50,6 @@ public partial class XmlDocParser
         }
 
         ExpectEndElement(Member);
-        return entry;
     }
 
     private bool TryParseDanglingFragment(RawXmlDocEntry entry)
@@ -56,7 +57,7 @@ public partial class XmlDocParser
         switch (Lookahead)
         {
             case XmlTextNode:
-            case IHasNameAndAttributes element when _fragmentParsers.ContainsKey(element.Name):
+            case XmlComplexNode element when _fragmentParsers.ContainsKey(element.Name):
                 entry.Summary.Add(NextFragment());
                 return true;
 
