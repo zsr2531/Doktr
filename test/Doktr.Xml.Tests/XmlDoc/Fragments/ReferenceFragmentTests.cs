@@ -1,5 +1,4 @@
 using Doktr.Core.Models.Fragments;
-using Doktr.Xml.XmlDoc;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 using FluentAssertions;
 using Xunit;
@@ -60,6 +59,10 @@ public class ReferenceFragmentTests : FragmentTests
     [Fact]
     public void Missing_Cref_And_Href()
     {
-        Assert.Throws<XmlDocParserException>(() => GetSummaryFor("<see/>"));
+        var parser = CreateParser("<see/>");
+        var result = parser.ParseXmlDoc();
+
+        Assert.NotEmpty(result);
+        Assert.True(parser.HasErrors);
     }
 }

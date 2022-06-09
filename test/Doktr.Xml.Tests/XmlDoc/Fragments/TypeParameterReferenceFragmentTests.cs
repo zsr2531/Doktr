@@ -1,5 +1,4 @@
 using Doktr.Core.Models.Fragments;
-using Doktr.Xml.XmlDoc;
 using Doktr.Xml.XmlDoc.FragmentParsers;
 using FluentAssertions;
 using Xunit;
@@ -25,6 +24,11 @@ public class TypeParameterReferenceFragmentTests : FragmentTests
     [Fact]
     public void Missing_Name()
     {
-        Assert.Throws<XmlDocParserException>(() => GetSummaryFor("<typeparamref/>"));
+        var parser = CreateParser("<typeparamref/>");
+        var result = parser.ParseXmlDoc();
+
+        Assert.NotEmpty(result);
+        Assert.True(parser.HasErrors);
+        Assert.False(parser.HasFatalErrors);
     }
 }
