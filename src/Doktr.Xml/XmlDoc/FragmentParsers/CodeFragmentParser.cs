@@ -1,4 +1,3 @@
-using System.Text;
 using Doktr.Core.Models.Fragments;
 
 namespace Doktr.Xml.XmlDoc.FragmentParsers;
