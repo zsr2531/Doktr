@@ -9,8 +9,15 @@ public class TypeParameterReferenceFragmentParser : IFragmentParser
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
         var start = processor.ExpectEmptyElement(SupportedTags);
-        string name = start.ExpectAttribute("name");
-
-        return new TypeParameterReferenceFragment(name);
+        try
+        {
+            string name = start.ExpectAttribute("name");
+            return new TypeParameterReferenceFragment(name);
+        }
+        catch (XmlDocParserException ex)
+        {
+            processor.ReportDiagnostic(XmlDocDiagnostic.MakeWarning(start.Span, ex.Message));
+            return new TypeParameterReferenceFragment("?MISSING-NAME?");
+        }
     }
 }
