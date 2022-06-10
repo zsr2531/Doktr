@@ -15,7 +15,7 @@ public class ParameterReferenceFragmentTests : FragmentTests
     [Fact]
     public void ParameterReference()
     {
-        var entry = GetSummaryFor("<paramref name='test'/>");
+        var entry = ParseXmlDoc("<paramref name='test'/>");
 
         var paramref = AssertSingleChildIsType<ParameterReferenceFragment>(entry);
         paramref.Name.Should().Be("test");

@@ -15,7 +15,7 @@ public class CodeFragmentTests : FragmentTests
     [Fact]
     public void Code()
     {
-        var entry = GetSummaryFor("<code>\npublic void Test()\n</code>");
+        var entry = ParseXmlDoc("<code>\npublic void Test()\n</code>");
 
         var code = AssertSingleChildIsType<CodeFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(code.Content);

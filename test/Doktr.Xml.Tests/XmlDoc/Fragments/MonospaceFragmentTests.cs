@@ -15,7 +15,7 @@ public class MonospaceFragmentTests : FragmentTests
     [Fact]
     public void Monospace()
     {
-        var entry = GetSummaryFor("<c>Hello</c>");
+        var entry = ParseXmlDoc("<c>Hello</c>");
 
         var monospace = AssertSingleChildIsType<MonospaceFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(monospace.Children);
@@ -26,7 +26,7 @@ public class MonospaceFragmentTests : FragmentTests
     [Fact]
     public void Nested_Bold()
     {
-        var entry = GetSummaryFor("<c><c>Hello</c></c>");
+        var entry = ParseXmlDoc("<c><c>Hello</c></c>");
 
         var monospace = AssertSingleChildIsType<MonospaceFragment>(entry);
         var monospace2 = AssertSingleChildIsType<MonospaceFragment>(monospace.Children);

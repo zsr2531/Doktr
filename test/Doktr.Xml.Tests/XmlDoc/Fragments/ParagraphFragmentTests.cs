@@ -15,7 +15,7 @@ public class ParagraphFragmentTests : FragmentTests
     [Fact]
     public void Paragraph()
     {
-        var entry = GetSummaryFor("<p>Hello</p>");
+        var entry = ParseXmlDoc("<p>Hello</p>");
 
         var paragraph = AssertSingleChildIsType<ParagraphFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(paragraph.Children);
@@ -25,7 +25,7 @@ public class ParagraphFragmentTests : FragmentTests
     [Fact]
     public void Nested_Paragraph()
     {
-        var entry = GetSummaryFor("<p><p>Hello</p></p>");
+        var entry = ParseXmlDoc("<p><p>Hello</p></p>");
 
         var paragraph1 = AssertSingleChildIsType<ParagraphFragment>(entry);
         var paragraph2 = AssertSingleChildIsType<ParagraphFragment>(paragraph1.Children);

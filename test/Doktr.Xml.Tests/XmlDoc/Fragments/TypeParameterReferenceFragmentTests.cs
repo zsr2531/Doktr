@@ -15,7 +15,7 @@ public class TypeParameterReferenceFragmentTests : FragmentTests
     [Fact]
     public void TypeParameterReference()
     {
-        var entry = GetSummaryFor("<typeparamref name='test'/>");
+        var entry = ParseXmlDoc("<typeparamref name='test'/>");
 
         var typeparamref = AssertSingleChildIsType<TypeParameterReferenceFragment>(entry);
         typeparamref.Name.Should().Be("test");

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Doktr.Core.Models.Collections;
 using Doktr.Xml.XmlDoc;
@@ -17,11 +18,12 @@ public abstract class FragmentTests
 
     protected FragmentTests(IFragmentParser fragmentParser) => _fragmentParsers = new[] { fragmentParser };
 
-    protected DocumentationFragmentCollection GetSummaryFor(string input)
+    protected DocumentationFragmentCollection ParseXmlDoc(string input)
     {
         var parser = CreateParser(input);
         var map = parser.ParseXmlDoc();
-        var entry = map.Single();
+        var entry = Assert.Single(map);
+        Assert.Empty(parser.Diagnostics);
 
         return entry.Value.Summary;
     }
@@ -35,9 +37,9 @@ public abstract class FragmentTests
         return parser;
     }
 
-    protected static T AssertSingleChildIsType<T>(DocumentationFragmentCollection fragments)
+    protected static T AssertSingleChildIsType<T>(IEnumerable fragments)
     {
-        var child = Assert.Single(fragments);
+        object child = Assert.Single(fragments);
         return Assert.IsType<T>(child);
     }
 }

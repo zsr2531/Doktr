@@ -14,7 +14,7 @@ public class LineBreakFragmentTests : FragmentTests
     [Fact]
     public void LineBreak()
     {
-        var entry = GetSummaryFor("<br/>");
+        var entry = ParseXmlDoc("<br/>");
 
         AssertSingleChildIsType<LineBreakFragment>(entry);
     }

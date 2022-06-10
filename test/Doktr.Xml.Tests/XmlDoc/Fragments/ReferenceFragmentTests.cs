@@ -15,7 +15,7 @@ public class ReferenceFragmentTests : FragmentTests
     [Fact]
     public void Code_Reference()
     {
-        var entry = GetSummaryFor("<see cref='T:Test'/>");
+        var entry = ParseXmlDoc("<see cref='T:Test'/>");
 
         var reference = AssertSingleChildIsType<CodeReferenceFragment>(entry);
         reference.CodeReference.Identifier.Should().Be("T:Test");
@@ -25,7 +25,7 @@ public class ReferenceFragmentTests : FragmentTests
     [Fact]
     public void Link_Reference()
     {
-        var entry = GetSummaryFor("<see href='https://example.com'/>");
+        var entry = ParseXmlDoc("<see href='https://example.com'/>");
 
         var reference = AssertSingleChildIsType<LinkReferenceFragment>(entry);
         reference.Url.Should().Be("https://example.com");
@@ -35,7 +35,7 @@ public class ReferenceFragmentTests : FragmentTests
     [Fact]
     public void Code_Reference_With_Replacement()
     {
-        var entry = GetSummaryFor("<see cref='T:Test'>Replacement</see>");
+        var entry = ParseXmlDoc("<see cref='T:Test'>Replacement</see>");
 
         var reference = AssertSingleChildIsType<CodeReferenceFragment>(entry);
         reference.CodeReference.Identifier.Should().Be("T:Test");
@@ -47,7 +47,7 @@ public class ReferenceFragmentTests : FragmentTests
     [Fact]
     public void Link_Reference_With_Replacement()
     {
-        var entry = GetSummaryFor("<see href='https://example.com'>Replacement</see>");
+        var entry = ParseXmlDoc("<see href='https://example.com'>Replacement</see>");
 
         var reference = AssertSingleChildIsType<LinkReferenceFragment>(entry);
         reference.Url.Should().Be("https://example.com");

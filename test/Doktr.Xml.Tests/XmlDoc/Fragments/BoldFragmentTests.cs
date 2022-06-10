@@ -15,7 +15,7 @@ public class BoldFragmentTests : FragmentTests
     [Fact]
     public void Bold()
     {
-        var entry = GetSummaryFor("<b>Hello</b>");
+        var entry = ParseXmlDoc("<b>Hello</b>");
 
         var bold = AssertSingleChildIsType<BoldFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(bold.Children);
@@ -25,7 +25,7 @@ public class BoldFragmentTests : FragmentTests
     [Fact]
     public void Nested_Bold()
     {
-        var entry = GetSummaryFor("<b><b>Hello</b></b>");
+        var entry = ParseXmlDoc("<b><b>Hello</b></b>");
 
         var bold1 = AssertSingleChildIsType<BoldFragment>(entry);
         var bold2 = AssertSingleChildIsType<BoldFragment>(bold1.Children);

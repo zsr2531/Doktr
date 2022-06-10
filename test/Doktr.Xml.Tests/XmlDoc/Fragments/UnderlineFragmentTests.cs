@@ -15,7 +15,7 @@ public class UnderlineFragmentTests : FragmentTests
     [Fact]
     public void Underline()
     {
-        var entry = GetSummaryFor("<u>Hello</u>");
+        var entry = ParseXmlDoc("<u>Hello</u>");
 
         var underline = AssertSingleChildIsType<UnderlineFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(underline.Children);
@@ -25,7 +25,7 @@ public class UnderlineFragmentTests : FragmentTests
     [Fact]
     public void Nested_Underline()
     {
-        var entry = GetSummaryFor("<u><u>Hello</u></u>");
+        var entry = ParseXmlDoc("<u><u>Hello</u></u>");
 
         var underline1 = AssertSingleChildIsType<UnderlineFragment>(entry);
         var underline2 = AssertSingleChildIsType<UnderlineFragment>(underline1.Children);

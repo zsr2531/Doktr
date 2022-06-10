@@ -15,7 +15,7 @@ public class ItalicFragmentTests : FragmentTests
     [Fact]
     public void Italic()
     {
-        var entry = GetSummaryFor("<i>Hello</i>");
+        var entry = ParseXmlDoc("<i>Hello</i>");
 
         var italic = AssertSingleChildIsType<ItalicFragment>(entry);
         var text = AssertSingleChildIsType<TextFragment>(italic.Children);
@@ -25,7 +25,7 @@ public class ItalicFragmentTests : FragmentTests
     [Fact]
     public void Nested_Italic()
     {
-        var entry = GetSummaryFor("<i><i>Hello</i></i>");
+        var entry = ParseXmlDoc("<i><i>Hello</i></i>");
 
         var italic1 = AssertSingleChildIsType<ItalicFragment>(entry);
         var italic2 = AssertSingleChildIsType<ItalicFragment>(italic1.Children);
