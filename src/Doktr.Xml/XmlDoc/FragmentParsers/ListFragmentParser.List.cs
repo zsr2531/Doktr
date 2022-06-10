@@ -8,9 +8,15 @@ public partial class ListFragmentParser
     private const string Bullet = "bullet";
     private const string Numbered = "numbered";
 
-    private static ListFragment ParseList(IXmlDocProcessor processor, string type)
+    private static ListFragment ParseList(IXmlDocProcessor processor, XmlNode start, string type)
     {
-        var style = GetListStyle(type);
+        bool isValidStyle = GetListStyle(type, out var style);
+        if (!isValidStyle)
+        {
+            var diagnostic = XmlDocDiagnostic.MakeWarning(start.Span, $"Unknown list style '{type}'");
+            processor.ReportDiagnostic(diagnostic);
+        }
+
         var list = new ListFragment
         {
             Style = style
@@ -80,13 +86,14 @@ public partial class ListFragmentParser
         };
     }
 
-    private static ListStyle GetListStyle(string type)
+    private static bool GetListStyle(string type, out ListStyle style)
     {
-        return type switch
+        style = type switch
         {
-            Bullet => ListStyle.Bullet,
             Numbered => ListStyle.Numbered,
-            _ => ListStyle.Bullet // TODO: Warn here for invalid list style.
+            _ => ListStyle.Bullet
         };
+
+        return type is Numbered or Bullet;
     }
 }

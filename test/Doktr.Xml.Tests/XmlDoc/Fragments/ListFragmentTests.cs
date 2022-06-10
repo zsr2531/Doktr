@@ -14,9 +14,24 @@ public class ListFragmentTests : FragmentTests
     [Theory]
     [InlineData("bullet", ListStyle.Bullet)]
     [InlineData("numbered", ListStyle.Numbered)]
-    public void Vanilla(string style, ListStyle expectedStyle)
+    public void Vanilla_Normal(string style, ListStyle expectedStyle)
     {
         var entry = ParseXmlDoc($"<list type='{style}'><item>Test</item></list>");
+
+        var list = AssertSingleChildIsType<ListFragment>(entry);
+        Assert.Equal(expectedStyle, list.Style);
+
+        var item = AssertSingleChildIsType<VanillaListItemFragment>(list.Items);
+        var content = AssertSingleChildIsType<TextFragment>(item.Children);
+        Assert.Equal("Test", content.Text);
+    }
+
+    [Theory]
+    [InlineData("bullet", ListStyle.Bullet)]
+    [InlineData("numbered", ListStyle.Numbered)]
+    public void Vanilla_Description(string style, ListStyle expectedStyle)
+    {
+        var entry = ParseXmlDoc($"<list type='{style}'><item><description>Test</description></item></list>");
 
         var list = AssertSingleChildIsType<ListFragment>(entry);
         Assert.Equal(expectedStyle, list.Style);
@@ -64,5 +79,35 @@ public class ListFragmentTests : FragmentTests
 
         var content = AssertSingleChildIsType<TextFragment>(van.Children);
         Assert.Equal("Test3", content.Text);
+    }
+
+    [Fact]
+    public void Invalid_Style()
+    {
+        var parser = CreateParser("<list type='test'><item>Test</item></list>");
+        var entries = parser.ParseXmlDoc();
+
+        Assert.True(parser.HasErrors);
+        Assert.False(parser.HasFatalErrors);
+        var member = Assert.Single(entries).Value;
+        var list = AssertSingleChildIsType<ListFragment>(member.Summary);
+        var item = AssertSingleChildIsType<VanillaListItemFragment>(list.Items);
+        var content = AssertSingleChildIsType<TextFragment>(item.Children);
+        Assert.Equal("Test", content.Text);
+    }
+
+    [Fact]
+    public void Missing_Style()
+    {
+        var parser = CreateParser("<list><item>Test</item></list>");
+        var entries = parser.ParseXmlDoc();
+
+        Assert.True(parser.HasErrors);
+        Assert.False(parser.HasFatalErrors);
+        var member = Assert.Single(entries).Value;
+        var list = AssertSingleChildIsType<ListFragment>(member.Summary);
+        var item = AssertSingleChildIsType<VanillaListItemFragment>(list.Items);
+        var content = AssertSingleChildIsType<TextFragment>(item.Children);
+        Assert.Equal("Test", content.Text);
     }
 }

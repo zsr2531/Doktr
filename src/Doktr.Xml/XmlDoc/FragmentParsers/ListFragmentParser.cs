@@ -14,10 +14,16 @@ public partial class ListFragmentParser : IFragmentParser
     public DocumentationFragment ParseFragment(IXmlDocProcessor processor)
     {
         var start = processor.ExpectElement(SupportedTags);
-        string type = start.ExpectAttribute("type");
+        if (!start.TryGetAttribute("type", out string? type))
+        {
+            var diagnostic = XmlDocDiagnostic.MakeWarning(start.Span, "Missing list type, assuming bullet");
+            processor.ReportDiagnostic(diagnostic);
+            type = "bullet";
+        }
+
         var fragment = type == "table"
             ? (DocumentationFragment) ParseTable(processor)
-            : ParseList(processor, type);
+            : ParseList(processor, start, type);
 
         processor.ExpectEndElement(start.Name);
         return fragment;
