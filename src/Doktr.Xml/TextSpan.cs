@@ -23,6 +23,25 @@ public readonly struct TextSpan : IEquatable<TextSpan>
     public int EndLine { get; }
     public int EndColumn { get; }
 
+    // This does not do any sanity checks! ie. if the two spans are disjunct
+    public TextSpan CombineWith(TextSpan end)
+    {
+        int startLine = Math.Min(StartLine, end.StartLine);
+        int startColumn = StartLine == end.StartLine
+            ? Math.Min(StartColumn, end.StartColumn)
+            : startLine == StartLine
+                ? StartColumn
+                : end.StartColumn;
+        int endLine = Math.Max(EndLine, end.EndLine);
+        int endColumn  = EndLine == end.EndLine
+            ? Math.Max(EndColumn, end.EndColumn)
+            : endLine == EndLine
+                ? EndColumn
+                : end.EndColumn;
+
+        return new TextSpan(startLine, startColumn, endLine, endColumn);
+    }
+
     public void Deconstruct(out int startLine, out int startColumn, out int endLine, out int endColumn)
     {
         startLine = StartLine;

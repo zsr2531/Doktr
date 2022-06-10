@@ -10,18 +10,41 @@ public partial class ListFragmentParser
     // TODO: Parse the alignment for the table... somehow.
     private static TableFragment ParseTable(IXmlDocProcessor processor)
     {
-        var table = new TableFragment();
-        var header = ParseTableHeader(processor);
+        var table = new TableFragment
+        {
+            Header = ParseTableHeader(processor)
+        };
+        var header = table.Header;
         int columns = header.Columns.Count;
         while (processor.Lookahead.IsNotEndElementOrEof())
         {
-            // TODO: Warn if the number of columns in the header doesn't match the number of columns in the rows.
-            // TODO: And add dummy columns as needed to fit the table.
-            var row = ParseRow(processor, columns);
+            var start = processor.ExpectElement(Item);
+            var row = ParseRow(processor);
+            var end = processor.ExpectEndElement(Item);
+            int entries = row.Columns.Count;
+            if (entries != columns)
+            {
+                string message = $"Incorrect number of columns (header has {columns}, while the row has {entries})";
+                var diagnostic = XmlDocDiagnostic.MakeWarning(start.Span.CombineWith(end.Span), message);
+                processor.ReportDiagnostic(diagnostic);
+                AdjustHeader(entries);
+            }
+
             table.Rows.Add(row);
         }
 
         return table;
+
+        void AdjustHeader(int minimum)
+        {
+            int actualColumns = header.Columns.Count;
+            if (actualColumns >= minimum)
+                return;
+
+            int difference = minimum - actualColumns;
+            for (int i = 0; i < difference; i++)
+                header.Columns.Add(new ColumnSegment());
+        }
     }
 
     private static RowSegment ParseTableHeader(IXmlDocProcessor processor)
@@ -33,10 +56,10 @@ public partial class ListFragmentParser
         return row;
     }
 
-    private static RowSegment ParseRow(IXmlDocProcessor processor, int maxCount = -1)
+    private static RowSegment ParseRow(IXmlDocProcessor processor)
     {
         var row = new RowSegment();
-        while ((maxCount == -1 || --maxCount > 0) && processor.Lookahead.IsNotEndElementOrEof())
+        while (processor.Lookahead.IsNotEndElementOrEof())
             row.Columns.Add(ParseColumn(processor));
 
         return row;
