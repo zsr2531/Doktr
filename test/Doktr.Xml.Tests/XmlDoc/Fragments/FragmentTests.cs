@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 using Doktr.Core.Models.Collections;
 using Doktr.Xml.XmlDoc;
 using Doktr.Xml.XmlDoc.FragmentParsers;
@@ -23,7 +22,7 @@ public abstract class FragmentTests
         var parser = CreateParser(input);
         var map = parser.ParseXmlDoc();
         var entry = Assert.Single(map);
-        Assert.False(parser.HasErrors);
+        Assert.False(parser.HasIssues);
 
         return entry.Value.Summary;
     }

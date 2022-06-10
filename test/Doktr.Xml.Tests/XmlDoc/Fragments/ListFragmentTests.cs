@@ -87,8 +87,8 @@ public class ListFragmentTests : FragmentTests
         var parser = CreateParser("<list type='test'><item>Test</item></list>");
         var entries = parser.ParseXmlDoc();
 
-        Assert.True(parser.HasErrors);
-        Assert.False(parser.HasFatalErrors);
+        Assert.True(parser.HasIssues);
+        Assert.False(parser.HasErrors);
         var member = Assert.Single(entries).Value;
         var list = AssertSingleChildIsType<ListFragment>(member.Summary);
         var item = AssertSingleChildIsType<VanillaListItemFragment>(list.Items);
@@ -102,8 +102,8 @@ public class ListFragmentTests : FragmentTests
         var parser = CreateParser("<list><item>Test</item></list>");
         var entries = parser.ParseXmlDoc();
 
-        Assert.True(parser.HasErrors);
-        Assert.False(parser.HasFatalErrors);
+        Assert.True(parser.HasIssues);
+        Assert.False(parser.HasErrors);
         var member = Assert.Single(entries).Value;
         var list = AssertSingleChildIsType<ListFragment>(member.Summary);
         var item = AssertSingleChildIsType<VanillaListItemFragment>(list.Items);

@@ -37,7 +37,7 @@ public class XmlDocParserTests : IClassFixture<SimpleXmlDocFixture>
 
         Assert.Empty(result);
         Assert.NotEmpty(parser.Diagnostics);
-        Assert.True(parser.HasFatalErrors);
+        Assert.True(parser.HasErrors);
     }
 
     private static XmlNodeCollection ParseInput(string input)

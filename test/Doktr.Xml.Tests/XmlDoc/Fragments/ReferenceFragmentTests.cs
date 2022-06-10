@@ -63,6 +63,6 @@ public class ReferenceFragmentTests : FragmentTests
         var result = parser.ParseXmlDoc();
 
         Assert.NotEmpty(result);
-        Assert.True(parser.HasErrors);
+        Assert.True(parser.HasIssues);
     }
 }

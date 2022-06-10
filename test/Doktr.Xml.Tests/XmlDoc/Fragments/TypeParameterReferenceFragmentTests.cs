@@ -28,7 +28,7 @@ public class TypeParameterReferenceFragmentTests : FragmentTests
         var result = parser.ParseXmlDoc();
 
         Assert.NotEmpty(result);
-        Assert.True(parser.HasErrors);
-        Assert.False(parser.HasFatalErrors);
+        Assert.True(parser.HasIssues);
+        Assert.False(parser.HasErrors);
     }
 }

@@ -33,8 +33,8 @@ public partial class XmlDocParser : IXmlDocParser
         _nodes = nodes;
     }
 
-    public bool HasErrors => !Diagnostics.IsEmpty;
-    public bool HasFatalErrors => Diagnostics.HasFatalErrors;
+    public bool HasIssues => !Diagnostics.IsEmpty;
+    public bool HasErrors => Diagnostics.HasErrors;
     public XmlDocDiagnosticCollection Diagnostics { get; } = new();
 
     public RawXmlDocEntryMap ParseXmlDoc()

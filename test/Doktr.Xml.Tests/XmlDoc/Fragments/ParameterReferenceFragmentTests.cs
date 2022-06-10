@@ -29,6 +29,6 @@ public class ParameterReferenceFragmentTests : FragmentTests
 
         Assert.Single(result);
         Assert.NotEmpty(parser.Diagnostics);
-        Assert.False(parser.HasFatalErrors);
+        Assert.False(parser.HasErrors);
     }
 }
