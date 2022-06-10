@@ -1,3 +1,4 @@
+using Doktr.Core.Models;
 using Doktr.Xml.Collections;
 using Doktr.Xml.XmlDoc.Collections;
 using Doktr.Xml.XmlDoc.FragmentParsers;
@@ -18,6 +19,7 @@ public partial class XmlDocParser : IXmlDocParser
     private readonly ILogger _logger;
     private readonly XmlNodeCollection _nodes;
     private int _position;
+    private CodeReference? _current;
 
     public XmlDocParser(
         IEnumerable<ISectionParser> sectionParsers,
@@ -53,6 +55,10 @@ public partial class XmlDocParser : IXmlDocParser
                 ReportDiagnostic(XmlDocDiagnostic.MakeError(ex.Span, ex.Message));
                 RecoverToNextMember();
             }
+            finally
+            {
+                _current = null;
+            }
         }
 
         if (hasPrologue)
@@ -64,10 +70,34 @@ public partial class XmlDocParser : IXmlDocParser
     public void ReportDiagnostic(XmlDocDiagnostic diagnostic)
     {
         Diagnostics.Add(diagnostic);
-        if (diagnostic.Severity == XmlDocDiagnosticSeverity.Error)
-            _logger.Error("An error occurred while parsing XML documentation: {Diagnostic}", diagnostic);
+        if (_current is not null)
+            ReportDiagnosticMember();
         else
-            _logger.Warning("There was an issue while parsing XML documentation: {Diagnostic}", diagnostic);
+            ReportDiagnosticNormal();
+
+        void ReportDiagnosticNormal()
+        {
+            if (diagnostic.Severity == XmlDocDiagnosticSeverity.Error)
+                _logger.Error("An error occurred while parsing XML documentation: {Diagnostic}", diagnostic);
+            else
+                _logger.Warning("There was an issue while parsing XML documentation: {Diagnostic}", diagnostic);
+        }
+
+        void ReportDiagnosticMember()
+        {
+            if (diagnostic.Severity == XmlDocDiagnosticSeverity.Error)
+            {
+                _logger.Error("An error occurred while parsing XML documentation for '{Member}': {Diagnostic}",
+                    _current,
+                    diagnostic);
+            }
+            else
+            {
+                _logger.Warning("There was an issue while parsing XML documentation for '{Member}': {Diagnostic}",
+                    _current,
+                    diagnostic);
+            }
+        }
     }
 
     private bool ParsePrologue()

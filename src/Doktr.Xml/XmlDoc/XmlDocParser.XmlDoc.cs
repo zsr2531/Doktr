@@ -33,11 +33,10 @@ public partial class XmlDocParser
     private void ParseMember(RawXmlDocEntryMap map)
     {
         var member = ExpectElement(Member);
-        if (!member.Attributes.TryGetValue(Name, out string? rawDocId))
-            throw new XmlDocParserException("Expected a name attribute on member tag, but found nothing", member.Span);
-
+        string rawDocId = member.ExpectAttribute(Name);
         var docId = new CodeReference(rawDocId);
         var entry = new RawXmlDocEntry(docId);
+        _current = docId;
         map[docId] = entry;
 
         while (Lookahead is not XmlEndElementNode)
