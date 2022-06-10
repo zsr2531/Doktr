@@ -27,11 +27,6 @@ public partial class ListFragmentParser
 
     private static ListItemFragment ParseListItem(IXmlDocProcessor processor)
     {
-        // This will allocate a new array for every call...
-        // Maybe this can be tweaked in the future?
-        // I just wish Roslyn would outline this to a
-        // static readonly field, so it wouldn't allocate every
-        // single time... But one can only wish.
         var start = processor.ExpectElement(Item);
 
         // There are 3 scenarios we want to support:
