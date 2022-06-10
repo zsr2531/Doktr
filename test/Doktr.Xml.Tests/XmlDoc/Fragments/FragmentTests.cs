@@ -23,7 +23,7 @@ public abstract class FragmentTests
         var parser = CreateParser(input);
         var map = parser.ParseXmlDoc();
         var entry = Assert.Single(map);
-        Assert.Empty(parser.Diagnostics);
+        Assert.False(parser.HasErrors);
 
         return entry.Value.Summary;
     }
