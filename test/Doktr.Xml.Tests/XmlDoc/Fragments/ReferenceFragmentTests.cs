@@ -63,6 +63,16 @@ public class ReferenceFragmentTests : FragmentTests
         var result = parser.ParseXmlDoc();
 
         Assert.NotEmpty(result);
-        Assert.True(parser.HasIssues);
+        Assert.True(parser.HasErrors);
+    }
+
+    [Fact]
+    public void Invalid_Cref()
+    {
+        var parser = CreateParser("<see cref='Invalid'/>");
+        var result = parser.ParseXmlDoc();
+
+        Assert.NotEmpty(result);
+        Assert.True(parser.HasErrors);
     }
 }
