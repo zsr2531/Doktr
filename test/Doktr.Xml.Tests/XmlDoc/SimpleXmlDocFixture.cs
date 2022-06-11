@@ -26,7 +26,14 @@ public class SimpleXmlDocFixture
         SectionParsers = new ISectionParser[]
         {
             new SummarySectionParser(),
-            new RemarksSectionParser()
+            new ExampleSectionParser(),
+            new ReturnsSectionParser(),
+            new RemarksSectionParser(),
+            new ValueSectionParser(),
+            new ExceptionSectionParser(),
+            new SeeAlsoSectionParser(),
+            new ParameterSectionParser(),
+            new TypeParameterSectionParser()
         };
     }
 
