@@ -4,13 +4,13 @@ public class XmlDocParserException : Exception
 {
     public XmlDocParserException(string message, TextSpan span)
     {
-        Message = message + $" at ({span})";
+        Message = message;
         Span = span;
     }
 
     public XmlDocParserException(string message, int line, int column)
     {
-        Message = message + $" at ({line}:{column})";
+        Message = message;
         Span = new TextSpan(line, column);
     }
 

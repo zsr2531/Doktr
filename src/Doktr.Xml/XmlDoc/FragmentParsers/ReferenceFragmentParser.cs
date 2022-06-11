@@ -1,4 +1,3 @@
-using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
 using Doktr.Core.Models.Fragments;
 
@@ -20,17 +19,20 @@ public class ReferenceFragmentParser : IFragmentParser
         if (replacement is not null)
             processor.ExpectEndElement(name);
 
-        if (attributes.TryGetValue(Cref, out string? cref))
-            return ParseCodeReference(cref, replacement);
         if (attributes.TryGetValue(Href, out string? href))
             return ParseLinkReference(href, replacement);
+        if (attributes.ContainsKey(Cref))
+            return ParseCodeReference(processor, start, replacement);
 
         throw new XmlDocParserException("Expected a 'cref' or an 'href' attribute, but found neither.", start.Span);
     }
 
-    private static CodeReferenceFragment ParseCodeReference(string cref, DocumentationFragmentCollection? replacement)
+    private static CodeReferenceFragment ParseCodeReference(
+        IXmlDocProcessor processor,
+        XmlComplexNode node,
+        DocumentationFragmentCollection? replacement)
     {
-        var reference = new CodeReference(cref);
+        var reference = processor.ParseCodeReference(node);
         return new CodeReferenceFragment(reference)
         {
             Replacement = replacement

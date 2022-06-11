@@ -22,5 +22,5 @@ public readonly struct XmlDocDiagnostic
     public TextSpan Span { get; }
     public string Message { get; }
 
-    public override string ToString() => $"({Span}): {Message}.";
+    public override string ToString() => $"{Message} at ({Span}).";
 }

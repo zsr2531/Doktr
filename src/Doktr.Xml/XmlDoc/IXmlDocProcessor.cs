@@ -1,3 +1,4 @@
+using Doktr.Core.Models;
 using Doktr.Core.Models.Fragments;
 
 namespace Doktr.Xml.XmlDoc;
@@ -21,4 +22,6 @@ public interface IXmlDocProcessor
     XmlNode Consume();
 
     void ReportDiagnostic(XmlDocDiagnostic diagnostic);
+
+    CodeReference ParseCodeReference(XmlComplexNode node, string key = "cref");
 }

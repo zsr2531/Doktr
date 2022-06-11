@@ -10,13 +10,12 @@ public class ExceptionSectionParser : ISectionParser
     public void ParseSection(IXmlDocProcessor processor, RawXmlDocEntry entry)
     {
         var start = processor.ExpectElement(Tag);
-        string docId = start.ExpectAttribute("cref");
-        var reference = new CodeReference(docId);
+        var ex = processor.ParseCodeReference(start);
         var documentation = new DocumentationFragmentCollection();
         while (processor.Lookahead.IsNotEndElementOrEof())
             documentation.Add(processor.NextFragment());
 
         processor.ExpectEndElement(start.Name);
-        entry.Exceptions.Add(reference, documentation);
+        entry.Exceptions.Add(ex, documentation);
     }
 }

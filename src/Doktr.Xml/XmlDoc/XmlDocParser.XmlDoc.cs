@@ -30,13 +30,27 @@ public partial class XmlDocParser
         }
     }
 
+    public CodeReference ParseCodeReference(XmlComplexNode member, string key = Cref)
+    {
+        try
+        {
+            string rawDocId = member.ExpectAttribute(key);
+            var docId = new CodeReference(rawDocId);
+            _current = docId;
+            return docId;
+        }
+        catch (ArgumentException ex)
+        {
+            throw new XmlDocParserException(ex.Message[..^1], member.Span);
+        }
+    }
+
+
     private void ParseMember(RawXmlDocEntryMap map)
     {
         var member = ExpectElement(Member);
-        string rawDocId = member.ExpectAttribute(Name);
-        var docId = new CodeReference(rawDocId);
+        var docId = ParseCodeReference(member, Name);
         var entry = new RawXmlDocEntry(docId);
-        _current = docId;
         map[docId] = entry;
 
         while (Lookahead is not XmlEndElementNode)

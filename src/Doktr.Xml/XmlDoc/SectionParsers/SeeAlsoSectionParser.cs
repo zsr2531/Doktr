@@ -19,8 +19,8 @@ public class SeeAlsoSectionParser : ISectionParser
         if (replacement is not null)
             processor.ExpectEndElement(Tag);
 
-        if (attributes.TryGetValue(Cref, out string? cref))
-            ParseCodeReference(cref, replacement, entry);
+        if (attributes.ContainsKey(Cref))
+            ParseCodeReference(processor, start, replacement, entry);
         else if (attributes.TryGetValue(Href, out string? href))
             ParseLinkReference(href, replacement, entry);
         else
@@ -28,11 +28,12 @@ public class SeeAlsoSectionParser : ISectionParser
     }
 
     private static void ParseCodeReference(
-        string cref,
+        IXmlDocProcessor processor,
+        XmlComplexNode node,
         DocumentationFragmentCollection? replacement,
         RawXmlDocEntry entry)
     {
-        var reference = new CodeReference(cref);
+        var reference = processor.ParseCodeReference(node);
         var fragment = new CodeReferenceFragment(reference)
         {
             Replacement = replacement
