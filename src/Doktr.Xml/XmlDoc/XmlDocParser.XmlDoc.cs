@@ -95,9 +95,9 @@ public partial class XmlDocParser
 
     private void ParseSection(RawXmlDocEntry entry)
     {
-        if (Lookahead is not XmlElementNode element)
+        if (Lookahead is not XmlComplexNode element)
         {
-            ThrowHelper.ThrowNodeTypeMismatch<object>(Lookahead, XmlNodeKind.Element);
+            ThrowHelper.ThrowNodeTypeMismatch<object>(Lookahead, XmlNodeKind.Element, XmlNodeKind.EmptyElement);
             return;
         }
 
