@@ -53,8 +53,6 @@ public class AsmResolverLifter : IModelLifter
             return;
 
         foreach (var diagnostic in diagnostics)
-        {
             _logger.Error("An error occurred while parsing xml: {Diagnostic}", diagnostic);
-        }
     }
 }
