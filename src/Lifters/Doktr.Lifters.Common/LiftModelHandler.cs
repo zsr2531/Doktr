@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Doktr.Lifters.Common;
 
-public class LiftModelHandler : IRequestHandler<LiftModel, TypeDocumentationCollection>
+public class LiftModelHandler : IRequestHandler<LiftModel, AssemblyTypesMap>
 {
     private readonly Func<string, string, IModelLifter> _lifterFactory;
     private readonly DoktrConfiguration _configuration;
@@ -15,18 +15,17 @@ public class LiftModelHandler : IRequestHandler<LiftModel, TypeDocumentationColl
         _configuration = configuration;
     }
 
-    public Task<TypeDocumentationCollection> Handle(LiftModel request, CancellationToken cancellationToken)
+    public Task<AssemblyTypesMap> Handle(LiftModel request, CancellationToken cancellationToken)
     {
-        var types = new TypeDocumentationCollection();
+        var types = new AssemblyTypesMap();
 
         foreach ((string assemblyPath, string xmlPath) in _configuration.InputFiles)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var lifter = _lifterFactory(assemblyPath, xmlPath);
-            var models = lifter.LiftModels();
-            foreach (var model in models)
-                types.Add(model);
+            (string fullName, var models) = lifter.LiftModels();
+            types[fullName] = models;
         }
 
         return Task.FromResult(types);

@@ -28,9 +28,9 @@ public class AsmResolverLifter : IModelLifter
         _xmlDoc = ParseXmlDoc(xmlPath, xmlParserFactory, xmlDocParserFactory);
     }
 
-    public TypeDocumentationCollection LiftModels()
+    public ModelLifterResult LiftModels()
     {
-        return _types;
+        return new ModelLifterResult(_module.Assembly!.FullName, _types);
     }
 
     private RawXmlDocEntryMap ParseXmlDoc(
