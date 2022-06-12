@@ -5,11 +5,13 @@ namespace Doktr.Lifters.Common.DependencyGraph;
 public class DependencyNode<T> : IEquatable<DependencyNode<T>>
     where T : notnull
 {
-    public DependencyNode(T value)
+    public DependencyNode(DependencyGraph<T> parentGraph, T value)
     {
+        ParentGraph = parentGraph;
         Value = value;
     }
 
+    public DependencyGraph<T> ParentGraph { get; }
     public T Value { get; }
     public DependencyNodeSet<T> Dependencies { get; } = new();
     public DependencyNodeSet<T> Dependants { get; } = new();

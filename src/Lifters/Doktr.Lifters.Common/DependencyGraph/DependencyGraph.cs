@@ -6,15 +6,18 @@ public class DependencyGraph<T>
     where T : notnull
 {
     public DependencyNodeSet<T> Nodes { get; } = new();
-    public DependencyEdgeSet<T> Edges { get; } = new();
     public DependencyNodeMap<T> NodeMap { get; } = new();
 
-    public bool AddNode(DependencyNode<T> node) => Nodes.Add(node);
+    public DependencyNode<T> AddNode(DependencyNode<T> node)
+    {
+        Nodes.Add(node);
+        return node;
+    }
 
-    public bool AddNode(T value) => AddNode(GetOrCreateNodeFor(value));
+    public DependencyNode<T> AddNode(T value) => AddNode(GetOrCreateNodeFor(value));
 
     public bool AddEdge(DependencyEdge<T> edge) =>
-        Edges.Add(edge) | edge.From.AddDependency(edge.To) | edge.To.AddDependant(edge.From);
+        edge.From.AddDependency(edge.To) | edge.To.AddDependant(edge.From);
 
     public bool AddDependency(DependencyNode<T> from, DependencyNode<T> to) => AddEdge(new DependencyEdge<T>(from, to));
 
@@ -22,5 +25,5 @@ public class DependencyGraph<T>
 
     // This creates the node but DOES NOT add it to the graph!
     // For that use AddNode().
-    private DependencyNode<T> GetOrCreateNodeFor(T value) => NodeMap.GetOrCreateNodeFor(value);
+    private DependencyNode<T> GetOrCreateNodeFor(T value) => NodeMap.GetOrCreateNodeFor(this, value);
 }
