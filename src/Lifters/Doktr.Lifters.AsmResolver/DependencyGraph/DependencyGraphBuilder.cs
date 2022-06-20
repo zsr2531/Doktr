@@ -3,16 +3,24 @@ using Doktr.Lifters.Common.DependencyGraph;
 
 namespace Doktr.Lifters.AsmResolver.DependencyGraph;
 
-public class DependencyGraphBuilder
+public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
 {
+    private readonly List<IDependencyGraphAnalyzer<IMemberDefinition>> _analyzers;
     private readonly ModuleDefinition _module;
     private readonly DependencyGraph<IMemberDefinition> _depGraph = new();
 
-    public DependencyGraphBuilder(ModuleDefinition module) => _module = module;
+    public DependencyGraphBuilder(
+        IEnumerable<IDependencyGraphAnalyzer<IMemberDefinition>> analyzers,
+        ModuleDefinition module)
+    {
+        _analyzers = analyzers.ToList();
+        _module = module;
+    }
 
     public DependencyGraph<IMemberDefinition> BuildDependencyGraph()
     {
         AddTypes();
+        PerformAnalysis();
 
         return _depGraph;
     }
@@ -45,4 +53,16 @@ public class DependencyGraphBuilder
     private void AddProperty(PropertyDefinition property) => _depGraph.AddNode(property);
 
     private void AddMethod(MethodDefinition method) => _depGraph.AddNode(method);
+
+    private void PerformAnalysis()
+    {
+        foreach (var node in _depGraph.Nodes)
+            AnalyzeNode(node);
+    }
+
+    private void AnalyzeNode(DependencyNode<IMemberDefinition> node)
+    {
+        foreach (var analyzer in _analyzers)
+            analyzer.AnalyzeNode(node);
+    }
 }
