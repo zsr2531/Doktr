@@ -33,7 +33,7 @@ public class BaseConstructorAnalyzer : IDependencyGraphAnalyzer<IMemberDefinitio
         }
 
         _logger.Verbose("The base constructor call of {Ctor} is {BaseCtor}", method, candidate);
-        node.ParentGraph.AddDependency(method, candidate);
+        node.ParentGraph.AddDependency(method, candidate, DependencyEdgeKind.OtherConstructor);
     }
 
     private static MethodDefinition? AnalyzeBody(CilMethodBody body)

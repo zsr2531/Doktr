@@ -9,12 +9,13 @@ public static class DependencyGraphExtensions
     public static bool AddMethodDependency(
         this DependencyGraph<IMemberDefinition> depGraph,
         MethodDefinition from,
-        MethodDefinition to)
+        MethodDefinition to,
+        DependencyEdgeKind kind)
     {
         if (TryExtractSemantics(from, to, out var fromAssoc, out var toAssoc))
-            depGraph.AddDependency(fromAssoc, toAssoc);
+            depGraph.AddDependency(fromAssoc, toAssoc, kind);
 
-        return depGraph.AddDependency(from, to);
+        return depGraph.AddDependency(from, to, kind);
     }
 
     private static bool TryExtractSemantics(
