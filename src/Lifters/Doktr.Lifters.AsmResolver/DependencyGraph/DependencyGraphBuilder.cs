@@ -35,24 +35,18 @@ public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
     {
         _depGraph.AddNode(type);
         foreach (var ev in type.Events)
-            AddEvent(ev);
+            AddMember(ev);
         foreach (var field in type.Fields)
-            AddField(field);
+            AddMember(field);
         foreach (var property in type.Properties)
-            AddProperty(property);
+            AddMember(property);
         foreach (var method in type.Methods)
-            AddMethod(method);
+            AddMember(method);
         foreach (var nestedType in type.NestedTypes)
             AddType(nestedType);
     }
 
-    private void AddEvent(EventDefinition ev) => _depGraph.AddNode(ev);
-
-    private void AddField(FieldDefinition field) => _depGraph.AddNode(field);
-
-    private void AddProperty(PropertyDefinition property) => _depGraph.AddNode(property);
-
-    private void AddMethod(MethodDefinition method) => _depGraph.AddNode(method);
+    private void AddMember(IMemberDefinition member) => _depGraph.AddNode(member);
 
     private void PerformAnalysis()
     {
