@@ -1,4 +1,5 @@
 using AsmResolver.DotNet;
+using Doktr.Core;
 using Doktr.Core.Models.Collections;
 using Doktr.Lifters.Common;
 using Doktr.Xml;
@@ -17,15 +18,14 @@ public class AsmResolverLifter : IModelLifter
     private readonly TypeDocumentationCollection _types = new();
 
     public AsmResolverLifter(
-        string assemblyPath,
-        string xmlPath,
+        DoktrTarget target,
         ILogger logger,
         Func<TextReader, IXmlParser> xmlParserFactory,
         Func<XmlNodeCollection, IXmlDocParser> xmlDocParserFactory)
     {
         _logger = logger;
-        _module = ModuleDefinition.FromFile(assemblyPath);
-        _xmlDoc = ParseXmlDoc(xmlPath, xmlParserFactory, xmlDocParserFactory);
+        _module = ModuleDefinition.FromFile(target.AssemblyPath);
+        _xmlDoc = ParseXmlDoc(target.XmlPath, xmlParserFactory, xmlDocParserFactory);
     }
 
     public ModelLifterResult LiftModels()
