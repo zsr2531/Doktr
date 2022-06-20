@@ -25,30 +25,33 @@ public class BaseConstructorAnalyzer : IDependencyGraphAnalyzer<IMemberDefinitio
         if (method.CilMethodBody is not { } body)
             return;
 
-        var candidate = TryGetOtherConstructorCall(body);
-        if (candidate is null)
+        if (!TryGetOtherConstructorCall(body, out var otherCtor))
         {
             _logger.Warning("Failed to resolve the base/other constructor call of {Ctor}", method);
             return;
         }
 
-        _logger.Verbose("The base/other constructor call of {Ctor} is {BaseCtor}", method, candidate);
-        node.ParentGraph.AddDependency(method, candidate, DependencyEdgeKind.OtherConstructor);
+        _logger.Verbose("The base/other constructor call of {Ctor} is {BaseCtor}", method, otherCtor);
+        node.ParentGraph.AddDependency(method, otherCtor, DependencyEdgeKind.OtherConstructor);
     }
 
-    private static MethodDefinition? TryGetOtherConstructorCall(CilMethodBody body)
+    private static bool TryGetOtherConstructorCall(CilMethodBody body, [NotNullWhen(true)] out MethodDefinition? call)
     {
+        call = null;
         foreach (var instruction in body.Instructions)
         {
             if (!IsCall(instruction, out var target))
                 continue;
 
             var resolved = target.Resolve();
-            if (resolved is not null && IsInstanceConstructor(resolved))
-                return resolved;
+            if (resolved is null || !IsInstanceConstructor(resolved))
+                continue;
+
+            call = resolved;
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     private static bool IsInstanceConstructor(MethodDefinition method)
