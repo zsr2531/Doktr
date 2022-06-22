@@ -40,6 +40,8 @@ public class DependencyNode<T> : IEquatable<DependencyNode<T>>
 
     public override int GetHashCode() => Value.GetHashCode();
 
+    public override string ToString() => Value.ToString()!;
+
     public static bool operator ==(DependencyNode<T>? left, DependencyNode<T>? right) => Equals(left, right);
 
     public static bool operator !=(DependencyNode<T>? left, DependencyNode<T>? right) => !Equals(left, right);
