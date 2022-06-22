@@ -9,6 +9,7 @@ public class DependencyNodeMap<T> : Dictionary<T, DependencyNode<T>>
             return node;
 
         node = new DependencyNode<T>(graph, value);
+        Add(value, node);
         return node;
     }
 }
