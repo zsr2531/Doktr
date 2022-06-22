@@ -7,11 +7,11 @@ using Serilog;
 
 namespace Doktr.Lifters.AsmResolver.DependencyGraph.Analyzers;
 
-public class BaseConstructorAnalyzer : IDependencyGraphAnalyzer<IMemberDefinition>
+public class ConstructorAnalyzer : IDependencyGraphAnalyzer<IMemberDefinition>
 {
     private readonly ILogger _logger;
 
-    public BaseConstructorAnalyzer(ILogger logger)
+    public ConstructorAnalyzer(ILogger logger)
     {
         _logger = logger;
     }
