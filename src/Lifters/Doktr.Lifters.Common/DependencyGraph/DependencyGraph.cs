@@ -17,7 +17,7 @@ public class DependencyGraph<T>
     public DependencyNode<T> AddNode(T value) => AddNode(GetOrCreateNodeFor(value));
 
     public bool AddEdge(DependencyEdge<T> edge) =>
-        edge.From.AddDependency(edge.To) | edge.To.AddDependant(edge.From);
+        edge.From.AddEdge(edge) | edge.To.AddEdge(edge);
 
     public bool AddDependency(DependencyNode<T> from, DependencyNode<T> to, DependencyEdgeKind kind) =>
         AddEdge(new DependencyEdge<T>(from, to, kind));

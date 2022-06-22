@@ -12,13 +12,14 @@ public class DependencyNode<T> : IEquatable<DependencyNode<T>>
     }
 
     public DependencyGraph<T> ParentGraph { get; }
+    public DependencyEdgeSet<T> Edges { get; } = new();
     public T Value { get; }
-    public DependencyNodeSet<T> Dependencies { get; } = new();
-    public DependencyNodeSet<T> Dependants { get; } = new();
 
-    public bool AddDependency(DependencyNode<T> dependency) => Dependencies.Add(dependency);
+    public bool AddEdge(DependencyEdge<T> edge) => Edges.Add(edge);
 
-    public bool AddDependant(DependencyNode<T> dependant) => Dependants.Add(dependant);
+    public IEnumerable<DependencyEdge<T>> GetDependencies() => Edges.Where(e => e.From == this);
+
+    public IEnumerable<DependencyEdge<T>> GetDependants() => Edges.Where(e => e.To == this);
 
     public bool Equals(DependencyNode<T>? other)
     {
