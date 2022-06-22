@@ -4,4 +4,6 @@ public interface IDependencyGraphBuilder<T>
     where T : notnull
 {
     DependencyGraph<T> BuildDependencyGraph();
+
+    void PerformAnalysis();
 }

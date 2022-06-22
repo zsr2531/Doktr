@@ -20,9 +20,13 @@ public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
     public DependencyGraph<IMemberDefinition> BuildDependencyGraph()
     {
         InspectTypes();
-        PerformAnalysis();
-
         return _depGraph;
+    }
+
+    public void PerformAnalysis()
+    {
+        foreach (var node in _depGraph.Nodes)
+            AnalyzeNode(node);
     }
 
     private void InspectTypes()
@@ -47,12 +51,6 @@ public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
     }
 
     private void AddMember(IMemberDefinition member) => _depGraph.AddNode(member);
-
-    private void PerformAnalysis()
-    {
-        foreach (var node in _depGraph.Nodes)
-            AnalyzeNode(node);
-    }
 
     private void AnalyzeNode(DependencyNode<IMemberDefinition> node)
     {
