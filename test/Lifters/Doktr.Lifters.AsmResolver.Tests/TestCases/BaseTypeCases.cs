@@ -16,6 +16,7 @@ public partial class ClassWithInterface : IInterface
 {
 }
 
-public partial class SubClassWithInterface : AbstractClass, IInterface
+// ReSharper disable once RedundantExtendsListEntry
+public partial class SubClassWithInterface : ClassWithInterface, IInterface
 {
 }

@@ -52,7 +52,7 @@ public class BaseTypeAnalyzerTests : IClassFixture<AnalyzerFixture<BaseTypeAnaly
     public void SubClass_With_Interface_Should_Have_Base_And_Implement_The_Interface()
     {
         var node = _fixture.AnalyzeNode(typeof(SubClassWithInterface));
-        var super = _fixture.GetNodeFor(typeof(AbstractClass));
+        var super = _fixture.GetNodeFor(typeof(ClassWithInterface));
         var inf = _fixture.GetNodeFor(typeof(IInterface));
 
         _fixture.AssertNoWarnings();
