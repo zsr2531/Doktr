@@ -21,7 +21,6 @@ public class BaseTypeAnalyzerTests : IClassFixture<AnalyzerFixture<BaseTypeAnaly
         var node = _fixture.AnalyzeNode(typeof(AbstractClass));
         var obj = _fixture.GetNodeFor(typeof(object));
 
-        _fixture.AssertNoWarnings();
         node.GetDependencies().Should().ContainSingle(e => e.To == obj && e.Kind == DependencyEdgeKind.Extension);
         obj.GetDependants().Should().ContainSingle(e => e.From == node && e.Kind == DependencyEdgeKind.Extension);
     }
@@ -32,7 +31,6 @@ public class BaseTypeAnalyzerTests : IClassFixture<AnalyzerFixture<BaseTypeAnaly
         var node = _fixture.AnalyzeNode(typeof(SubClass));
         var super = _fixture.GetNodeFor(typeof(AbstractClass));
 
-        _fixture.AssertNoWarnings();
         node.GetDependencies().Should().ContainSingle(e => e.To == super && e.Kind == DependencyEdgeKind.Extension);
         super.GetDependants().Should().ContainSingle(e => e.From == node && e.Kind == DependencyEdgeKind.Extension);
     }
@@ -43,7 +41,6 @@ public class BaseTypeAnalyzerTests : IClassFixture<AnalyzerFixture<BaseTypeAnaly
         var node = _fixture.AnalyzeNode(typeof(ClassWithInterface));
         var inf = _fixture.GetNodeFor(typeof(IInterface));
 
-        _fixture.AssertNoWarnings();
         node.GetDependencies().Should().ContainSingle(e => e.To == inf && e.Kind == DependencyEdgeKind.Implementation);
         inf.GetDependants().Should().ContainSingle(e => e.From == node && e.Kind == DependencyEdgeKind.Implementation);
     }
@@ -55,7 +52,6 @@ public class BaseTypeAnalyzerTests : IClassFixture<AnalyzerFixture<BaseTypeAnaly
         var super = _fixture.GetNodeFor(typeof(ClassWithInterface));
         var inf = _fixture.GetNodeFor(typeof(IInterface));
 
-        _fixture.AssertNoWarnings();
         super.GetDependants().Should().ContainSingle(e => e.From == node && e.Kind == DependencyEdgeKind.Extension);
         inf.GetDependants().Should().ContainSingle(e => e.From == node && e.Kind == DependencyEdgeKind.Implementation);
         node.GetDependencies().Should().HaveCount(2)

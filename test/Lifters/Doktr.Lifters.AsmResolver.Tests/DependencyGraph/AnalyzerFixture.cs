@@ -34,6 +34,7 @@ public class AnalyzerFixture<T>
     {
         var node = GetNodeFor(member);
         Analyzer.AnalyzeNode(node);
+        AssertNoWarnings();
 
         return node;
     }
@@ -42,7 +43,7 @@ public class AnalyzerFixture<T>
     {
         int warnings = Logger
                        .ReceivedCalls()
-                       .Count(c => c.GetMethodInfo().Name != nameof(Logger.Warning));
+                       .Count(c => c.GetMethodInfo().Name is "Warning" or "Error" or "Fatal");
 
         warnings.Should().Be(0);
     }
