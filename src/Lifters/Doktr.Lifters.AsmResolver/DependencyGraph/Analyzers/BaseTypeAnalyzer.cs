@@ -21,10 +21,16 @@ public class BaseTypeAnalyzer : IDependencyGraphAnalyzer<IMemberDefinition>
 
         var depGraph = node.ParentGraph;
         if (TryResolveBaseType(type, out var baseType))
+        {
+            _logger.Verbose("The base type of {Type} is {BaseType}", type, baseType);
             depGraph.AddDependency(type, baseType, DependencyEdgeKind.Extension);
+        }
 
         foreach (var inf in ResolveInterfaces(type))
+        {
+            _logger.Verbose("{Type} implements {Interface}", type, inf);
             depGraph.AddDependency(type, inf, DependencyEdgeKind.Implementation);
+        }
     }
 
     private bool TryResolveBaseType(TypeDefinition type, [NotNullWhen(true)] out TypeDefinition? baseType)
