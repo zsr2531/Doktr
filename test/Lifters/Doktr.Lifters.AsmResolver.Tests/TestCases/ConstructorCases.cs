@@ -1,6 +1,6 @@
 namespace Doktr.Lifters.AsmResolver.Tests.TestCases;
 
-public partial class SubClass : AbstractClass
+public partial class SubClass
 {
     public SubClass()
         : this(0)
