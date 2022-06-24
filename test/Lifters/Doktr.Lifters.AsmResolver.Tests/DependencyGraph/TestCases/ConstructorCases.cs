@@ -1,4 +1,4 @@
-namespace Doktr.Lifters.AsmResolver.Tests.TestCases;
+namespace Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases;
 
 public partial class SubClass
 {

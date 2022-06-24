@@ -1,6 +1,6 @@
 using System;
 using Doktr.Lifters.AsmResolver.DependencyGraph.Analyzers;
-using Doktr.Lifters.AsmResolver.Tests.TestCases;
+using Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases;
 using Doktr.Lifters.Common.DependencyGraph;
 using FluentAssertions;
 using Xunit;
