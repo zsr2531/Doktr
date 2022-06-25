@@ -19,7 +19,7 @@ public class ExplicitInterfaceAnalyzerTests : IClassFixture<AnalyzerFixture<Expl
     [Fact]
     public void Explicit_Implementation_Should_Link_Back_To_Interface()
     {
-        const string fullName = "Doktr.Lifters.AsmResolver.Tests.TestCases.IInterface.ExplicitMethod";
+        const string fullName = "Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases.IInterface.ExplicitMethod";
         var impl = typeof(ClassWithInterface).GetMethod(fullName, (BindingFlags) (-1))!;
 
         _fixture.AnalyzeNode(typeof(ClassWithInterface));
@@ -35,7 +35,7 @@ public class ExplicitInterfaceAnalyzerTests : IClassFixture<AnalyzerFixture<Expl
     [Fact]
     public void Explicit_Property_Should_Link_Both_Property_And_Accessor()
     {
-        const string fullName = "Doktr.Lifters.AsmResolver.Tests.TestCases.IInterface.ExplicitProperty";
+        const string fullName = "Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases.IInterface.ExplicitProperty";
         var impl = typeof(ClassWithInterface).GetProperty(fullName, (BindingFlags) (-1))!;
 
         _fixture.AnalyzeNode(typeof(ClassWithInterface));
@@ -58,7 +58,7 @@ public class ExplicitInterfaceAnalyzerTests : IClassFixture<AnalyzerFixture<Expl
     [Fact]
     public void Explicit_Event_Should_Link_Both_Event_And_Accessors()
     {
-        const string fullName = "Doktr.Lifters.AsmResolver.Tests.TestCases.IInterface.ExplicitEvent";
+        const string fullName = "Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases.IInterface.ExplicitEvent";
         var impl = typeof(ClassWithInterface).GetEvent(fullName, (BindingFlags) (-1))!;
 
         _fixture.AnalyzeNode(typeof(ClassWithInterface));
