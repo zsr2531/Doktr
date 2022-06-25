@@ -23,10 +23,7 @@ public class MethodOverrideAnalyzer : IDependencyGraphAnalyzer<IMemberDefinition
         if (!HasOverride(method, out var baseType))
             return;
         if (!TryWalkInheritance(method, baseType, out var baseMethod))
-        {
-            _logger.Warning("Failed to find the method which {Override} overrides", method);
             return;
-        }
 
         node.ParentGraph.AddMethodDependency(method, baseMethod, DependencyEdgeKind.Override);
         _logger.Verbose("{Override} overrides {BaseMethod}", method, baseMethod);
