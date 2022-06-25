@@ -7,6 +7,7 @@ using Serilog;
 
 namespace Doktr.Xml.XmlDoc;
 
+// TODO: Don't log events inside the parser... code smell!
 public partial class XmlDocParser : IXmlDocParser
 {
     private const string Doc = "doc";

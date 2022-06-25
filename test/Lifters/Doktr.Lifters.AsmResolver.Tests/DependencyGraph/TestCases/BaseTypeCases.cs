@@ -1,4 +1,4 @@
-namespace Doktr.Lifters.AsmResolver.Tests.TestCases;
+namespace Doktr.Lifters.AsmResolver.Tests.DependencyGraph.TestCases;
 
 public abstract partial class AbstractClass
 {
@@ -16,6 +16,7 @@ public partial class ClassWithInterface : IInterface
 {
 }
 
-public partial class SubClassWithInterface : AbstractClass, IInterface
+// ReSharper disable once RedundantExtendsListEntry
+public partial class SubClassWithInterface : ClassWithInterface, IInterface
 {
 }

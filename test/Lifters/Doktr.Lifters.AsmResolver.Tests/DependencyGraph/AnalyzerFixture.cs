@@ -27,22 +27,14 @@ public class AnalyzerFixture<T>
 
     public DependencyNode<IMemberDefinition> GetNodeFor(MemberInfo member)
     {
-        string needle = GetNeedle();
-        return DependencyGraph.Nodes.Single(m => m.Value.FullName == needle);
-
-        string GetNeedle()
-        {
-            if (member.ReflectedType is null)
-                return ((Type) member).FullName!;
-
-            return $"{member.ReflectedType.FullName}.{member.Name}";
-        }
+        return DependencyGraph.Nodes.Single(m => m.Value.MetadataToken == member.MetadataToken);
     }
 
     public DependencyNode<IMemberDefinition> AnalyzeNode(MemberInfo member)
     {
         var node = GetNodeFor(member);
         Analyzer.AnalyzeNode(node);
+        AssertNoWarnings();
 
         return node;
     }
@@ -51,7 +43,7 @@ public class AnalyzerFixture<T>
     {
         int warnings = Logger
                        .ReceivedCalls()
-                       .Count(c => c.GetMethodInfo().Name != nameof(Logger.Warning));
+                       .Count(c => c.GetMethodInfo().Name is "Warning" or "Error" or "Fatal");
 
         warnings.Should().Be(0);
     }

@@ -43,7 +43,7 @@ public class ImplicitInterfaceAnalyzer : IDependencyGraphAnalyzer<IMemberDefinit
             return;
         }
 
-        foreach (var method in resolved.Methods.Where(m => !m.IsStatic))
+        foreach (var method in resolved.Methods.Where(m => !m.IsStatic && !IsExplicitlyImplemented(m)))
         {
             if (!TryFindImplementation(implementor, inf, method, out var impl))
             {
@@ -54,6 +54,9 @@ public class ImplicitInterfaceAnalyzer : IDependencyGraphAnalyzer<IMemberDefinit
             depGraph.AddMethodDependency(impl, method, DependencyEdgeKind.Implementation);
             _logger.Verbose("{Implementor} implements {Method}", impl, method);
         }
+
+        bool IsExplicitlyImplemented(MethodDefinition m) =>
+            implementor.MethodImplementations.Any(i => i.Declaration == m);
     }
 
     private static bool TryFindImplementation(
