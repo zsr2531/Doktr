@@ -50,7 +50,8 @@ public class AnalyzerFixture<T>
 
     private DependencyGraph<IMemberDefinition> BuildDependencyGraph()
     {
-        var builder = new DependencyGraphBuilder(Array.Empty<IDependencyGraphAnalyzer<IMemberDefinition>>(), Module);
+        var builder = new DependencyGraphBuilder(
+            Array.Empty<IDependencyGraphAnalyzer<IMemberDefinition>>(), new[] { Module });
         return builder.BuildDependencyGraph();
     }
 

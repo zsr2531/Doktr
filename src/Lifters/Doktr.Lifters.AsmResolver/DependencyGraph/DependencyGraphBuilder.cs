@@ -6,20 +6,20 @@ namespace Doktr.Lifters.AsmResolver.DependencyGraph;
 public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
 {
     private readonly IEnumerable<IDependencyGraphAnalyzer<IMemberDefinition>> _analyzers;
-    private readonly ModuleDefinition _module;
+    private readonly IEnumerable<ModuleDefinition> _modules;
     private readonly DependencyGraph<IMemberDefinition> _depGraph = new();
 
     public DependencyGraphBuilder(
         IEnumerable<IDependencyGraphAnalyzer<IMemberDefinition>> analyzers,
-        ModuleDefinition module)
+        IEnumerable<ModuleDefinition> modules)
     {
         _analyzers = analyzers;
-        _module = module;
+        _modules = modules;
     }
 
     public DependencyGraph<IMemberDefinition> BuildDependencyGraph()
     {
-        InspectTypes();
+        InspectModules();
         return _depGraph;
     }
 
@@ -29,9 +29,15 @@ public class DependencyGraphBuilder : IDependencyGraphBuilder<IMemberDefinition>
             AnalyzeNode(node);
     }
 
-    private void InspectTypes()
+    private void InspectModules()
     {
-        foreach (var type in _module.TopLevelTypes)
+        foreach (var module in _modules)
+            InspectTypes(module);
+    }
+
+    private void InspectTypes(ModuleDefinition module)
+    {
+        foreach (var type in module.TopLevelTypes)
             InspectType(type);
     }
 

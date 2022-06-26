@@ -8,28 +8,18 @@ namespace Doktr.Lifters.Common;
 [ExcludeFromCodeCoverage]
 public class LiftModelHandler : IRequestHandler<LiftModel, AssemblyTypesMap>
 {
-    private readonly Func<DoktrTarget, IModelLifter> _lifterFactory;
+    private readonly IModelLifter _lifter;
     private readonly DoktrConfiguration _configuration;
 
-    public LiftModelHandler(Func<DoktrTarget, IModelLifter> lifterFactory, DoktrConfiguration configuration)
+    public LiftModelHandler(IModelLifter lifter, DoktrConfiguration configuration)
     {
-        _lifterFactory = lifterFactory;
+        _lifter = lifter;
         _configuration = configuration;
     }
 
     public Task<AssemblyTypesMap> Handle(LiftModel request, CancellationToken cancellationToken)
     {
-        var types = new AssemblyTypesMap();
-
-        foreach (var target in _configuration.InputFiles)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var lifter = _lifterFactory(target);
-            (string fullName, var models) = lifter.LiftModels();
-            types[fullName] = models;
-        }
-
+        var types = _lifter.LiftModels(_configuration.InputFiles);
         return Task.FromResult(types);
     }
 }
