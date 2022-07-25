@@ -1,9 +1,9 @@
 using AsmResolver.DotNet;
 using Doktr.Core;
-using Doktr.Core.Models;
 using Doktr.Core.Models.Collections;
 using Doktr.Lifters.Common;
 using Doktr.Lifters.Common.DependencyGraph;
+using Doktr.Lifters.Common.Inheritance;
 using Doktr.Xml;
 using Doktr.Xml.Collections;
 using Doktr.Xml.XmlDoc;
@@ -19,17 +19,23 @@ public class AsmResolverLifter : IModelLifter
     private readonly Func<XmlNodeCollection, IXmlDocParser> _xmlDocParserFactory;
     private readonly Func<IEnumerable<ModuleDefinition>, IDependencyGraphBuilder<IMemberDefinition>>
         _depGraphBuilderFactory;
+    private readonly Func<DependencyGraph<IMemberDefinition>, RawXmlDocEntryMap,
+            IInheritanceResolver<IMemberDefinition>>
+        _inheritanceResolverFactory;
 
     public AsmResolverLifter(
         ILogger logger,
         Func<TextReader, IXmlParser> xmlParserFactory,
         Func<XmlNodeCollection, IXmlDocParser> xmlDocParserFactory,
-        Func<IEnumerable<ModuleDefinition>, IDependencyGraphBuilder<IMemberDefinition>> depGraphBuilderFactory)
+        Func<IEnumerable<ModuleDefinition>, IDependencyGraphBuilder<IMemberDefinition>> depGraphBuilderFactory,
+        Func<DependencyGraph<IMemberDefinition>, RawXmlDocEntryMap, IInheritanceResolver<IMemberDefinition>>
+            inheritanceResolverFactory)
     {
         _logger = logger;
         _xmlParserFactory = xmlParserFactory;
         _xmlDocParserFactory = xmlDocParserFactory;
         _depGraphBuilderFactory = depGraphBuilderFactory;
+        _inheritanceResolverFactory = inheritanceResolverFactory;
     }
 
     public AssemblyTypesMap LiftModels(IEnumerable<DoktrTarget> targets)
@@ -40,11 +46,16 @@ public class AsmResolverLifter : IModelLifter
         foreach (var target in targets)
         {
             var module = ModuleDefinition.FromFile(target.AssemblyPath);
+            var doc = ParseXmlDoc(target);
+
             modules.Add(module);
-            docs.MergeWith(ParseXmlDoc(target));
+            docs.MergeWith(doc);
         }
 
-        // return new ModelLifterResult(module.Assembly!.FullName, _types);
+        // TODO: Load extra xml files
+
+        ResolveInheritance(modules, docs);
+
         return new AssemblyTypesMap();
     }
 
@@ -71,20 +82,13 @@ public class AsmResolverLifter : IModelLifter
     private void ResolveInheritance(List<ModuleDefinition> modules, RawXmlDocEntryMap docs)
     {
         var depGraph = BuildDependencyGraph(modules);
-        var cache = new RawXmlDocEntryMap();
+        var resolver = _inheritanceResolverFactory(depGraph, docs);
 
-        foreach (var entry in docs)
+        foreach (var (key, entry) in docs.Where(d => d.Value.InheritsDocumentation))
         {
+            var resolved = resolver.ResolveInheritance(entry);
+            docs[key] = resolved;
         }
-    }
-
-    private RawXmlDocEntry ResolveInheritance(
-        DependencyGraph<IMemberDefinition> depGraph,
-        RawXmlDocEntry entry,
-        RawXmlDocEntryMap docs,
-        RawXmlDocEntryMap cache)
-    {
-        return new(new CodeReference("T:Test"));
     }
 
     private DependencyGraph<IMemberDefinition> BuildDependencyGraph(List<ModuleDefinition> modules)
