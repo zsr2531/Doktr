@@ -10,18 +10,16 @@ using Serilog;
 
 namespace Doktr.Lifters.AsmResolver.Tests.DependencyGraph;
 
-public class AnalyzerFixture<T>
+public class AnalyzerFixture<T> : ModuleFixture<AnalyzerFixture<T>>
     where T : IDependencyGraphAnalyzer<IMemberDefinition>
 {
     public AnalyzerFixture()
     {
-        Module = ModuleDefinition.FromFile(typeof(AnalyzerFixture<>).Assembly.Location);
         DependencyGraph = BuildDependencyGraph();
         Analyzer = (T) Activator.CreateInstance(typeof(T), Logger)!;
     }
 
     public ILogger Logger { get; } = Substitute.For<ILogger>();
-    public ModuleDefinition Module { get; }
     public DependencyGraph<IMemberDefinition> DependencyGraph { get; }
     public T Analyzer { get; }
 
