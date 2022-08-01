@@ -19,7 +19,7 @@ public class ModuleFixture<T>
         int needle = memberInfo.MetadataToken;
         return Module.GetAllTypes()
                      .SelectMany(t =>
-                         t.Events.Concat<IMemberDefinition>(t.Fields).Concat(t.Properties).Concat(t.Methods))
+                         t.Events.Concat<IMemberDefinition>(t.Fields).Concat(t.Properties).Concat(t.Methods).Append(t))
                      .First(m => m.MetadataToken == needle);
     }
 }

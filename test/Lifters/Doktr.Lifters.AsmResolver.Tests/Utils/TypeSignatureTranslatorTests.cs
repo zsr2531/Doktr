@@ -1,4 +1,3 @@
-using System.Reflection;
 using AsmResolver.DotNet;
 using Doktr.Lifters.AsmResolver.Tests.Utils.TestCases;
 using Doktr.Lifters.AsmResolver.Utils;
