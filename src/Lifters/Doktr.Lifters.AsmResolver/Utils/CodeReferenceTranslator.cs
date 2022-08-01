@@ -69,7 +69,8 @@ public class CodeReferenceTranslator : ICodeReferenceTranslator<IMemberDefinitio
         }
     }
 
-    private void TranslateType(TypeDefinition type) => _sb.Append(type.FullName);
+    // Nested types are separated via '+'s in metadata, but in doc id's they are separated via '.'s.
+    private void TranslateType(TypeDefinition type) => _sb.Append(type.FullName.Replace('+', '.'));
 
     private void TranslateEvent(EventDefinition ev) => WriteMemberName(ev);
 
